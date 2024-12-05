@@ -19,22 +19,27 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 	};
 
 	return (
-		<div className="mentor-card bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+		<div className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center">
 			<img
 				src={mentor.profilePicture}
 				alt={`${mentor.name}'s profile`}
 				className="w-20 h-20 rounded-full mb-4"
 			/>
-			<h3 className="text-lg font-semibold">{mentor.name}</h3>
-			<p className="text-sm text-gray-600">{mentor.expertise}</p>
-			<button
-				className={`mt-4 px-4 py-2 rounded ${
-					isFollowing ? "bg-gray-300 text-gray-700" : "bg-blue-500 text-white"
-				}`}
-				onClick={toggleFollow}
-			>
-				{isFollowing ? "Following" : "Follow"}
-			</button>
+			<div className="flex justify-between w-full">
+				<div>
+					<h3 className="text-lg font-semibold">{mentor.name}</h3>
+					<p className="text-sm text-gray-800">{mentor.expertise}</p>
+				</div>
+
+				<button
+					className={`mt-4 px-4 py-2 rounded ${
+						isFollowing ? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900" : "bg-sky-700 text-white"
+					}`}
+					onClick={toggleFollow}
+				>
+					{isFollowing ? "Following" : "Follow"}
+				</button>
+			</div>
 		</div>
 	);
 };
