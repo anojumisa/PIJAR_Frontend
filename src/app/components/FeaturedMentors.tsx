@@ -16,32 +16,50 @@ const FeaturedMentors: React.FC = () => {
 		{
 			name: "Mentor A",
 			expertise: "Coding",
-			profilePicture: "/images/mentor1.jpg",
+			profilePicture: "https://i.pravatar.cc/150?img=9",
 			isFollowing: false,
 		},
 		{
 			name: "Mentor B",
 			expertise: "Agriculture",
-			profilePicture: "/images/mentor2.jpg",
+			profilePicture: "https://i.pravatar.cc/150?img=1",
 			isFollowing: true,
 		},
 		{
 			name: "Mentor C",
 			expertise: "Finance",
-			profilePicture: "/images/mentor3.jpg",
+			profilePicture: "https://i.pravatar.cc/150?img=2",
 			isFollowing: false,
 		},
 		{
 			name: "Mentor D",
 			expertise: "Marketing",
-			profilePicture: "/images/mentor4.jpg",
+			profilePicture: "https://i.pravatar.cc/150?img=3",
 			isFollowing: false,
 		},
 		{
 			name: "Mentor E",
 			expertise: "Entrepreneurship",
-			profilePicture: "/images/mentor5.jpg",
+			profilePicture: "https://i.pravatar.cc/150?img=4",
 			isFollowing: true,
+		},
+		{
+			name: "Mentor F",
+			expertise: "Healthcare",
+			profilePicture: "https://i.pravatar.cc/150?img=5",
+			isFollowing: false,
+		},
+		{
+			name: "Mentor G",
+			expertise: "Design",
+			profilePicture: "https://i.pravatar.cc/150?img=6",
+			isFollowing: true,
+		},
+		{
+			name: "Mentor H",
+			expertise: "Business",
+			profilePicture: "https://i.pravatar.cc/150?img=7",
+			isFollowing: false,
 		},
 	];
 

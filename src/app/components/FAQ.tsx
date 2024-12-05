@@ -48,14 +48,14 @@ const FAQ: React.FC = () => {
 				{faqData.map((faq, index) => (
 					<div key={index} className="faq-item border-b pb-4">
 						<button
-							className="flex justify-between items-center w-full text-left text-lg font-semibold py-2 px-4  rounded hover:bg-blue-950 focus:outline-none"
+							className="flex justify-between items-center w-full text-left text-lg font-semibold py-2 px-4  rounded hover:bg-gradient-to-r from-cyan-500 to-blue-500 focus:outline-none transition duration-300 ease-in-out"
 							onClick={() => toggleExpand(index)}
 						>
 							{faq.question}
 							<span className="text-xl">{expanded[index] ? "▲" : "▼"}</span>
 						</button>
 						{expanded[index] && (
-							<div className="faq-answer mt-2 text-gray-700 whitespace-pre-line">
+							<div className="faq-answer mt-2 text-gray-400 whitespace-pre-line">
 								{faq.answer}
 							</div>
 						)}
