@@ -19,7 +19,7 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 	};
 
 	return (
-		<div className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center">
+		<div className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:transform hover:scale-105 transition duration-300">
 			<img
 				src={mentor.profilePicture}
 				alt={`${mentor.name}'s profile`}
@@ -33,7 +33,7 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 
 				<button
 					className={`mt-4 px-4 py-2 rounded ${
-						isFollowing ? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900" : "bg-sky-700 text-white"
+						isFollowing ? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900" : "bg-sky-700 text-white hover:transform hover:scale-105 transition duration-300"
 					}`}
 					onClick={toggleFollow}
 				>
