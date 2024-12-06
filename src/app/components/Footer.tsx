@@ -65,6 +65,10 @@ const Footer = () => {
 
 			<div className="mx-6 py-10 text-center md:text-left">
 				<div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+					<div className="w-6/12 mx-auto">
+						<img src="/pijar_logo.png" alt="PIJAR logo" className="rounded-2xl"/>
+						
+					</div>
 					<div className="">
 						<h6 className="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">
 							<span className="me-3 [&>svg]:h-4 [&>svg]:w-4">
@@ -79,10 +83,12 @@ const Footer = () => {
 							PIJAR
 						</h6>
 						<p>
-                        PIJAR adalah sebuah platform belajar berbasis komunitas yang bertujuan untuk menjembatani kebutuhan akses pendidikan yang berkualitas bagi komunitas yang kurang terlayani. 
+							PIJAR adalah sebuah platform belajar berbasis komunitas yang
+							bertujuan untuk menjembatani kebutuhan akses pendidikan yang
+							berkualitas bagi komunitas yang kurang terlayani.
 						</p>
 					</div>
-					<div>
+					{/* <div>
 						<h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
 							Fitur
 						</h6>
@@ -98,7 +104,7 @@ const Footer = () => {
 						<p>
 							<a href="#!">Live Streaming</a>
 						</p>
-					</div>
+					</div> */}
 					<div>
 						<h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
 							Tautan Bermanfaat
@@ -184,7 +190,6 @@ const Footer = () => {
 
 			<div className="bg-black/5 p-6 text-center">
 				<span>© 2024 PIJAR. Seluruh hak dipertahankan.</span>
-				
 			</div>
 		</footer>
 	);
