@@ -8,10 +8,12 @@ import Topic from "./component/topic";
 import UpcomingSession from "./component/upcoming";
 import Homes from "./home";
 import Navbar from "./component/navbar";
+import Navbar_not_auth from "./component/navbar_not_auth";
 
 export default function Home() {
 	return (
 		<>
+    <Navbar_not_auth />
      <Navbar />
 			<Banner />
 			<Topic />
