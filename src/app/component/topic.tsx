@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import TopicCard from "../fragment/TopicCard";
 
 type Categories = {
     category_name: string;
@@ -13,50 +14,44 @@ const Topic: React.FC = () => {
     const Categories: Categories [] = [
         {
             category_name: "Coding",
-            image_url: "",
+            image_url: "https://www.mtu.edu/cs/undergraduate/software/what/images/software-engineering-banner1600.jpg",
         },
         {
             category_name: "Trading",
-            image_url: "",
+            image_url: "https://cdn.corporatefinanceinstitute.com/assets/trade-execution-1024x576.jpeg",
         },
         {
             category_name: "Graphic Design",
-            image_url: "",
+            image_url: "https://community.wacom.com/us/wp-content/uploads/2019/02/How-to-paint-with-Wacom-and-Painter-small.jpg",
         },
         {
             category_name: "Fashion Design",
-            image_url: "",
+            image_url: "https://www.hongkongda.com/wp-content/uploads/2024/05/aim_18730_1.jpg",
         },
         {
             category_name: "Architecture",
-            image_url: "",
+            image_url: "https://i0.wp.com/www.designhausarchitecture.co.uk/wp-content/uploads/2021/11/DesignHausBlog.png?w=1000&ssl=1",
         },
         {
             category_name: "Applied Mathematics",
-            image_url: "",
+            image_url: "https://studentresearch.engineering.columbia.edu/sites/default/files/styles/cu_crop/public/2017-01/math4.jpg?itok=u1bkQxYE",
         },
     ]
     return (
-        <div className="relative text-center bg-blue-800 text-white p-6 border-b-4 border-white">
-            <div className="text-right mb-6">
+        <div className="topic-container p-6 max-w-6xl mx-auto">
+            <div className="text-left mb-6">
                 <h2 className="text-2xl md:text-4xl uppercase font-bold drop-shadow-md">
                     Topik Pilihan
                 </h2>
             </div>
 
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Categories.map((category, index) => (
-                    <div key={index} className="relative">
-                        <Image
-                            src={category.image_url}
-                            alt={category.category_name}
-                            width={500}
-                            height={500}
-                            className="w-full h-48 object-cover rounded-md"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"></div>
-                            <h3 className="text-white text-lg font-bold">{category.category_name}</h3>
-                    </div>
+                <TopicCard
+                    key={index}
+                    category_name={category.category_name}
+                    image_url={category.image_url}
+                />
                 ))}
             </div>
         </div>
