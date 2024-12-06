@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+// import Menu, { SubMenu, MenuItem } from 'rc-menu';
 
 const Navbar_not_auth: React.FC = () => {
   return (
@@ -16,16 +18,14 @@ const Navbar_not_auth: React.FC = () => {
               LOGO
             </a>
           </li>
-          <Menu as="div" className="relative inline-block pl-40">
-            <div>
-              <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                Kategori
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="-mr-1 size-5 text-gray-400"
-                />
-              </MenuButton>
-            </div>
+          <Menu as="div" className="relative inline-block pl-60">
+            <MenuButton className="inline-flex w-full justify-center  gap-x-1.5 rounded-md bg-white px-3 py-2  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              Kategori
+              <ChevronDownIcon
+                className="-mr-1 h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </MenuButton>
 
             <MenuItems
               transition
@@ -33,12 +33,44 @@ const Navbar_not_auth: React.FC = () => {
             >
               <div className="py-1">
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                  >
-                    Account settings
-                  </a>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900  ring-gray-300 hover:bg-gray-100">
+                      Account settings
+                      <ChevronRightIcon
+                        aria-hidden="true"
+                        className="ml-14 h-5 w-5 text-gray-400"
+                      />
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute left-full top-0 z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt1
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt2
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt3
+                        </a>
+                      </MenuItem>
+                    </MenuItems>
+                  </Menu>
                 </MenuItem>
                 <MenuItem>
                   <a
@@ -123,24 +155,23 @@ const Navbar_not_auth: React.FC = () => {
               </button>
             </form>
           </li>
-          <div
-          className="flex">          
-          <li>
-            <button
-              type="button"
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Sign In
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              Sign Up
-            </button>
-          </li>
+          <div className="flex">
+            <li>
+              <button
+                type="button"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Sign In
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                Sign Up
+              </button>
+            </li>
           </div>
         </ul>
       </div>
