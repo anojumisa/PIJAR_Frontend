@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import MentorCard from "../fragments/MentorCard";
+import MentorCard from "@/fragments/MentorCard";
 
 type Mentor = {
 	name: string;

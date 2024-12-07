@@ -44,11 +44,11 @@ const FAQ: React.FC = () => {
 			<h1 className="text-3xl font-bold text-center mb-8">
 				Pertanyaan yang Sering Ditanyakan
 			</h1>
-			<div className="faq-list space-y-4">
+			<div className="faq-list space-y-4 mb-6">
 				{faqData.map((faq, index) => (
-					<div key={index} className="faq-item border-b pb-4">
+					<div key={index} className="faq-item border-b pb-4 mb-4">
 						<button
-							className="flex justify-between items-center w-full text-left text-lg font-semibold py-2 px-4  rounded hover:bg-gradient-to-r from-cyan-500 to-blue-500 focus:outline-none transition duration-300 ease-in-out"
+							className="flex justify-between items-center w-full text-left text-lg font-semibold py-2 px-4 text-white rounded hover:bg-gradient-to-r from-cyan-500 to-blue-500 focus:outline-none transition duration-300 ease-in-out"
 							onClick={() => toggleExpand(index)}
 						>
 							{faq.question}
