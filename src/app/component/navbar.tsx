@@ -1,7 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import pijarLogo from "../../assets/pijar-logo.png";
+
 type APIResponse = {
   link: string;
   content: string;
@@ -28,68 +30,168 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav className="bg-[#CDB278] border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="flex-auto p-4">
-        <ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-          <li>
+        <ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-[#CDB278] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  md:bg-[#CDB278]  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
             <a
               href="#"
               className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               aria-current="page"
             >
-              LOGO
+              <img src="/pijarLogo.png" alt="Pijar Logo" className="h-8 w-auto" />
             </a>
-          </li>
-          <Menu as="div" className="relative inline-block pl-40">
-            <div>
-              <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                Kategori
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="-mr-1 size-5 text-gray-400"
-                />
-              </MenuButton>
-            </div>
-
+            </li>
+            <Menu as="div" className="relative inline-block pl-60">
+            <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2.5  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              Kategori
+              <ChevronDownIcon
+                className="-mr-1 h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </MenuButton>
             <MenuItems
               transition
-              className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+              className="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
             >
-              <div className="py-1">
+              <div>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left w-full"
                   >
-                    Account settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                  >
-                    Support
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                  >
-                    License
-                  </a>
-                </MenuItem>
-                <form action="#" method="POST">
-                  <MenuItem>
-                    <button
-                      type="submit"
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                    <MenuButton className="inline-flex w-full justify-between px-3 py-1 text-sm font-semibold text-gray-900 ring-gray-300 hover:bg-gray-100 my-1">
+                      <span>Grafik Desain</span>
+                      <ChevronRightIcon
+                        aria-hidden="true"
+                        className="h-5 w-5 text-gray-400"
+                      />
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute left-full top-0 z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
-                      Sign out
-                    </button>
-                  </MenuItem>
-                </form>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt1
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt1
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt2
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt3
+                        </a>
+                      </MenuItem>
+                    </MenuItems>
+                  </Menu>
+                </MenuItem>
+                <MenuItem>
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left w-full"
+                  >
+                    <MenuButton className="inline-flex w-full justify-between px-3 py-1 text-sm font-semibold text-gray-900 ring-gray-300 hover:bg-gray-100 my-1">
+                      <span>Grafik Desain</span>
+                      <ChevronRightIcon
+                        aria-hidden="true"
+                        className="h- w-5 text-gray-400"
+                      />
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute left-full top-0 z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-3 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt1
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt2
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt3
+                        </a>
+                      </MenuItem>
+                    </MenuItems>
+                  </Menu>
+                </MenuItem>
+                <MenuItem>
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left w-full"
+                  >
+                    <MenuButton className="inline-flex w-full justify-between px-3 py-1 text-sm font-semibold text-gray-900 ring-gray-300 hover:bg-gray-100 my-1">
+                      <span>Grafik Desain</span>
+                      <ChevronRightIcon
+                        aria-hidden="true"
+                        className="h-5 w-5 text-gray-400"
+                      />
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute left-full top-0 z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt1
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt2
+                        </a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                        >
+                          Opt3
+                        </a>
+                      </MenuItem>
+                    </MenuItems>
+                  </Menu>
+                </MenuItem>
               </div>
             </MenuItems>
           </Menu>
