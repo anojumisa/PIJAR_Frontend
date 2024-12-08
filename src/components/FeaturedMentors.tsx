@@ -65,7 +65,7 @@ const FeaturedMentors: React.FC = () => {
 
 	return (
 		<div className="featured-mentors-container p-6 max-w-6xl mx-auto">
-			<h2 className="text-2xl font-bold text-center mb-6">Mentor Pilihan</h2>
+			<h2 className="text-2xl font-bold text-neutral-400 text-center mb-6">Mentor Pilihan</h2>
 			<div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
 				{mentors.map((mentor, index) => (
 					<MentorCard key={index} mentor={mentor} />
