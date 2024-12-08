@@ -14,7 +14,7 @@ const MOCK_CLASS_DATA = {
 		"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
 	mentor: "John Doe",
 	imageURL: "https://via.placeholder.com/150",
-	videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual URL
+	videoUrl: "https://www.youtube.com/embed/iA8lLwmtKQM?list=PLZS-MHyEIRo59lUBwU-XHH7Ymmb04ffOY" , // Replace with actual URL
 	comments: [
 		{
 			id: 1,
