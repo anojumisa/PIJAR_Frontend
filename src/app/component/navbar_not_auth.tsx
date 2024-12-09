@@ -2,7 +2,7 @@
 import React from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-// import Menu, { SubMenu, MenuItem } from 'rc-menu';
+
 
 const Navbar_not_auth: React.FC = () => {
   return (
@@ -16,13 +16,14 @@ const Navbar_not_auth: React.FC = () => {
           aria-current="page"
         >
           <img
-          src="/pijarLogo.png"
+          src="/pijarLogo2.png"
           alt="Pijar Logo"
           className="h-8 w-auto"
           />
         </a>
         </li>
-        <Menu as="div" className="relative inline-block pl-60">
+        <div className="relative inline-flex">
+            <Menu as="div" className="relative inline-block pr-3">
         <MenuButton className="inline-flex w-full justify-center  gap-x-1.5 rounded-md bg-white px-3 py-2.5  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
           Kategori
           <ChevronDownIcon
@@ -229,11 +230,12 @@ const Navbar_not_auth: React.FC = () => {
           </button>
         </form>
         </li>
+        </div>
         <div className="flex">
         <li>
           <button
           type="button"
-          className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-sky-700 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
           Sign In
           </button>
@@ -241,7 +243,7 @@ const Navbar_not_auth: React.FC = () => {
         <li>
           <button
           type="button"
-          className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
           Sign Up
           </button>
