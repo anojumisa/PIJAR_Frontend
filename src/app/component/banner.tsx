@@ -25,7 +25,7 @@ const Banner = () => {
                 </p>
             </div>
             <br />
-            <button className="bg-black text-white font-bold py-2 px-4 rounded">
+            <button className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold py-2 px-4 rounded">
                 Mulai Belajar
             </button>
         </div>

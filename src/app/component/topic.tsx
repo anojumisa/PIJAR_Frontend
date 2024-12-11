@@ -36,6 +36,10 @@ const Topic: React.FC = () => {
             category_name: "Applied Mathematics",
             image_url: "https://studentresearch.engineering.columbia.edu/sites/default/files/styles/cu_crop/public/2017-01/math4.jpg?itok=u1bkQxYE",
         },
+        {
+            category_name: "Data Science",
+            image_url: "https://cdn.builtin.com/cdn-cgi/image/f=auto,fit=cover,w=1200,h=635,q=80/https://builtin.com/sites/www.builtin.com/files/2024-10/data-science.jpg",
+        },
     ]
     return (
         <div className="topic-container p-6 max-w-6xl mx-auto">

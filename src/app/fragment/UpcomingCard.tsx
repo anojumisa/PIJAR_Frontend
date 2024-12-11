@@ -49,7 +49,7 @@ const UpcomingSessionCard: React.FC<UpcomingSessionCardProps> = ({
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 bg-blue-500 text-white font-medium text-sm rounded hover:bg-blue-600 transition duration-300"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium text-sm rounded hover:bg-blue-600 transition duration-300"
                 >
                     Join Now
                 </a>
