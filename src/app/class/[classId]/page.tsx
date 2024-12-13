@@ -1,7 +1,7 @@
 'use client'
-import VideoPlayer from "./components/VideoPlayer";
-import Comments from "./components/Comments";
-import Resources from "./components/Resources";
+import VideoPlayer from "../../../components/class/VideoPlayer";
+import Comments from "../../../components/class/Comments";
+import Resources from "../../../components/class/Resources";
 import { useState } from "react";
 
 // Mock Data (replace with API when available)

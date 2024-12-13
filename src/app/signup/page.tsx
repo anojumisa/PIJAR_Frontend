@@ -13,6 +13,7 @@ import {
 } from "@/components/select";
 import axios from "axios";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";	
 
 interface SignUpFormValues {
 	fullName: string;
@@ -98,6 +99,7 @@ export default function SignUp() {
 			<Toaster position="bottom-center" richColors />
 			<div className="flex flex-col lg:flex-row w-full max-w-5xl rounded-lg overflow-hidden shadow-lg">
 				<div className="bg-yellow-600 text-white flex flex-col justify-center items-center lg:items-start px-8 py-12 lg:w-2/6">
+					<Link href={"/"}>
 					<h2 className="text-3xl font-caveat leading-snug mb-6 text-center lg:text-left">
 						Ruang Belajar Anda, <br /> Dimanapun dan Kapanpun
 					</h2>
@@ -105,7 +107,7 @@ export default function SignUp() {
 						src="/image.png"
 						alt="Robot"
 						className="w-40 h-40 lg:w-64 lg:h-64 mt-6 ml-6"
-					/>
+					/></Link>
 				</div>
 
 				<div className="bg-white flex-1 p-8">
@@ -195,7 +197,7 @@ export default function SignUp() {
 							<p className="text-center text-gray-600 mt-4">
 								Sudah punya akun?{" "}
 								<a
-									href="#"
+									href="/signin"
 									className="text-blue-500 font-medium hover:underline"
 								>
 									Masuk
