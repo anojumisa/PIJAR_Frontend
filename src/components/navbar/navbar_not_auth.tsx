@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const Navbar_not_auth: React.FC = () => {
 	return (
-		<nav className="bg-[#CDB278] border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+		<nav className="bg-gradient-to-t from-sky-800 to-gray-900 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
 			<div className="flex-auto p-4">
-				<ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-[#CDB278] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#CDB278] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+				<ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 					<li>
 						<a
 							href="#"
@@ -209,7 +209,7 @@ const Navbar_not_auth: React.FC = () => {
 								</div>
 								<button
 									type="submit"
-									className="p-2.5 ml-2 text-sm font-medium text-white bg-sky-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+									className="p-2.5 ml-2 text-sm font-medium text-white bg-sky-700 rounded-lg border border-sky-7=800 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 								>
 									<svg
 										className="w-5 h-5"
@@ -236,7 +236,7 @@ const Navbar_not_auth: React.FC = () => {
 							<Link href={"/signin"}>
 								<button
 									type="button"
-									className="inline-flex items-center mr-3 px-4 py-2 text-sm font-medium text-white bg-sky-700 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+									className="inline-flex items-center mr-3 px-4 py-2 text-sm font-medium text-white bg-sky-700 rounded-lg hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
 								>
 									Sign In
 								</button>
@@ -246,7 +246,7 @@ const Navbar_not_auth: React.FC = () => {
 							<Link href={"/signup"}>
 								<button
 									type="button"
-									className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+									className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-green-500"
 								>
 									Sign Up
 								</button>
