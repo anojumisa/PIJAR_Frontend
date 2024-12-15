@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import UpcomingSessionCard from "../../fragments/UpcomingCard";
+import UpcomingSessionCard from "../fragments/UpcomingCard";
 
 type UpcomingSession = {
 	image_url: string;
