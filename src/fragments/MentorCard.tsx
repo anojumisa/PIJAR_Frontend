@@ -25,7 +25,7 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 				alt={`${mentor.name}'s profile`}
 				className="w-20 h-20 rounded-full mb-4"
 			/>
-			<div className="flex justify-between w-full">
+			<div className="flex justify-between w-full lg: flex-row sm:items-center sm:flex-col">
 				<div>
 					<h3 className="text-lg font-semibold">{mentor.name}</h3>
 					<p className="text-sm text-gray-800">{mentor.expertise}</p>

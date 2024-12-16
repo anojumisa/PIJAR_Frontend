@@ -41,7 +41,7 @@ const FAQ: React.FC = () => {
 
 	return (
 		<div className="faq-container p-6 max-w-4xl mx-auto">
-			<h1 className="text-2xl font-bold text-center mb-8 text-neutral-400">
+			<h1 className="text-2xl md:text-4xl mb-4 font-bold text-gray-500 text-center">
 				Pertanyaan yang Sering Ditanyakan
 			</h1>
 			<div className="faq-list space-y-4 mb-6">
