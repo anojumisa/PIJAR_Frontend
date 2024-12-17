@@ -26,3 +26,15 @@ export const UserSignUp = async (userData: { email: string; fullname: string; pa
         throw error;
     }
 };
+
+// Function for User Login
+export const UserSignIn = async (userData: { email: string; password: string }) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/login`, userData);
+        return response.data;
+    } catch (error) {
+        console.error("Error logging in user:", error);
+        throw error;
+    }
+};
+

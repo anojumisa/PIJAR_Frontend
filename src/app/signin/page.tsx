@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { toast, Toaster } from "sonner";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { UserSignIn } from "@/utils/api";
 
 interface SignInFormValues {
 	email: string;
@@ -29,19 +30,29 @@ export default function SignIn() {
 		password: "",
 	};
 
-	const handleSignInSubmit = (
+	const handleSignInSubmit = async (
 		values: SignInFormValues,
 		{
 			setSubmitting,
 			resetForm,
 		}: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
 	) => {
-		console.log("Sign In data:", values);
-		toast.success("Berhasil Masuk! 🎉", {
-			description: "Selamat datang kembali!",
-		});
-		setSubmitting(false);
-		resetForm();
+		try {
+			const data = await UserSignIn(values);
+
+			console.log("Sign In data:", data);
+			toast.success("Berhasil Masuk! 🎉", {
+				description: "Selamat datang kembali!",
+			});
+			resetForm();
+		} catch (error) {
+			toast.error("Gagal Masuk", {
+				description: "Periksa kembali email dan kata sandi Anda.",
+			});
+			console.error("Sign In error:", error);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (
