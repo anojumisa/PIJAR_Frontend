@@ -5,7 +5,7 @@ import Spline from '@splinetool/react-spline';
 
 const Banner = () => {
     return (
-        <div className="h-auto max-w-screen-3xl mx-auto flex flex-col justify-center items-center mt-20 lg:mt-28">
+        <div className="h-[800px] max-w-screen-2xl mx-auto flex flex-col justify-center items-center mt-20 lg:mt-28">
             <Spline scene="https://prod.spline.design/3olMyDmlAS7WlJux/scene.splinecode" />
             {/* <div className="bg-black bg-opacity-75 p-4 mt-6 max-w-3xl">
                 <p className="text-white text-sm md:text-base mt-2 text-center">
