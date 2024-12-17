@@ -11,3 +11,14 @@ export const fetchCategories = async () => {
 		throw error;
 	}
 };
+
+// Function for User Registration
+export const UserSignUp = async (userData: { email: string; fullname: string; password: string }) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/register`, userData);
+        return response.data;
+    } catch (error) {
+        console.error("Error registering user:", error);
+        throw error;
+    }
+};
