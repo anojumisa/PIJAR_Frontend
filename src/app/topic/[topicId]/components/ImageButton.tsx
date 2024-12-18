@@ -13,7 +13,7 @@ const ImageButton: React.FC<ImageButtonProps> = ({ image_url, title, link }) => 
             <img
                 src={image_url}
                 alt={title}
-                className="h-20 w-full object-cover rounded-lg"
+                className="h-60 w-full object-cover rounded-lg"
             />
             <div className="mt-4 text-center">
                 <a
