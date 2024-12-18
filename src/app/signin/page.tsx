@@ -39,15 +39,17 @@ export default function SignIn() {
 	) => {
 		try {
 			const data = await UserSignIn(values);
-
-			console.log("Sign In data:", data);
+			// Simpan info hasil signup -> set cookie access_token & refresh_token
+			document.cookie = `access_token=${data.access_token}; max-age=3600`;
+			document.cookie = `refresh_token=${data.refresh_token}; max-age=3600`;
 			toast.success("Berhasil Masuk! 🎉", {
 				description: "Selamat datang kembali!",
 			});
-			resetForm();
+			// Redirect ke home
+			document.location.replace("/")
 		} catch (error) {
 			toast.error("Gagal Masuk", {
-				description: "Periksa kembali email dan kata sandi Anda.",
+				description: `Periksa kembali email dan kata sandi Anda., error: ${(error as any).response?.data.error}`,
 			});
 			console.error("Sign In error:", error);
 		} finally {
