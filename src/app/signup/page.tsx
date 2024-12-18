@@ -83,8 +83,8 @@ export default function SignUp() {
             toast.success("Pendaftaran berhasil! 🎉", {
                 description: "Selamat datang di platform kami!",
             });
-            // Redirect ke home
-            document.location.replace("/");
+            // Redirect ke minat
+            document.location.replace("/minat");
         } catch (error) {
             console.log("🚀 ~ SignUp ~ error:", error);
             toast.error(`Gagal mendaftar. Silakan coba lagi, erorr: ${(error as any).response?.data.error}`);
