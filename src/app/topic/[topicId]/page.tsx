@@ -11,7 +11,7 @@ const MOCK_TOPIC_DATA = {
     rating: 4.8,
     details: "Pada materi ini pelajar akan diperkenalkan dengan dasar-dasar pemgrograman. Topik yang akan dibahas pada materi ini akan berupa bagaimana cara membuat HTML sederhana serta pengenalan tentang repository Git.",
     link: "https://www.youtube.com/embed/iA8lLwmtKQM?list=PLZS-MHyEIRo59lUBwU-XHH7Ymmb04ffOY",
-    image_url: "https://via.placeholder.com/150"
+    image_url: "https://www.mtu.edu/cs/undergraduate/software/what/images/software-engineering-banner1600.jpg"
 }
 
 const TopicPage: React.FC = () => {
