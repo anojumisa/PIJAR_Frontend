@@ -14,3 +14,5 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({ title, short_description }) =
         </div>
     )
 }
+
+export default TopicHeader;
