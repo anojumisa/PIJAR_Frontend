@@ -18,6 +18,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "flowbite": "^2.5.2",
+    "flowbite-react": "^0.10.2",
     "formik": "^2.4.6",
     "heroicons": "^2.2.0",
     "lucide-react": "^0.468.0",
