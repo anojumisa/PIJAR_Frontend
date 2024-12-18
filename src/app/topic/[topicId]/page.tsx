@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import ImageButton from "./components/ImageButton";
-import TopicHeader from "./components/TopicHeader";
-import WhatYouLearn from "./components/WhatYouLearn";
+import ImageButton from "../../../components/Topic/ImageButton";
+import TopicHeader from "../../../components/Topic/TopicHeader";
+import WhatYouLearn from "../../../components/Topic/WhatYouLearn";
 
 const MOCK_TOPIC_DATA = {
     id: "123",
