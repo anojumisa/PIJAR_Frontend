@@ -16,6 +16,7 @@ import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignUp } from "@/utils/api";
 import { redirect, RedirectType } from "next/navigation";
+import { set_cookie } from "@/lib/utils";
 
 interface SignUpFormValues {
     fullName: string;
@@ -77,8 +78,8 @@ export default function SignUp() {
             const data = await UserSignUp(userData);
             // Pasti belom authenticated
             // Simpan info hasil signup -> set cookie access_token & refresh_token
-            document.cookie = `access_token=${data.access_token}; max-age=3600`;
-            document.cookie = `refresh_token=${data.refresh_token}; max-age=3600`;
+            set_cookie("access_token", data.access_token);
+            set_cookie("refresh_token", data.refresh_token);
             toast.success("Pendaftaran berhasil! 🎉", {
                 description: "Selamat datang di platform kami!",
             });

@@ -7,6 +7,7 @@ import { toast, Toaster } from "sonner";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignIn } from "@/utils/api";
+import { set_cookie } from "@/lib/utils";
 
 interface SignInFormValues {
 	email: string;
@@ -40,8 +41,8 @@ export default function SignIn() {
 		try {
 			const data = await UserSignIn(values);
 			// Simpan info hasil signup -> set cookie access_token & refresh_token
-			document.cookie = `access_token=${data.access_token}; max-age=3600`;
-			document.cookie = `refresh_token=${data.refresh_token}; max-age=3600`;
+			set_cookie("access_token", data.access_token);
+			set_cookie("refresh_token", data.refresh_token);
 			toast.success("Berhasil Masuk! 🎉", {
 				description: "Selamat datang kembali!",
 			});
