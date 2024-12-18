@@ -9,13 +9,13 @@ interface ImageButtonProps {
 
 const ImageButton: React.FC<ImageButtonProps> = ({ image_url, title, link }) => {
     return(
-        <div className="mt-6 bg-neutral-300 p-4 shadow border border-neutral-200">
+        <div className="p-4 bg-neutral-300 shadow border border-neutral-200 rounded-lg">
             <img
                 src={image_url}
                 alt={title}
                 className="h-20 w-full object-cover rounded-lg"
             />
-            <div className="mt-4">
+            <div className="mt-4 text-center">
                 <a
                     href={link}
                     target="_blank"
