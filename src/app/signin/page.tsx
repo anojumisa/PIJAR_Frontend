@@ -46,8 +46,8 @@ export default function SignIn() {
 			toast.success("Berhasil Masuk! 🎉", {
 				description: "Selamat datang kembali!",
 			});
-			// Redirect ke home
-			document.location.replace("/")
+			// Redirect ke minat
+			document.location.replace("/minat")
 		} catch (error) {
 			toast.error("Gagal Masuk", {
 				description: `Periksa kembali email dan kata sandi Anda., error: ${(error as any).response?.data.error}`,
