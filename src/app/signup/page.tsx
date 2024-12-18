@@ -11,10 +11,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/select";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignUp } from "@/utils/api";
+import { redirect, RedirectType } from "next/navigation";
 
 interface SignUpFormValues {
     fullName: string;
@@ -74,14 +75,18 @@ export default function SignUp() {
                 password: values.password,
             };
             const data = await UserSignUp(userData);
-            setIsSubmitted(true);
+            // Pasti belom authenticated
+            // Simpan info hasil signup -> set cookie access_token & refresh_token
+            document.cookie = `access_token=${data.access_token}; max-age=3600`;
+            document.cookie = `refresh_token=${data.refresh_token}; max-age=3600`;
             toast.success("Pendaftaran berhasil! 🎉", {
                 description: "Selamat datang di platform kami!",
             });
-            console.log("User registered:", data);
-            resetForm();
+            // Redirect ke home
+            document.location.replace("/");
         } catch (error) {
-            toast.error("Gagal mendaftar. Silakan coba lagi.");
+            console.log("🚀 ~ SignUp ~ error:", error);
+            toast.error(`Gagal mendaftar. Silakan coba lagi, erorr: ${(error as any).response?.data.error}`);
             console.error("Failed to register user:", error);
         } finally {
             setSubmitting(false);
