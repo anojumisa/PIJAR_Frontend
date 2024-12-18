@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -38,3 +38,28 @@ export const UserSignIn = async (userData: { email: string; password: string }) 
     }
 };
 
+export interface NotificationItem {
+    is_read: boolean;
+    message: string;
+    type: string;
+}
+
+interface NotificationsResponse {
+    message: string;
+    notification: NotificationItem[];
+}
+
+export const fetchNotifications = async (accessToken: string): Promise<AxiosResponse<NotificationsResponse>> => {
+    try {
+        // API Call for protected
+        const response = await axios.get(`${API_URL}/users/notifications/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+        throw error;
+    }
+}

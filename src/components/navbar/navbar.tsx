@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { fetchCategories } from "@/utils/api";
-import { delete_cookie } from "@/lib/utils";
+import { fetchCategories, fetchNotifications, NotificationItem } from "@/utils/api";
+import { delete_cookie, get_cookie } from "@/lib/utils";
 
 interface SubCategory {
 	category_id: number;
@@ -32,19 +32,9 @@ interface ProfileMenuProps {
 }
 
 interface NotificationProps {
-	notifications: { content: string; link: string }[];
+	notifications: NotificationItem[];
 }
 
-const parseCookies = (cookie: string): Record<string, string> => {
-	return cookie.split(";").reduce((res, c) => {
-		const [key, val] = c.trim().split("=");
-		try {
-			return Object.assign(res, { [key]: JSON.parse(val) });
-		} catch (e) {
-			return Object.assign(res, { [key]: val });
-		}
-	}, {});
-}
 
 const Categories: React.FC<CategoriesProps> = ({ categories }) => (
 	<Menu as="div" className="relative inline-block pr-3">
@@ -202,13 +192,13 @@ const Notifications: React.FC<NotificationProps> = ({ notifications }) => (
 			</MenuButton>
 		</div>
 		<MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-			{notifications.map((notif) => (
-				<MenuItem key={notif.link}>
+			{notifications.map((notif, i) => (
+				<MenuItem key={notif.message + i }>
 					<a
 						className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-						href={notif.link}
+						// href={notif.message}
 					>
-						{notif.content}
+						{notif.message}
 					</a>
 				</MenuItem>
 			))}
@@ -293,6 +283,7 @@ const AuthenticatedMenu: React.FC<AuthenticatedMenuProps> = ({
 
 const Navbar_not_auth: React.FC = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
+	const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [isAuthenthicated, setIsAuthenthicated] = useState(false);
@@ -301,9 +292,8 @@ const Navbar_not_auth: React.FC = () => {
 		const getCategories = async () => {
 			try {
 				const data = await fetchCategories();
-				const parsedCookies = parseCookies((document && document.cookie) || "")
 				setCategories(data);
-				setIsAuthenthicated(!!parsedCookies.access_token)
+				setIsAuthenthicated(!!get_cookie(document.cookie, "access_token"));
 			} catch (error) {
 				setError("Error loading categories");
 			} finally {
@@ -313,6 +303,25 @@ const Navbar_not_auth: React.FC = () => {
 
 		getCategories();
 	}, []);
+
+	useEffect(() => {
+		if (isAuthenthicated) {
+			// fetch disini
+			const getNotifications = async () => {
+				try {
+					const notificationsResp = await fetchNotifications(get_cookie(document.cookie, "access_token"))
+					console.log("🚀 ~ getNotifications ~ notificationsResp:", notificationsResp);
+					setNotifications(notificationsResp.data.notification)
+				} catch (error) {
+					setError("Error loading notifications" + error);
+				} finally {
+					setLoading(false);
+				}
+			}
+			getNotifications()
+		}
+		// Gausa fetch kalo ga authenthicated
+	}, [isAuthenthicated])
 
 	const handleSignOut = () => {
 		// Hapus Cookies
@@ -347,7 +356,7 @@ const Navbar_not_auth: React.FC = () => {
 						<SearchBar />
 					</div>
 					{isAuthenthicated && <AuthenticatedMenu 
-						notifications={[{ content: "New Notification", link: "#" }]} 
+						notifications={notifications} 
 						onEditProfile={() => {}}
 						onMyProfile={() => {}}
 						onSignOut={handleSignOut}
