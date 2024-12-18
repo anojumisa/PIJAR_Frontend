@@ -17,9 +17,21 @@ const MOCK_TOPIC_DATA = {
 const TopicPage: React.FC = () => {
     return (
         <div className="container mx-auto px-4 py-8">
-            <ImageButton image_url={MOCK_TOPIC_DATA.image_url} title={MOCK_TOPIC_DATA.title} link={MOCK_TOPIC_DATA.link} />
-            <TopicHeader title={MOCK_TOPIC_DATA.title} short_description={MOCK_TOPIC_DATA.short_description} rating={MOCK_TOPIC_DATA.rating} />
-            <WhatYouLearn details={MOCK_TOPIC_DATA.details} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ImageButton
+                    image_url={MOCK_TOPIC_DATA.image_url}
+                    title={MOCK_TOPIC_DATA.title}
+                    link={MOCK_TOPIC_DATA.link}
+                />
+                <TopicHeader
+                    title={MOCK_TOPIC_DATA.title}
+                    short_description={MOCK_TOPIC_DATA.short_description}
+                    rating={MOCK_TOPIC_DATA.rating}
+                />
+            </div>
+            <div className="mt-8">
+                <WhatYouLearn details={MOCK_TOPIC_DATA.details} />
+            </div>
         </div>
     );
 };
