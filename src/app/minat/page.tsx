@@ -2,18 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Toaster } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/select";
+import { toast, Toaster } from "sonner";
 import Link from "next/link";
 import { Spinner } from "flowbite-react";
 import { fetchCategories } from "@/utils/api";
-import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
+import { AxiosError } from "axios";
+import { delete_cookie } from "@/lib/utils";
 
 interface InterestFormValues {
   id: string;
@@ -27,17 +22,14 @@ interface SelectorProps {
   onSelect: (interest: InterestFormValues) => void;
 }
 
-const Selector: React.FC<SelectorProps> = ({ interests, onSelect, placeholder }) => {
-  const [selected, setSelected] = useState<InterestFormValues | null>(null);
+const Selector: React.FC<SelectorProps> = ({ interests, onSelect, placeholder, selected }) => {
   const handleOnSelectItem = (item: InterestFormValues) => {
-    console.log(item);
     onSelect(item);
-    setSelected(item);
   }
   return (
     <Menu as="div" className="relative inline-block pr-3">
       <MenuButton className="inline-flex w-full justify-center  gap-x-1.5 rounded-md bg-white px-3 py-2.5  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-        {selected ? selected.category_name : placeholder}
+        {selected || placeholder}
         <ChevronDownIcon
           className="-mr-1 h-5 w-5 text-gray-400"
           aria-hidden="true"
@@ -48,15 +40,16 @@ const Selector: React.FC<SelectorProps> = ({ interests, onSelect, placeholder })
         className="absolute z-10 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
       >
         {interests.map((interest) => (
-          <MenuItem as="div" className="inline-flex w-full justify-between px-3 py-1 text-sm font-semibold text-gray-900 ring-gray-300 hover:bg-gray-100 my-1" key={interest.id}>
-            {/* <MenuButton > */}
-              <div
-                onClick={() => handleOnSelectItem(interest)}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-              >
-                {interest.category_name}
-              </div>
-            {/* </MenuButton> */}
+          <MenuItem
+            onClick={() => handleOnSelectItem(interest)}
+            as="div"
+            className="inline-flex w-full justify-between px-3 py-1 text-sm font-semibold text-gray-900 ring-gray-300 hover:bg-gray-100 my-1" key={interest.id}
+          >
+            <div
+              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+            >
+              {interest.category_name}
+            </div>
           </MenuItem>
         ))}
       </MenuItems>
@@ -77,6 +70,15 @@ export default function SignUp() {
         setInterests(data);
         setIsLoading(false);
       } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 401) {
+          // Unauthorized
+          console.error("Unauthorized");
+          // Logout
+          delete_cookie("access_token");
+          delete_cookie("refresh_token");
+          alert("Session Expired, Please Login Again")
+          document.location.replace("/signin");
+        }
         console.error("Error fetching interests:", error);
       }
     }
@@ -85,12 +87,18 @@ export default function SignUp() {
 
   const handleSelectInterest = (interest: InterestFormValues, index: number) => {
     selectedInterests[index] = interest;
-    setSelectedInterests({...selectedInterests});
+    setSelectedInterests({ ...selectedInterests });
   }
 
   const onSubmitInterests = () => {
-    // POST API
-    console.log(selectedInterests);
+    if (Object.keys(selectedInterests).length < 3) {
+      toast.error("Pilih 3 minat terlebih dahulu");
+      return
+    }
+    // POST API 
+
+    toast.success("Berhasil memilih minat");
+    document.location.replace("/")
   }
 
   return (
@@ -118,9 +126,9 @@ export default function SignUp() {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              <Selector interests={interests} placeholder="Pilih Minat 1" onSelect={(interest) => handleSelectInterest(interest, 0)}/>
-              <Selector interests={interests} placeholder="Pilih Minat 2" onSelect={(interest) => handleSelectInterest(interest, 1)}/>
-              <Selector interests={interests} placeholder="Pilih Minat 3" onSelect={(interest) => handleSelectInterest(interest, 2)}/>
+              <Selector key="0" interests={interests} selected={selectedInterests[1]?.category_name} placeholder="Pilih Minat 1" onSelect={(interest) => handleSelectInterest(interest, 1)} />
+              <Selector key="1" interests={interests} selected={selectedInterests[2]?.category_name} placeholder="Pilih Minat 2" onSelect={(interest) => handleSelectInterest(interest, 2)} />
+              <Selector key="2" interests={interests} selected={selectedInterests[3]?.category_name} placeholder="Pilih Minat 3" onSelect={(interest) => handleSelectInterest(interest, 3)} />
               <button onClick={onSubmitInterests} className="justify-center bg-yellow-600 rounded-full p-2">
                 Lihat Usulan
               </button>

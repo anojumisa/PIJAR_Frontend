@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { fetchCategories, fetchNotifications, NotificationItem } from "@/utils/api";
 import { delete_cookie, get_cookie } from "@/lib/utils";
+import { AxiosError } from "axios";
 
 interface SubCategory {
 	category_id: number;
@@ -295,6 +296,15 @@ const Navbar_not_auth: React.FC = () => {
 				setCategories(data);
 				setIsAuthenthicated(!!get_cookie(document.cookie, "access_token"));
 			} catch (error) {
+				if (error instanceof AxiosError && error.response?.status === 401) {
+					// Unauthorized
+					console.error("Unauthorized");
+					// Logout
+					delete_cookie("access_token");
+					delete_cookie("refresh_token");
+					alert("Session Expired, Please Login Again")
+					document.location.replace("/signin");
+				}
 				setError("Error loading categories");
 			} finally {
 				setLoading(false);
@@ -314,6 +324,15 @@ const Navbar_not_auth: React.FC = () => {
 					setNotifications(notificationsResp.data.notification)
 				} catch (error) {
 					setError("Error loading notifications" + error);
+					if (error instanceof AxiosError && error.response?.status === 401) {
+						// Unauthorized
+						console.error("Unauthorized");
+						// Logout
+						delete_cookie("access_token");
+						delete_cookie("refresh_token");
+						alert("Session Expired, Please Login Again")
+						document.location.replace("/signin");
+					}
 				} finally {
 					setLoading(false);
 				}
