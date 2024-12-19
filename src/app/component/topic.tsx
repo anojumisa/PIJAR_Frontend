@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import TopicCard from "../fragment/TopicCard";
+import TopicCard from "@/fragments/TopicCard";
 
 type Categories = {
     category_name: string;

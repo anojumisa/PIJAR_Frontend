@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import UpcomingSessionCard from "../fragment/UpcomingCard";
+import UpcomingSessionCard from "@/fragments/UpcomingCard";
 
 type UpcomingSession = {
   mentor_session_title: string;
