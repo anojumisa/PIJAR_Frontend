@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface TopicCardProps {
     category_name: string;
@@ -8,7 +7,6 @@ interface TopicCardProps {
 }
 
 const TopicCard: React.FC<TopicCardProps> = ({ category_name, image_url }) => {
-
     return (
         <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-lg cursor-pointer">
         <img
