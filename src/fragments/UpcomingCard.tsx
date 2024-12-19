@@ -3,11 +3,9 @@
 import React from "react";
 
 interface UpcomingSessionCardProps {
-    image_url: string;
-    title: string;
-    short_description: string;
-    schedule: string; 
-    link: string;
+    mentor_session_title: string;
+	short_description: string;
+	schedule: string;
 }
 
 const UpcomingSessionCard: React.FC<UpcomingSessionCardProps> = ({
