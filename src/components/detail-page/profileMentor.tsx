@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { Briefcase } from "lucide-react";
-import WavingHand from "@/app/animation/wavinghand/page";
+import WavingHand from "@/components/animation/wavinghand/page";
+
 
 interface Props {
   mentor: {

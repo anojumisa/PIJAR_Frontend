@@ -28,10 +28,10 @@ export const UserCategories = async () => {
   
   export const PostUserInterests = async (categoryIds: number[]) => {
     try {
-      const response = await axios.post(`${API_URL}/learners/interests`, {
+      const resInterest = await axios.post(`${API_URL}/learners/interests/`, {
         category_id: categoryIds,
       });
-      return response.data;
+      return resInterest.data;
     } catch (error) {
       console.error("Error posting user interests:", error);
       throw error;
