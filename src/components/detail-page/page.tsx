@@ -1,4 +1,3 @@
-// dashboard/mentors-details/page.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -78,7 +77,7 @@ export default function MentorsDetail() {
       <MentorsProfile mentor={mentor} />
       <MentorsIntro mentor={mentor} />
       <ExperienceMentors mentor={mentor} />
-      <EducationAndSkills mentor={mentor} /> {/* Pass mentor data here */}
+      <EducationAndSkills mentor={mentor} />
       <UpComingClasses mentor={mentor} />
     </div>
   );
