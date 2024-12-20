@@ -1,75 +1,53 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MentorCard from "@/fragments/MentorCard";
+import { fetchFeaturedMentors } from "@/utils/api";
 
 type Mentor = {
 	name: string;
 	expertise: string;
-	profilePicture: string; // URL or static image path
+	profilePicture: string; 
 	isFollowing: boolean;
 };
 
 const FeaturedMentors: React.FC = () => {
-	// Sample mentor data
-	const mentors: Mentor[] = [
-		{
-			name: "Mentor A",
-			expertise: "Coding",
-			profilePicture: "https://i.pravatar.cc/150?img=9",
-			isFollowing: false,
-		},
-		{
-			name: "Mentor B",
-			expertise: "Agrikultur",
-			profilePicture: "https://i.pravatar.cc/150?img=1",
-			isFollowing: true,
-		},
-		{
-			name: "Mentor C",
-			expertise: "Pengelolaan Keuangan",
-			profilePicture: "https://i.pravatar.cc/150?img=2",
-			isFollowing: false,
-		},
-		{
-			name: "Mentor D",
-			expertise: "Pemasaran",
-			profilePicture: "https://i.pravatar.cc/150?img=3",
-			isFollowing: false,
-		},
-		{
-			name: "Mentor E",
-			expertise: "Kewirausahaan",
-			profilePicture: "https://i.pravatar.cc/150?img=4",
-			isFollowing: true,
-		},
-		{
-			name: "Mentor F",
-			expertise: "Pelayanan Kesehatan",
-			profilePicture: "https://i.pravatar.cc/150?img=5",
-			isFollowing: false,
-		},
-		{
-			name: "Mentor G",
-			expertise: "Desain",
-			profilePicture: "https://i.pravatar.cc/150?img=6",
-			isFollowing: true,
-		},
-		{
-			name: "Mentor H",
-			expertise: "Bisnis",
-			profilePicture: "https://i.pravatar.cc/150?img=7",
-			isFollowing: false,
-		},
-	];
+	const [mentors, setMentors] = useState<Mentor[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		const fetchMentors = async () => {
+			try {
+				const data = await fetchFeaturedMentors();
+				setMentors(data);
+			} catch (error) {
+				console.error("Failed to fetch mentors:", error);
+				setError("Gagal memuat mentor");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchMentors();
+	}, []);
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>{error}</p>;
 
 	return (
 		<div className="featured-mentors-container p-6 max-w-6xl mx-auto">
-			<h2 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">Mentor Pilihan</h2>
+			<h2 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">
+				Mentor Pilihan
+			</h2>
 			<div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-				{mentors.map((mentor, index) => (
-					<MentorCard key={index} mentor={mentor} />
-				))}
+				{Array.isArray(mentors) && mentors.length > 0 ? (
+					mentors.map((mentor, index) => (
+						<MentorCard key={index} mentor={mentor} />
+					))
+				) : (
+					<p>Tidak ada mentor yang tersedia.</p>
+				)}
 			</div>
 		</div>
 	);

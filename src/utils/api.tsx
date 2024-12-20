@@ -91,3 +91,18 @@ export const fetchLandingPageCategories = async () => {
 		throw error;
 	}
 };
+
+// Function for Fetching Featured Mentors
+export const fetchFeaturedMentors = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/mentors/landingpage`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data; 
+    } catch (error) {
+        console.error("Error fetching mentors:", error);
+        throw error;
+    }
+};
