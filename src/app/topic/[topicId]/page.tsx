@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import ImageButton from "../../../components/Topic/ImageButton";
 import TopicHeader from "../../../components/Topic/TopicHeader";
 import WhatYouLearn from "../../../components/Topic/WhatYouLearn";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/navbar/navbar";
 
 const MOCK_TOPIC_DATA = {
     id: "123",
@@ -16,6 +18,8 @@ const MOCK_TOPIC_DATA = {
 
 const TopicPage: React.FC = () => {
     return (
+    <>
+        <Navbar />
         <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <ImageButton
@@ -33,6 +37,8 @@ const TopicPage: React.FC = () => {
                 <WhatYouLearn details={MOCK_TOPIC_DATA.details} />
             </div>
         </div>
+        <Footer />
+    </>
     );
 };
 
