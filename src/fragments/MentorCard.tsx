@@ -6,7 +6,7 @@ type MentorProps = {
 	mentor: {
 		name: string;
 		expertise: string;
-		profilePicture: string;
+		profilePicture: string; // URL or static image path
 		isFollowing: boolean;
 	};
 };

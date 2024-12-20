@@ -124,9 +124,30 @@ export const fetchUpcomingSessions = async () => {
 				"Content-Type": "application/json",
 			},
 		});
-		return response.data.sessions; 
+		return response.data.sessions;
 	} catch (error) {
 		console.error("Error fetching upcoming sessions:", error);
+		throw error;
+	}
+};
+
+// Function to post learner interests
+export const postLearnerInterest = async (categoryIds: number[]) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/learners/interest`,
+			{
+				category_id: categoryIds,
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error posting learner interests:", error);
 		throw error;
 	}
 };
