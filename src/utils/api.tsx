@@ -93,29 +93,20 @@ export const fetchLandingPageCategories = async () => {
 };
 
 // Function for Fetching Featured Mentors
-export const fetchFeaturedMentors = async (
-	page = 1,
-	pagesize = 10,
-	categoryid?: number
-) => {
+export const fetchFeaturedMentors = async () => {
 	try {
 		const response = await axios.get(`${API_URL}/mentors/landingpage`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			params: {
-				page,
-				pagesize,
-				categoryid,
-			},
 		});
-		return response.data.data; // Extract the data field
+		return response.data;
 	} catch (error) {
 		console.error("Error fetching mentors:", error);
 		throw error;
 	}
 };
-
+		
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
 	try {
