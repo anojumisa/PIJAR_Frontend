@@ -9,11 +9,12 @@ import Navbar from "@/components/navbar/navbar";
 const MOCK_TOPIC_DATA = {
     id: "123",
     title: "Belajar Dasar Coding",
+    mentor: "John Doe",
     short_description: "Belajar pemrograman dasar untuk pemula",
     rating: 4.8,
     details: "Pada materi ini pelajar akan diperkenalkan dengan dasar-dasar pemgrograman. Topik yang akan dibahas pada materi ini akan berupa bagaimana cara membuat HTML sederhana serta pengenalan tentang repository Git.",
-    link: "https://www.youtube.com/embed/iA8lLwmtKQM?list=PLZS-MHyEIRo59lUBwU-XHH7Ymmb04ffOY",
-    image_url: "https://via.placeholder.com/150"
+    link: "../class/123",
+    image_url: "https://codeop.tech/wp-content/webp-express/webp-images/uploads/2023/11/arpad-czapp-H424WdcQN4Y-unsplash-scaled.jpg.webp"
 }
 
 const TopicPage: React.FC = () => {
@@ -29,6 +30,7 @@ const TopicPage: React.FC = () => {
                 />
                 <TopicHeader
                     title={MOCK_TOPIC_DATA.title}
+                    mentor={MOCK_TOPIC_DATA.mentor}
                     short_description={MOCK_TOPIC_DATA.short_description}
                     rating={MOCK_TOPIC_DATA.rating}
                 />

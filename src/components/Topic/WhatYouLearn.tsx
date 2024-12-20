@@ -8,9 +8,10 @@ interface WhatYouLearnProps {
 const WhatYouLearn: React.FC<WhatYouLearnProps> = ({ details }) => {
 
     return (
-        <div className="mt-6 bg-neutral-300 p-4 shadow border border-neutral-200">
-            <h1 className="font-bold font-caveat text-2xl md:text-base lg:text-lg">Apa yang akan dipelajari:</h1>
-            <p className="text-sm">{details}</p>
+        <div className="p-4 bg-neutral-800 shadow border border-neutral-400 rounded-2xl">
+            <h2 className="text-4xl text-neutral-300 font-semibold">Apa yang akan dipelajari:</h2>
+            <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+            <p className="text-sm text-white">{details}</p>
         </div>
     );
 };
