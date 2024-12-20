@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import UpcomingSessionCard from "../fragments/UpcomingCard";
+import { fetchUpcomingSessions } from "../utils/api";
 
 type UpcomingSession = {
 	image_url: string;
@@ -13,28 +14,35 @@ type UpcomingSession = {
 };
 
 const UpcomingSession: React.FC = () => {
-	const [upcomingSessions] = useState<UpcomingSession[]>([
-		{
-			image_url:
-				"https://www.mtu.edu/cs/undergraduate/software/what/images/software-engineering-banner1600.jpg",
-			title: "Coding",
-			short_description: "Apa itu Coding?",
-			schedule: "Selasa, 10:00 - 11:00 WIB",
-			link: "https://www.mtu.edu/cs/undergraduate/software/what/images/software-engineering-banner1600.jpg",
-		},
-		{
-			image_url: "https://images.unsplash.com/photo-1581093458791-89c21c3fb1d3",
-			title: "Data Science",
-			short_description: "Learn the basics of data analysis.",
-			schedule: "Kamis, 14:00 - 15:00 WIB",
-			link: "https://images.unsplash.com/photo-1581093458791-89c21c3fb1d3",
-		},
-	]);
+	const [upcomingSessions, setUpcomingSessions] = useState<UpcomingSession[]>(
+		[]
+	);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		const fetchSessions = async () => {
+			try {
+				const data = await fetchUpcomingSessions();
+				setUpcomingSessions(data);
+			} catch (error) {
+				console.error("Failed to fetch upcoming sessions:", error);
+				setError("Gagal memuat sesi yang akan datang");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchSessions();
+	}, []);
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>{error}</p>;
 
 	return (
-		<div className="upcoming-container p-6 max-w-6xl mx-auto ">
+		<div className="upcoming-container p-6 max-w-6xl mx-auto">
 			<div className="text-left mb-6">
-				<h2 className="text-2xl md:text-4xl  font-bold text-gray-500 text-center">
+				<h2 className="text-2xl md:text-4xl font-bold text-gray-500 text-center">
 					Jadwal Kelas
 				</h2>
 			</div>

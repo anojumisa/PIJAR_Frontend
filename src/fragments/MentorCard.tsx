@@ -6,7 +6,7 @@ type MentorProps = {
 	mentor: {
 		name: string;
 		expertise: string;
-		profilePicture: string; // URL or static image path
+		profilePicture: string;
 		isFollowing: boolean;
 	};
 };
@@ -25,15 +25,16 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 				alt={`${mentor.name}'s profile`}
 				className="w-20 h-20 rounded-full mb-4"
 			/>
-			<div className="flex justify-between w-full lg: flex-row sm:items-center sm:flex-col">
+			<div className="flex justify-between w-full lg:flex-row sm:items-center sm:flex-col">
 				<div>
 					<h3 className="text-lg font-semibold">{mentor.name}</h3>
 					<p className="text-sm text-gray-800">{mentor.expertise}</p>
 				</div>
-
 				<button
 					className={`mt-4 px-4 py-2 rounded ${
-						isFollowing ? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900" : "bg-sky-700 text-white hover:transform hover:scale-105 transition duration-300"
+						isFollowing
+							? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900"
+							: "bg-sky-700 text-white hover:transform hover:scale-105 transition duration-300"
 					}`}
 					onClick={toggleFollow}
 				>

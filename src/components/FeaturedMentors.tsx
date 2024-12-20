@@ -5,10 +5,10 @@ import MentorCard from "@/fragments/MentorCard";
 import { fetchFeaturedMentors } from "@/utils/api";
 
 type Mentor = {
-	name: string;
-	expertise: string;
-	profilePicture: string; 
-	isFollowing: boolean;
+	fullname: string;
+	occupation: string;
+	image_url: string;
+	id: number;
 };
 
 const FeaturedMentors: React.FC = () => {
@@ -19,7 +19,7 @@ const FeaturedMentors: React.FC = () => {
 	useEffect(() => {
 		const fetchMentors = async () => {
 			try {
-				const data = await fetchFeaturedMentors();
+				const data = await fetchFeaturedMentors(1, 10); // Pass page and pagesize parameters
 				setMentors(data);
 			} catch (error) {
 				console.error("Failed to fetch mentors:", error);
@@ -42,8 +42,16 @@ const FeaturedMentors: React.FC = () => {
 			</h2>
 			<div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
 				{Array.isArray(mentors) && mentors.length > 0 ? (
-					mentors.map((mentor, index) => (
-						<MentorCard key={index} mentor={mentor} />
+					mentors.map((mentor) => (
+						<MentorCard
+							key={mentor.id}
+							mentor={{
+								name: mentor.fullname,
+								expertise: mentor.occupation,
+								profilePicture: mentor.image_url,
+								isFollowing: false, // Assuming default value
+							}}
+						/>
 					))
 				) : (
 					<p>Tidak ada mentor yang tersedia.</p>

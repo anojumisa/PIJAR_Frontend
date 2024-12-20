@@ -1,38 +1,57 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 interface UpcomingSessionCardProps {
-    mentor_session_title: string;
+	image_url: string;
+	title: string;
 	short_description: string;
 	schedule: string;
+	link: string;
 }
 
 const UpcomingSessionCard: React.FC<UpcomingSessionCardProps> = ({
-    mentor_session_title,
-    short_description,
-    schedule,
+	image_url,
+	title,
+	short_description,
+	schedule,
+	link,
 }) => {
-    return (
-        <div className="max-w-sm p-4 bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg rounded-lg border border-gray-200">
-            <div className="text-center mb-4">
-                <p className="text-xl font-bold text-gray-900">
-                    {schedule.split(" ")[0]} 
-                </p>
-                <p className="text-sm text-blue-950 font-bold">
-                    {schedule.split(" ")[1]} 
-                </p>
-            </div>
+	// Parse and format the schedule string
+	const date = new Date(schedule);
+	const formattedDate = new Intl.DateTimeFormat("id-ID", {
+		weekday: "long",
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		hour: "numeric",
+		minute: "numeric",
+		hour12: true,
+	}).format(date);
 
-            <div>
-                <h1 className="text-lg font-semibold text-gray-800">{mentor_session_title}</h1>
-                <p className="text-sm text-gray-900 mb-2">{short_description}</p>
-                <p className="text-sm text-gray-900 font-medium">
-                    <span className="font-bold">Schedule:</span> {schedule}
-                </p>
-            </div>
-        </div>
-    );
+	return (
+		<div className="upcoming-session-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4">
+			<img
+				src={image_url}
+				alt={title}
+				className="w-full h-40 object-cover rounded-t-2xl opacity-90"
+			/>
+			<div className="p-4 space-y-2">
+				<h3 className="text-lg font-semibold">{title}</h3>
+				<p className="text-sm text-gray-700">{short_description}</p>
+				<p className="text-sm text-white pb-5">{formattedDate}</p>
+				<Link
+					href="/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-white bg-blue-900 hover:bg-gray-800 bg-opacity-80 px-4 py-2 rounded-lg mt-4 inline-block animate-pulse "
+				>
+					Join Session
+				</Link>
+			</div>
+		</div>
+	);
 };
 
 export default UpcomingSessionCard;
