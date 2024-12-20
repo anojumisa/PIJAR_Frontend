@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import TopicCard from "@/fragments/TopicCard";
+import { fetchLandingPageCategories } from "@/utils/api";
 
 type Categories = {
     category_name: string;
@@ -10,20 +11,31 @@ type Categories = {
 }
 const Topic: React.FC = () => {
     const [topicCategories, setTopicCategories] = useState<Categories[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/v1/categories/featured');
-                const data = await response.json();
+                const data = await fetchLandingPageCategories();
                 setTopicCategories(data);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
-            }
+                setError("Gagal memuat kategori");
+            } finally {
+                setLoading(false);
         };
+        }
 
         fetchCategories();
     }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+    if (error) {
+        return <p>{error}</p>;
+    }
     
     return (
         <div className="topic-container p-6 max-w-6xl mx-auto">
@@ -34,13 +46,18 @@ const Topic: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {topicCategories.map((category, index) => (
-                <TopicCard
-                    key={index}
-                    category_name={category.category_name}
-                    image_url={category.image_url}
-                />
-                ))}
+            
+            {topicCategories.length > 0 ? (
+                topicCategories.map((category, index) => (
+                    <TopicCard
+                        key={index}
+                        category_name={category.category_name}
+                        image_url={category.image_url}
+                    />
+                ))
+            ) : (
+                <p>Tidak ada kategori yang tersedia.</p>
+            )}
             </div>
         </div>
     );
