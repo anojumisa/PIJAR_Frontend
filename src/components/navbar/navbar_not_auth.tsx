@@ -1,8 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { fetchCategories } from "@/utils/api";
+
+interface Category {
+  id: number;
+  category_name: string;
+  sub_categories: {
+	category_id: number;
+	sub_category_name: string;
+  }[];
+}
 
 const Navbar_not_auth: React.FC = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
