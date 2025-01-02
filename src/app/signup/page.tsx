@@ -11,9 +11,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/select";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";	
+import Link from "next/link";
+import { UserSignUp, postLearnerInterest } from "@/utils/api";
+import { redirect, RedirectType } from "next/navigation";
+import { set_cookie } from "@/lib/utils";
 
 interface SignUpFormValues {
 	fullName: string;
@@ -30,6 +33,7 @@ export default function SignUp() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [interests, setInterests] = useState<InterestFormValues[]>([]);
+	const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const validationSchema = Yup.object({
@@ -59,20 +63,40 @@ export default function SignUp() {
 		password: "",
 	};
 
-	const handleSignUpSubmit = (
+	const handleSignUpSubmit = async (
 		values: SignUpFormValues,
 		{
 			setSubmitting,
 			resetForm,
 		}: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
 	) => {
-		console.log("Form data:", values);
-		toast.success("Pendaftaran berhasil! 🎉", {
-			description: "Selamat datang di platform kami!",
-		});
-		setSubmitting(false);
-		resetForm();
-		setIsSubmitted(true);
+		try {
+			const userData = {
+				email: values.email,
+				fullname: values.fullName,
+				password: values.password,
+			};
+			const data = await UserSignUp(userData);
+			// Pasti belom authenticated
+			// Simpan info hasil signup -> set cookie access_token & refresh_token
+			set_cookie("access_token", data.access_token);
+			set_cookie("refresh_token", data.refresh_token);
+			toast.success("Pendaftaran berhasil! 🎉", {
+				description: "Selamat datang di platform kami!",
+			});
+			// Redirect ke minat
+			document.location.replace("/minat");
+		} catch (error) {
+			console.log("🚀 ~ SignUp ~ error:", error);
+			toast.error(
+				`Gagal mendaftar. Silakan coba lagi, erorr: ${
+					(error as any).response?.data.error
+				}`
+			);
+			console.error("Failed to register user:", error);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	const fetchInterests = async () => {
@@ -88,6 +112,18 @@ export default function SignUp() {
 		}
 	};
 
+	const handleInterestSubmit = async () => {
+		try {
+			const categoryIds = selectedInterests.map(Number);
+			await postLearnerInterest(categoryIds);
+			toast.success("Minat berhasil disimpan!");
+			document.location.replace("/dashboard");
+		} catch (error) {
+			console.error("Error posting learner interests:", error);
+			toast.error("Gagal menyimpan minat. Silakan coba lagi.");
+		}
+	};
+
 	useEffect(() => {
 		if (isSubmitted) {
 			fetchInterests();
@@ -100,14 +136,15 @@ export default function SignUp() {
 			<div className="flex flex-col lg:flex-row w-full max-w-5xl rounded-lg overflow-hidden shadow-lg">
 				<div className="bg-yellow-600 text-white flex flex-col justify-center items-center lg:items-start px-8 py-12 lg:w-2/6">
 					<Link href={"/"}>
-					<h2 className="text-3xl font-caveat leading-snug mb-6 text-center lg:text-left">
-						Ruang Belajar Anda, <br /> Dimanapun dan Kapanpun
-					</h2>
-					<img
-						src="/image.png"
-						alt="Robot"
-						className="w-40 h-40 lg:w-64 lg:h-64 mt-6 ml-6"
-					/></Link>
+						<h2 className="text-3xl font-caveat leading-snug mb-6 text-center lg:text-left">
+							Ruang Belajar Anda, <br /> Dimanapun dan Kapanpun
+						</h2>
+						<img
+							src="/image.png"
+							alt="Robot"
+							className="w-40 h-40 lg:w-64 lg:h-64 mt-6 ml-6"
+						/>
+					</Link>
 				</div>
 
 				<div className="bg-white flex-1 p-8">
@@ -246,7 +283,7 @@ export default function SignUp() {
 								</Select>
 							)}
 							<br />
-							<button className="justify-center bg-yellow-600 w-[35rem] rounded-full p-2">
+							<button className="justify-center bg-yellow-600 w-[35rem] rounded-full p-2" onClick={handleInterestSubmit}>
 								Lihat Usulan
 							</button>
 						</>

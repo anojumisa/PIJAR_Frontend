@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { toast, Toaster } from "sonner";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { UserSignIn } from "@/utils/api";
+import { set_cookie } from "@/lib/utils";
 
 interface SignInFormValues {
 	email: string;
@@ -29,19 +31,31 @@ export default function SignIn() {
 		password: "",
 	};
 
-	const handleSignInSubmit = (
+	const handleSignInSubmit = async (
 		values: SignInFormValues,
 		{
 			setSubmitting,
 			resetForm,
 		}: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
 	) => {
-		console.log("Sign In data:", values);
-		toast.success("Berhasil Masuk! 🎉", {
-			description: "Selamat datang kembali!",
-		});
-		setSubmitting(false);
-		resetForm();
+		try {
+			const data = await UserSignIn(values);
+			// Simpan info hasil signup -> set cookie access_token & refresh_token
+			set_cookie("access_token", data.access_token);
+			set_cookie("refresh_token", data.refresh_token);
+			toast.success("Berhasil Masuk! 🎉", {
+				description: "Selamat datang kembali!",
+			});
+			// Redirect ke home
+			document.location.replace("/")
+		} catch (error) {
+			toast.error("Gagal Masuk", {
+				description: `Periksa kembali email dan kata sandi Anda., error: ${(error as any).response?.data.error}`,
+			});
+			console.error("Sign In error:", error);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (
