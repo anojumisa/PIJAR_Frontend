@@ -77,6 +77,7 @@ export const fetchNotifications = async (
 	}
 };
 
+
 // Function for Fetching Landing Page Category
 export const fetchLandingPageCategories = async () => {
 	try {
@@ -106,6 +107,44 @@ export const fetchFeaturedMentors = async () => {
 		throw error;
 	}
 };
+
+// Function for Fetching Detail Mentors
+export const fetchMentorDetail = async (id: string | number) => {
+	try {
+	  console.log("Fetching mentor detail for ID:", id);
+	  const response = await axios.get(`${API_URL}/mentors/${id}`, {
+		headers: {
+		  "Content-Type": "application/json",
+		},
+	  });
+	  console.log("Mentor detail response:", response.data);
+	  return response.data;
+	} catch (error) {
+	  console.error("Error fetching mentor detail:", error);
+	  throw error;
+	}
+  };
+
+
+// Function for Fetching Session class
+export const fetchSessionClass = async (id: string | number) => {
+	try {
+	  console.log("Fetching session class for ID:", id);
+	  const response = await axios.get(`${API_URL}/sessions/${id}`, {
+		headers: {
+		  "Content-Type": "application/json",
+		},
+	  });
+	  console.log("Session Class response:", response.data);
+	  return response.data;
+	} catch (error) {
+	  console.error("Error fetching Session Class:", error);
+	  throw error;
+	}
+  };
+  
+  
+
 		
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
@@ -142,3 +181,4 @@ export const postLearnerInterest = async (categoryIds: number[]) => {
 		throw error;
 	}
 };
+
