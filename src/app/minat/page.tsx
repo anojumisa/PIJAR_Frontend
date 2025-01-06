@@ -9,6 +9,7 @@ import { fetchCategories } from "@/utils/api";
 import { ChevronDownIcon } from "lucide-react";
 import { AxiosError } from "axios";
 import { delete_cookie } from "@/lib/utils";
+import { PostUserInterests } from "../api/utils";
 
 interface InterestFormValues {
 	id: string;
