@@ -3,13 +3,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 interface SearchResultProps {
-  query: string;
+  id: number;
+  categories: string;
+  mentor: string;
+  topic: string;
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ query }) => {
-  const [mentors, setMentors] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [topics, setTopics] = useState([]);
+  const [mentors, setMentors] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [topics, setTopics] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
