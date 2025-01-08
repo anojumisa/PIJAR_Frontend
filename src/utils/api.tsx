@@ -60,23 +60,44 @@ interface NotificationsResponse {
 	notification: NotificationItem[];
 }
 
-export const fetchNotifications = async (
-	accessToken: string
-): Promise<AxiosResponse<NotificationsResponse>> => {
-	try {
-		// API Call for protected
-		const response = await axios.get(`${API_URL}/users/notifications/`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-		return response;
-	} catch (error) {
-		console.error("Error fetching notifications:", error);
-		throw error;
-	}
-};
+export const fetchNotifications = async (accessToken: string): Promise<AxiosResponse<NotificationsResponse>> => {
+    try {
+        // API Call for protected
+        const response = await axios.get(`${API_URL}/users/notifications/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+        throw error;
+    }
+}
 
+export interface LearnersInterest {
+    category_id: string;
+    category_name: string;
+}
+
+interface LearnersInterestResponse {
+    message: string;
+    data: LearnersInterest[]
+}
+
+export const fetchLearnersInterests = async (accessToken: string): Promise<AxiosResponse<LearnersInterestResponse>> => {
+    try {
+        const response = await axios.get(`${API_URL}/learners/interests`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching learner interests:", error);
+        throw error;
+    }
+};
 
 // Function for Fetching Landing Page Category
 export const fetchLandingPageCategories = async () => {
@@ -107,44 +128,6 @@ export const fetchFeaturedMentors = async () => {
 		throw error;
 	}
 };
-
-// Function for Fetching Detail Mentors
-export const fetchMentorDetail = async (id: string | number) => {
-	try {
-	  console.log("Fetching mentor detail for ID:", id);
-	  const response = await axios.get(`${API_URL}/mentors/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Mentor detail response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching mentor detail:", error);
-	  throw error;
-	}
-  };
-
-
-// Function for Fetching Session class
-export const fetchSessionClass = async (id: string | number) => {
-	try {
-	  console.log("Fetching session class for ID:", id);
-	  const response = await axios.get(`${API_URL}/sessions/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Session Class response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching Session Class:", error);
-	  throw error;
-	}
-  };
-  
-  
-
 		
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
@@ -180,5 +163,4 @@ export const postLearnerInterest = async (categoryIds: number[]) => {
 		console.error("Error posting learner interests:", error);
 		throw error;
 	}
-};
-
+}
