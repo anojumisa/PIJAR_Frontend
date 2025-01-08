@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "@/components/animation/loading/page";
+import { get_cookie } from "@/lib/utils";
+import { fetchLearnersInterests, LearnersInterest } from "@/utils/api";
 
 interface LearningHistory {
 	id: number;
@@ -19,18 +21,17 @@ export default function LearnerDashboard() {
 		description: "Mahasiswa Universitas Gundar yang tertarik pada bidang Software Engineering",
 	});
 	const [learningHistory, setLearningHistory] = useState<LearningHistory[]>([]);
-	const [interests, setInterests] = useState<string[]>([]);
+	const [interests, setInterests] = useState<LearnersInterest[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const historyResponse = await axios.get("/api/learner/history");
-				const interestResponse = await axios.get("/api/learner/interests");
-
-				setLearningHistory(historyResponse.data.history);
-				setInterests(interestResponse.data.interests);
+				// const historyResponse = await axios.get("/api/learner/history");
+				const interestResponse = await fetchLearnersInterests(get_cookie(document.cookie, "access_token"))
+				// setLearningHistory(historyResponse.data.history);
+				setInterests(interestResponse.data.data);
 			} catch (err) {
 				console.error("Error fetching data:", err);
 				setError("Failed to load data.");
@@ -82,10 +83,10 @@ export default function LearnerDashboard() {
 				<div className="flex flex-wrap gap-2">
 					{interests.map((interest, idx) => (
 						<span
-							key={idx}
+							key={interest.category_id}
 							className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm"
 						>
-							{interest}
+							{interest.category_name}
 						</span>
 					))}
 				</div>
