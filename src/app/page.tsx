@@ -10,7 +10,7 @@ import SearchPage from "./search/page";
 export default function Home() {
 	return (
 		<>
-			<SearchPage results={[]}/>
+			<SearchPage />
 			<Navbar />
 			<Topic />
 			<FeaturedMentors />

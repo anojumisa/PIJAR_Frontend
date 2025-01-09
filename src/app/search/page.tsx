@@ -21,7 +21,7 @@ const SearchPage: React.FC = () => {
     return (
         <div className="space-y-4 text-white">
             {dummyData.map((dummy) => (
-                <SearchResult key={dummy.id} {...dummy} />
+                <SearchResult query={''} key={dummy.id} {...dummy} />
             ))}
         </div>
     );

@@ -7,6 +7,7 @@ interface SearchResultProps {
   categories: string;
   mentor: string;
   topic: string;
+  query: string;
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ query }) => {
