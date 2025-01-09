@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import Loading from "@/app/animation/loading/page";
+import Loading from "@/components/animation/loading/page";
 
 interface Schedule {
   image_program: string;

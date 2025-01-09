@@ -2,7 +2,8 @@
 import VideoPlayer from "../../../components/class/VideoPlayer";
 import Comments from "../../../components/class/Comments";
 import Resources from "../../../components/class/Resources";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 // Mock Data (replace with API when available)
 // TODO: replace with actual data
@@ -39,14 +40,18 @@ const MOCK_CLASS_DATA = {
 	],
 };
 
-export default function LiveStreamPage({
-	params,
-}: {
-	params: { classId: string };
-}) {
+export default function LiveStreamPage() {
+	const router = useRouter();
+	const { classId } = router.query;
 	const [classData, setClassData] = useState(MOCK_CLASS_DATA); // Replace with data fetching logic later
-	// example: const classData = await fetch(`/api/classes/${params.classId}`).then((res) => res.json());
-	
+	// example: const classData = await fetch(`/api/classes/${classId}`).then((res) => res.json());
+
+	useEffect(() => {
+		if (classId) {
+			// Fetch class data using classId
+			// setClassData(fetchedData);
+		}
+	}, [classId]);
 
 	const handleAddComment = (newComment: typeof MOCK_CLASS_DATA.comments[0]) => {
 		setClassData((prevData) => ({
@@ -54,6 +59,7 @@ export default function LiveStreamPage({
 			comments: [...prevData.comments, newComment],
 		}));
 	};
+
 	return (
 		<div className="p-6 bg-neutral-950">
 			{/* Video Section */}

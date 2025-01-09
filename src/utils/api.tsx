@@ -164,3 +164,48 @@ export const postLearnerInterest = async (categoryIds: number[]) => {
 		throw error;
 	}
 }
+
+// Function to fetch mentor details
+export const fetchMentorDetail = async (id: string | number) => {
+	try {
+		const response = await axios.get(`${API_URL}/mentors/${id}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching mentor detail:", error);
+		throw error;
+	}
+}
+
+// Function to fetch session class
+export const fetchSessionClass = async (userId: number) => {
+	try {
+		const response = await axios.get(`${API_URL}/mentors/${userId}/sessions`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching session class:", error);
+		throw error;
+	}
+}
+
+// Function to fetch learner profile
+export const fetchLearnerProfile = async (id: number) => {
+	try {
+		const response = await axios.get(`${API_URL}/learners/${id}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching learner profile:", error);
+		throw error;
+	}
+}
