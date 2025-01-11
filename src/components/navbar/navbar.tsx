@@ -10,6 +10,7 @@ import {
 } from "@/utils/api";
 import { delete_cookie, get_cookie } from "@/lib/utils";
 import { AxiosError } from "axios";
+import { redirect } from "next/navigation";
 
 interface SubCategory {
   category_id: number;
@@ -121,107 +122,11 @@ const SearchBar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <li>
-      <form className="flex items-center">
-        <label htmlFor="simple-search" className="sr-only">
-          Search
-        </label>
-        <div className="relative shrink w-80">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-5 h-5 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth=""
-                d="M19 19l-4-4m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-              />
-            </svg>
-          </div>
-          <input
-            type="text"
-            id="simple-search"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Cari kelas, mentor, dan topik keahlian"
-            onChange={(e) => {
-              const query = e.target.value;
-              setSearchQuery(query);
-            }}
-            required
-          />
-          {searchQuery && (
-            <div className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg">
-              {dummySearchResults
-                .filter(
-                  (item) =>
-                    item.title
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) ||
-                    item.mentor
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) ||
-                    item.topic.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-                .map((result) => (
-                  <div
-                    key={result.id}
-                    className="p-2 rounded-md hover:bg-gray-300"
-                  >
-                    <div className="text-sm font-medium">
-                      {result.title
-                        .split(new RegExp(`(${searchQuery})`, "gi"))
-                        .map((part, i) =>
-                          part.toLowerCase() === searchQuery.toLowerCase() ? (
-                            <span key={i} className="bg-yellow-200">
-                              {part}
-                            </span>
-                          ) : (
-                            part
-                          )
-                        )}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {result.mentor
-                        .split(new RegExp(`(${searchQuery})`, "gi"))
-                        .map((part, i) =>
-                          part.toLowerCase() === searchQuery.toLowerCase() ? (
-                            <span key={i} className="bg-yellow-200">
-                              {part}
-                            </span>
-                          ) : (
-                            part
-                          )
-                        )}{" "}
-                      •{" "}
-                      {result.topic
-                        .split(new RegExp(`(${searchQuery})`, "gi"))
-                        .map((part, i) =>
-                          part.toLowerCase() === searchQuery.toLowerCase() ? (
-                            <span key={i} className="bg-yellow-200">
-                              {part}
-                            </span>
-                          ) : (
-                            part
-                          )
-                        )}
-                    </div>
-                  </div>
-                ))}
-            </div>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="p-2.5 ml-2 text-sm font-medium text-white bg-sky-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
+    <div className="flex items-center">
+      <div className="relative shrink w-80">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <svg
-            className="w-5 h-5"
+            className="w-5 h-5 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -231,14 +136,105 @@ const SearchBar: React.FC = () => {
               stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
+              strokeWidth=""
               d="M19 19l-4-4m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
             />
           </svg>
-          <span className="sr-only">Search</span>
-        </button>
-      </form>
-    </li>
+        </div>
+        <input
+          type="text"
+          id="simple-search"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Cari kelas, mentor, dan topik keahlian"
+          onChange={(e) => {
+            const query = e.target.value;
+            setSearchQuery(query);
+          }}
+          required
+        />
+        {searchQuery && (
+          <div className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg">
+            {dummySearchResults
+              .filter(
+                (item) =>
+                  item.title
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                  item.mentor
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                  item.topic.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((result) => (
+                <div
+                  key={result.id}
+                  className="p-2 rounded-md hover:bg-gray-300"
+                >
+                  <div className="text-sm font-medium">
+                    {result.title
+                      .split(new RegExp(`(${searchQuery})`, "gi"))
+                      .map((part, i) =>
+                        part.toLowerCase() === searchQuery.toLowerCase() ? (
+                          <span key={i} className="bg-yellow-200">
+                            {part}
+                          </span>
+                        ) : (
+                          part
+                        )
+                      )}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {result.mentor
+                      .split(new RegExp(`(${searchQuery})`, "gi"))
+                      .map((part, i) =>
+                        part.toLowerCase() === searchQuery.toLowerCase() ? (
+                          <span key={i} className="bg-yellow-200">
+                            {part}
+                          </span>
+                        ) : (
+                          part
+                        )
+                      )}{" "}
+                    •{" "}
+                    {result.topic
+                      .split(new RegExp(`(${searchQuery})`, "gi"))
+                      .map((part, i) =>
+                        part.toLowerCase() === searchQuery.toLowerCase() ? (
+                          <span key={i} className="bg-yellow-200">
+                            {part}
+                          </span>
+                        ) : (
+                          part
+                        )
+                      )}
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+      <button
+        onClick={() => redirect(`/search?query=${searchQuery}`)}
+        className="p-2.5 ml-2 text-sm font-medium text-white bg-sky-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        <svg
+          className="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 19l-4-4m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <span className="sr-only">Search</span>
+      </button>
+    </div>
   );
 };
 
@@ -468,7 +464,7 @@ const Navbar_not_auth: React.FC = () => {
         <ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
             <a
-              href="#"
+              href="/"
               className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               aria-current="page"
             >
