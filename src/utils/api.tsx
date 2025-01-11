@@ -3,182 +3,214 @@ import axios, { AxiosResponse } from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 if (!API_URL) {
-	throw new Error("NEXT_PUBLIC_API_URL is not defined");
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
 }
 
 export const fetchCategories = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/categories/`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data;
-	} catch (error) {
-		console.error("Error fetching categories:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.get(`${API_URL}/categories/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
 };
 
 // Function for User Registration
 export const UserSignUp = async (userData: {
-	email: string;
-	fullname: string;
-	password: string;
+  email: string;
+  fullname: string;
+  password: string;
 }) => {
-	try {
-		const response = await axios.post(`${API_URL}/users/register`, userData);
-		return response.data;
-	} catch (error) {
-		console.error("Error registering user:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.post(`${API_URL}/users/register`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
 };
 
 // Function for User Login
 export const UserSignIn = async (userData: {
-	email: string;
-	password: string;
+  email: string;
+  password: string;
 }) => {
-	try {
-		const response = await axios.post(`${API_URL}/users/login`, userData);
-		return response.data;
-	} catch (error) {
-		console.error("Error logging in user:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.post(`${API_URL}/users/login`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    throw error;
+  }
 };
 
 export interface NotificationItem {
-	is_read: boolean;
-	message: string;
-	type: string;
+  is_read: boolean;
+  message: string;
+  type: string;
 }
 
 interface NotificationsResponse {
-	message: string;
-	notification: NotificationItem[];
+  message: string;
+  notification: NotificationItem[];
 }
 
 export const fetchNotifications = async (
-	accessToken: string
+  accessToken: string
 ): Promise<AxiosResponse<NotificationsResponse>> => {
-	try {
-		// API Call for protected
-		const response = await axios.get(`${API_URL}/users/notifications/`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-		return response;
-	} catch (error) {
-		console.error("Error fetching notifications:", error);
-		throw error;
-	}
+  try {
+    // API Call for protected
+    const response = await axios.get(`${API_URL}/users/notifications/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    throw error;
+  }
 };
-
 
 // Function for Fetching Landing Page Category
 export const fetchLandingPageCategories = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/categories/featured`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data; // Return the data directly
-	} catch (error) {
-		console.error("Error fetching categories:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.get(`${API_URL}/categories/featured`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data; // Return the data directly
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
 };
 
 // Function for Fetching Featured Mentors
 export const fetchFeaturedMentors = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/mentors/landingpage`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data;
-	} catch (error) {
-		console.error("Error fetching mentors:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.get(`${API_URL}/mentors/landingpage`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching mentors:", error);
+    throw error;
+  }
 };
 
 // Function for Fetching Detail Mentors
 export const fetchMentorDetail = async (id: string | number) => {
-	try {
-	  console.log("Fetching mentor detail for ID:", id);
-	  const response = await axios.get(`${API_URL}/mentors/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Mentor detail response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching mentor detail:", error);
-	  throw error;
-	}
-  };
-
+  try {
+    console.log("Fetching mentor detail for ID:", id);
+    const response = await axios.get(`${API_URL}/mentors/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Mentor detail response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching mentor detail:", error);
+    throw error;
+  }
+};
 
 // Function for Fetching Session class
 export const fetchSessionClass = async (id: string | number) => {
-	try {
-	  console.log("Fetching session class for ID:", id);
-	  const response = await axios.get(`${API_URL}/sessions/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Session Class response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching Session Class:", error);
-	  throw error;
-	}
-  };
-  
-  
+  try {
+    console.log("Fetching session class for ID:", id);
+    const response = await axios.get(`${API_URL}/sessions/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Session Class response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching Session Class:", error);
+    throw error;
+  }
+};
 
-		
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/sessions/upcoming`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data.sessions;
-	} catch (error) {
-		console.error("Error fetching upcoming sessions:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.get(`${API_URL}/sessions/upcoming`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.sessions;
+  } catch (error) {
+    console.error("Error fetching upcoming sessions:", error);
+    throw error;
+  }
 };
 
 // Function to post learner interests
 export const postLearnerInterest = async (categoryIds: number[]) => {
-	try {
-		const response = await axios.post(
-			`${API_URL}/learners/interest`,
-			{
-				category_id: categoryIds,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		return response.data;
-	} catch (error) {
-		console.error("Error posting learner interests:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.post(
+      `${API_URL}/learners/interest`,
+      {
+        category_id: categoryIds,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error posting learner interests:", error);
+    throw error;
+  }
 };
 
+interface SessionSearchResultItem {
+  title: string;
+  short_description: string;
+  schedule: string;
+  image_url: string;
+}
+
+interface MentorSearchResultItem {
+  fullname: string;
+  email: string;
+  image_url: string;
+}
+
+interface TopicSearchResultItem {
+  category_name: string;
+}
+
+export interface SearchResultResponse {
+  mentors: MentorSearchResultItem[];
+  sessions: SessionSearchResultItem[];
+  topics: TopicSearchResultItem[];
+}
+
+// Function to get search bar results
+export const getSearchResult = async (
+  keyword: string
+): Promise<AxiosResponse<SearchResultResponse>> => {
+  try {
+    const params = new URLSearchParams();
+    params.append("keyword", keyword);
+    const resp = await axios.get(`${API_URL}/search`, { params });
+    return resp;
+  } catch (error) {
+    console.error("Error getting search result:", error);
+    throw error;
+  }
+};
