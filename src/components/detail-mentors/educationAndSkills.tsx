@@ -2,28 +2,13 @@
 import React, { useState } from "react";
 
 import { GraduationCap } from "lucide-react";
-
-
-interface Education {
-  id: number;
-  school_name: string;
-  year: string;
-  major: string;
-  description: string;
-}
-
-
-interface MentorExpertise {
-  category: string;
-  expertise: string;
-}
+import { Mentor, Education } from "../../utils/interface/type";
 
 
 interface Props{
-mentor:{
-  mentor_expertise: MentorExpertise[];
+mentor:Mentor
 };
-}
+
 export default function EducationAndSkills({mentor}:Props){
 
   const [showEducationContent, setShowEducationContent] = useState<{

@@ -2,16 +2,10 @@
 import React from "react";
 import { Briefcase } from "lucide-react";
 import WavingHand from "@/components/animation/wavinghand/page";
-
+import { Mentor } from "../../utils/interface/type";
 
 interface Props {
-  mentor: {
-  image_baground?: string;
-  fullname: string;
-  image_url: string;
-  occupation: string;
-  user_id: number;
-  };
+  mentor: Mentor
   
 }
 
