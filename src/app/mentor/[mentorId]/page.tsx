@@ -7,30 +7,7 @@ import MentorsProfile from "@/components/detail-mentors/profileMentor";
 import MentorsIntro from "@/components/detail-mentors/introduction";
 import ExperienceMentors from "@/components/detail-mentors/experienceMentors";
 import ClassSession from "@/components/detail-mentors/sessionClass";
-
-
-interface MentorExperience {
-  company_name: string;
-  end_date: string; 
-  occupation: string;
-  start_date: string; 
-}
-
-interface MentorExpertise {
-  category: string;
-  expertise: string;
-}
-
-interface Mentor {
-  fullname: string;
-  image_url: string;
-  mentor_bio: string;
-  mentor_experiences: MentorExperience[];
-  mentor_expertise: MentorExpertise[];
-  occupation: string;
-  user_id: number;
-}
-
+import {Mentor} from "@/utils/interface/type";
 
 export default function MentorsDetail({ params }: { params: Promise<{ mentorId: string }> }) {
   const [mentor, setMentor] = useState<Mentor | null>(null);
