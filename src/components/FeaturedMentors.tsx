@@ -55,8 +55,8 @@ const FeaturedMentors: React.FC = () => {
         <div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {Array.isArray(mentors) && mentors.length > 0 ? (
             mentors.map((mentor) => (
-              <Link key={mentor.id} href={`/mentor/${mentor.id}`}>
-                <div>
+              <Link key={mentor.id} href={`/mentor/${mentor.id}`} passHref>
+                <a className="block">
                   <MentorCard
                     mentor={{
                       name: mentor.fullname,
@@ -65,7 +65,7 @@ const FeaturedMentors: React.FC = () => {
                       isFollowing: false, // Assuming default value
                     }}
                   />
-                </div>
+                </a>
               </Link>
             ))
           ) : (

@@ -3,7 +3,7 @@ import VideoPlayer from "../../../components/class/VideoPlayer";
 import Comments from "../../../components/class/Comments";
 import Resources from "../../../components/class/Resources";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 // Mock Data (replace with API when available)
 // TODO: replace with actual data
@@ -41,8 +41,8 @@ const MOCK_CLASS_DATA = {
 };
 
 export default function LiveStreamPage() {
-	const router = useRouter();
-	const { classId } = router.query;
+	const searchParams = useSearchParams();
+	const classId = searchParams.get("classId");
 	const [classData, setClassData] = useState(MOCK_CLASS_DATA); // Replace with data fetching logic later
 	// example: const classData = await fetch(`/api/classes/${classId}`).then((res) => res.json());
 

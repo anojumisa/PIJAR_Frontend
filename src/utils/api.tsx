@@ -8,11 +8,9 @@ if (!API_URL) {
 
 export const fetchCategories = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/categories/`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await axios.get(`${API_URL}/categories`, {
+			maxRedirects: 10,
+		})
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching categories:", error);
