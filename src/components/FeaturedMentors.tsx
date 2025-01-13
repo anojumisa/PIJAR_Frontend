@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import MentorCard from "@/fragments/MentorCard";
 import { fetchFeaturedMentors } from "@/utils/api";
 import Link from "next/link";
+import Loading from "./animation/loading/page";
 
 type Mentor = {
   fullname: string;
@@ -48,7 +49,7 @@ const FeaturedMentors: React.FC = () => {
       </h2>
 
       {loading ? (
-        <p>Loading mentors...</p>
+        <Loading/>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
@@ -61,7 +62,7 @@ const FeaturedMentors: React.FC = () => {
                     mentor={{
                       name: mentor.fullname,
                       expertise: mentor.occupation,
-                      profilePicture: mentor.image_url,
+                      profilePicture: mentor.image_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                       isFollowing: false, // Assuming default value
                     }}
                   />
