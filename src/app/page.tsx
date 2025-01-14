@@ -1,11 +1,11 @@
 import React from "react";
-import FeaturedMentors from "@/components/FeaturedMentors";
-import FAQ from "../components/FAQ";
-import Footer from "../components/Footer";
+import FeaturedMentors from "@/components/landing-page/FeaturedMentors";
+import FAQ from "../components/landing-page/FAQ";
+import Footer from "../components/landing-page/Footer";
+import Banner from "../components/landing-page/banner";
+import Topic from "../components/landing-page/topic";
+import UpcomingSession from "../components/landing-page/upcoming";
 import Navbar from "../components/navbar/navbar";
-import Topic from "../components/topic";
-import UpcomingSession from "../components/upcoming";
-import SearchPage from "./search/page";
 
 export default function Home() {
 	return (
@@ -15,7 +15,7 @@ export default function Home() {
 			<FeaturedMentors />
 			<UpcomingSession />
 			<FAQ />
-			<Footer /> 
+			<Footer />
 		</>
 	);
-	}
+}
