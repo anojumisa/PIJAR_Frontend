@@ -4,16 +4,19 @@ import SearchResult from "@/components/navbar/search_result";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getSearchResult, SearchResultResponse } from "../../utils/api";
+import { SearchResultProps } from "@/components/navbar/search_result";
 
 const SearchPage: React.FC = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("query");
-  const [searchResult, setSearchResult] = useState<SearchResultResponse>({});
+  const [searchResult, setSearchResult] = useState<SearchResultResponse | null>(null);
 
   useEffect(() => {
     const fetchSearchResult = async () => {
-      const resp = await getSearchResult(search);
-      setSearchResult(resp.data);
+      if (search) {
+        const resp = await getSearchResult(search);
+        setSearchResult(resp.data);
+      }
     };
 
     fetchSearchResult();
