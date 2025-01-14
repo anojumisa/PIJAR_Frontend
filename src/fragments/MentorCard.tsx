@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 
 type MentorProps = {
@@ -14,7 +12,8 @@ type MentorProps = {
 const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 	const [isFollowing, setIsFollowing] = useState(mentor.isFollowing);
 
-	const toggleFollow = () => {
+	const toggleFollow = (e: React.MouseEvent) => {
+		e.stopPropagation(); // Prevent the click event from propagating to the Link
 		setIsFollowing(!isFollowing);
 	};
 
@@ -31,14 +30,14 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 					<p className="text-sm text-gray-800">{mentor.expertise}</p>
 				</div>
 				<button
-					className={`mt-4 px-4 py-2 rounded ${
-						isFollowing
-							? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900"
-							: "bg-sky-700 text-white hover:transform hover:scale-105 transition duration-300"
-					}`}
 					onClick={toggleFollow}
+					className={`mt-2 lg:mt-0 px-4 py-2 rounded outline-black ${
+						isFollowing
+							? "bg-gradient-to-r from-clay-500 to-pink-500 text-white"
+							: "bg-gradient-to-r from-slate-900 to-cyan-600 text-yellow-500"
+					}`}
 				>
-					{isFollowing ? "Following" : "Follow"}
+					{isFollowing ? "Unfollow" : "Follow"}
 				</button>
 			</div>
 		</div>

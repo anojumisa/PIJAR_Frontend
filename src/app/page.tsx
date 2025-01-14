@@ -13,7 +13,7 @@ export default function Home() {
 			{/* <SearchResult query={""} /> */}
 			<Navbar />
 
-			<Banner />
+			{/* <Banner /> */}
 			<Topic />
 			<FeaturedMentors />
 			<UpcomingSession />
