@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export interface SearchResultProps {
+  map(arg0: (result: SearchResultProps, index: number) => React.JSX.Element): React.ReactNode;
   query: string;
   mentors?: Array<{
     email: string;
