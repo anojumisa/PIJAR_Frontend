@@ -89,8 +89,7 @@ export default function SignUp() {
 		} catch (error) {
 			console.log("🚀 ~ SignUp ~ error:", error);
 			toast.error(
-				`Gagal mendaftar. Silakan coba lagi, erorr: ${
-					(error as any).response?.data.error
+				`Gagal mendaftar. Silakan coba lagi.
 				}`
 			);
 			console.error("Failed to register user:", error);

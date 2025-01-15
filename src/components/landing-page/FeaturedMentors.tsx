@@ -16,7 +16,7 @@ const FeaturedMentors: React.FC = () => {
 	const [mentors, setMentors] = useState<Mentor[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const router = useRouter(); // Use Next.js router for navigation
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchMentors = async () => {

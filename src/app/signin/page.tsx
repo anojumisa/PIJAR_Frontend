@@ -50,9 +50,9 @@ export default function SignIn() {
 			document.location.replace("/")
 		} catch (error) {
 			toast.error("Gagal Masuk", {
-				description: `Periksa kembali email dan kata sandi Anda., error: ${(error as any).response?.data.error}`,
+				description: `Periksa kembali email dan kata sandi Anda.`,
 			});
-			console.error("Sign In error:", error);
+	
 		} finally {
 			setSubmitting(false);
 		}
