@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import Loading from "@/components/animation/loading/page";
 import { fetchCategories } from "@/utils/api";
 import { mockClass } from "../api/courseClass/[id]/routes";
-import Footer from "@/components/Footer";
 import Navbar_not_auth from "@/components/navbar/navbar";
 import CourseList from "@/components/course/courseList";
 import CategoryFilter from "@/components/course/categoryFilter";
 import NoClassesMessage from "@/components/course/noClassesMassage";
 import { Category, Course } from "@/utils/interface/type";
+import Footer from "@/components/landing-page/Footer";
 
 
 export default function CoursePage() {
