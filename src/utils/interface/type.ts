@@ -8,20 +8,10 @@ export interface Category {
 export interface MentorDetails {
   mentor_id: number;
   fullname: string;
-}
-
-export interface Course {
-  id: number;
-  title: string;
   image_url: string;
-  category_id: number;
-  mentor_details: MentorDetails;
-  average_rate: number;
-  is_replay: boolean;
 }
 
 //mentor detail
-
 export interface MentorExperience {
   company_name: string;
   end_date: string;
@@ -54,3 +44,18 @@ export interface Education {
 }
 
 
+export interface MentorSession {
+  mentor_session_title: string;
+  short_description: string;
+  image_url: string;
+  schedule: string; 
+  mentor_details: MentorDetails;
+  average_rating: number;
+}
+
+export interface Session {
+  sessions: MentorSession[];
+  total: number;
+  page: number;
+  page_size: number;
+}
