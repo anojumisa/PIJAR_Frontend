@@ -180,3 +180,39 @@ export const postLearnerInterest = async (categoryIds: number[]) => {
 	}
 };
 
+
+export interface SessionSearchResultItem {
+	title: string;
+	short_description: string;
+	schedule: string;
+	image_url: string;
+  }
+  export  interface MentorSearchResultItem {
+	fullname: string;
+	email: string;
+	image_url: string;
+  }
+ export  interface TopicSearchResultItem {
+	category_name: string;
+  }
+  export interface SearchResultResponse {
+	mentors: MentorSearchResultItem[];
+	sessions: SessionSearchResultItem[];
+	topics: TopicSearchResultItem[];
+  }
+
+
+  // Function to get search bar results
+  export const getSearchResult = async (
+	keyword: string
+  ): Promise<AxiosResponse<SearchResultResponse>> => {
+	try {
+	  const params = new URLSearchParams();
+	  params.append("keyword", keyword);
+	  const resp = await axios.get(`${API_URL}/search`, { params });
+	  return resp;
+	} catch (error) {
+	  console.error("Error getting search result:", error);
+	  throw error;
+	}
+  };
