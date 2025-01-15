@@ -69,12 +69,15 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => (
 						>
 							{category.sub_categories.map((subCategory) => (
 								<MenuItem key={subCategory.category_id}>
+
 									<a
-										href="#"
+										href={`/course?categoryid=${subCategory.category_id}`}
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
 									>
 										{subCategory.sub_category_name}
 									</a>
+									
+
 								</MenuItem>
 							))}
 						</MenuItems>
