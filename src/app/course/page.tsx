@@ -1,57 +1,41 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import Loading from "@/components/animation/loading/page";
-import { fetchCategories } from "@/utils/api";
-import { mockClass } from "../api/courseClass/[id]/routes";
+import { fetchCategories, fetchCourseSession } from "@/utils/api";
 import Navbar_not_auth from "@/components/navbar/navbar";
 import CourseList from "@/components/course/courseList";
-import CategoryFilter from "@/components/course/categoryFilter";
-import NoClassesMessage from "@/components/course/noClassesMassage";
-import { Category, Course } from "@/utils/interface/type";
+import { Category, MentorSession } from "@/utils/interface/type";
 import Footer from "@/components/landing-page/Footer";
+import { useSearchParams } from "next/navigation";
+import NoClassesMessage from "@/components/course/noClassesMassage";
+import Loading from "@/components/animation/loading/page";
 
-
-export default function CoursePage() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+const CoursePage = () => {
+  const searchParams = useSearchParams();
+  const categoryid = searchParams.get("categoryid");
+  const [courses, setCourses] = useState<MentorSession[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
+      if (!categoryid) return;
+
       try {
-        const response = await mockClass();
-        setCourses(response as Course[]);
-        setFilteredCourses(response as Course[]);
+        const sessionResponse = await fetchCourseSession(categoryid);
+        setCourses(sessionResponse.sessions); 
+        const categoriesResponse = await fetchCategories();
+        setCategories(categoriesResponse);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
+    fetchData();
+  }, [categoryid]);
 
-    const fetchCategoryData = async () => {
-      const response = await fetchCategories();
-      setCategories(response);
-    };
-
-    fetchCourses();
-    fetchCategoryData();
-  }, []);
-
-  const handleCategoryFilter = (categoryId: number | null) => {
-    setSelectedCategory(categoryId);
-    if (categoryId === null) {
-      setFilteredCourses(courses);
-    } else {
-      setFilteredCourses(courses.filter((course) => course.category_id === categoryId));
-    }
-  };
-
-  if (loading) return <Loading />;
-
-  const newClasses = filteredCourses.filter((course) => !course.is_replay);
-  const replayClasses = filteredCourses.filter((course) => course.is_replay);
+  if (loading) return <Loading/>;
 
   return (
     <>
@@ -60,18 +44,15 @@ export default function CoursePage() {
         <h1 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">
           Kursus Yang Tersedia
         </h1>
-
-        <CategoryFilter
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryFilter={handleCategoryFilter}
-        />
-
-        {newClasses.length > 0 && <CourseList title="Segera" courses={newClasses} />}
-        {replayClasses.length > 0 && <CourseList title="Tonton Ulang" courses={replayClasses} />}
-        <NoClassesMessage selectedCategory={selectedCategory} categories={categories} />
+        {Array.isArray(courses) && courses.length > 0 ? (
+          <CourseList sessions={courses} /> 
+        ) : (
+          <NoClassesMessage selectedCategory={Number(categoryid)} categories={categories} />
+        )}
       </div>
       <Footer />
     </>
   );
 }
+
+export default CoursePage;
