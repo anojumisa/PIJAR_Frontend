@@ -18,6 +18,27 @@ export const fetchCategories = async () => {
 	}
 };
 
+export const fetchCourseSession = async (id: string | number) => {
+	try {
+	  console.log(`Fetching course by category for: ${id}`);
+	  const response = await axios.get(`${API_URL}/sessions`, {
+		params: {
+		  categoryid: id,
+		},
+		headers: {
+		  "Content-Type": "application/json",
+		},
+	  });
+	  console.log("Course sessions response:", response.data);
+	  return response.data;
+	} catch (error) {
+	  console.error("Error fetching course session:", error);
+	  throw error;
+	}
+  };
+  
+  
+
 // Function for User Registration
 export const UserSignUp = async (userData: {
 	email: string;
