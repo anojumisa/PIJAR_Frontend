@@ -28,13 +28,13 @@ const TopicPage: React.FC = () => {
 					<ImageButton
 						image_url={MOCK_TOPIC_DATA.image_url}
 						title={MOCK_TOPIC_DATA.title}
-						link={MOCK_TOPIC_DATA.link}
 					/>
 					<TopicHeader
 						title={MOCK_TOPIC_DATA.title}
 						mentor={MOCK_TOPIC_DATA.mentor}
 						short_description={MOCK_TOPIC_DATA.short_description}
 						rating={MOCK_TOPIC_DATA.rating}
+						link={MOCK_TOPIC_DATA.link}
 					/>
 				</div>
 				<div className="mt-8">
