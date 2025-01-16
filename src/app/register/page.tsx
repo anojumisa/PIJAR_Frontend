@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 const RegisterPage: React.FC = () => {
-    const router = useRouter();
+    const router = useRouter(); 
 
     const handleOptionClick = (role: string) => {
         // Redirect to the appropriate page based on the selected role
