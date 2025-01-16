@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { fetchCategories, fetchCourseSession } from "@/utils/api";
 import Navbar_not_auth from "@/components/navbar/navbar";
 import CourseList from "@/components/course/courseList";
@@ -55,4 +55,10 @@ const CoursePage = () => {
   );
 }
 
-export default CoursePage;
+const CoursePageWrapper = () => (
+  <Suspense fallback={<Loading />}>
+    <CoursePage />
+  </Suspense>
+);
+
+export default CoursePageWrapper;
