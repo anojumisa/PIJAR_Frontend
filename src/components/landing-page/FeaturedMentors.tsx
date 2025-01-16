@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import MentorCard from "@/fragments/MentorCard";
 import { fetchFeaturedMentors } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Mentor = {
 	fullname: string;
@@ -55,16 +56,19 @@ const FeaturedMentors: React.FC = () => {
 				<div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
 					{Array.isArray(mentors) && mentors.length > 0 ? (
 						mentors.map((mentor) => (
-							<MentorCard
-								key={mentor.id}
-								mentor={{
-									name: mentor.fullname,
-									expertise: mentor.occupation,
-									profilePicture: mentor.image_url,
-									isFollowing: false, // Assuming default value
-								}}
-								onCardClick={() => router.push(`/mentor/${mentor.id}`)} // Navigate to mentor details page
-							/>
+							<Link key={mentor.id} href={`/mentor/${mentor.id}`} passHref>
+								<div className="block">
+									<MentorCard
+										mentor={{
+											name: mentor.fullname,
+											expertise: mentor.occupation,
+											profilePicture: mentor.image_url,
+											isFollowing: false, 
+										}}
+										
+									/>
+								</div>
+							</Link>
 						))
 					) : (
 						<p>Tidak ada mentor yang tersedia.</p>

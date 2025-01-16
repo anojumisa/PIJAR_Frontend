@@ -9,21 +9,21 @@ interface MentorProps {
 		profilePicture: string;
 		isFollowing: boolean;
 	};
-	onCardClick: () => void;
+	
 }
 
-const MentorCard: React.FC<MentorProps> = ({ mentor, onCardClick }) => {
+const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 	const [isFollowing, setIsFollowing] = useState(mentor.isFollowing);
 
 	const toggleFollow = (e: React.MouseEvent) => {
-		e.stopPropagation();
+		e.stopPropagation(); // Prevent triggering onCardClick when the button is clicked
 		setIsFollowing(!isFollowing);
 	};
 
 	return (
 		<div
 			className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:cursor-pointer hover:transform hover:scale-105 transition duration-300"
-			onClick={onCardClick}
+			onClick={() => {}} 
 		>
 			<img
 				src={mentor.profilePicture}
