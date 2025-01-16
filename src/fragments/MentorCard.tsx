@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 
-type MentorProps = {
+interface MentorProps {
 	mentor: {
 		name: string;
 		expertise: string;
@@ -8,7 +10,7 @@ type MentorProps = {
 		isFollowing: boolean;
 	};
 	onCardClick: () => void;
-};
+}
 
 const MentorCard: React.FC<MentorProps> = ({ mentor, onCardClick }) => {
 	const [isFollowing, setIsFollowing] = useState(mentor.isFollowing);
