@@ -7,15 +7,15 @@ if (!API_URL) {
 }
 
 export const fetchCategories = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/categories`, {
-			maxRedirects: 10,
-		})
-		return response.data;
-	} catch (error) {
-		console.error("Error fetching categories:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.get(`${API_URL}/categories`, {
+      maxRedirects: 10,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
 };
 
 // Function for User Registration
@@ -59,22 +59,21 @@ interface NotificationsResponse {
 }
 
 export const fetchNotifications = async (
-	accessToken: string
+  accessToken: string
 ): Promise<AxiosResponse<NotificationsResponse>> => {
-	try {
-		// API Call for protected
-		const response = await axios.get(`${API_URL}/users/notifications/`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-		return response;
-	} catch (error) {
-		console.error("Error fetching notifications:", error);
-		throw error;
-	}
+  try {
+    // API Call for protected
+    const response = await axios.get(`${API_URL}/users/notifications/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    throw error;
+  }
 };
-
 
 // Function for Fetching Landing Page Category
 export const fetchLandingPageCategories = async () => {
@@ -108,42 +107,38 @@ export const fetchFeaturedMentors = async () => {
 
 // Function for Fetching Detail Mentors
 export const fetchMentorDetail = async (id: string | number) => {
-	try {
-	  console.log("Fetching mentor detail for ID:", id);
-	  const response = await axios.get(`${API_URL}/mentors/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Mentor detail response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching mentor detail:", error);
-	  throw error;
-	}
-  };
-
+  try {
+    console.log("Fetching mentor detail for ID:", id);
+    const response = await axios.get(`${API_URL}/mentors/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Mentor detail response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching mentor detail:", error);
+    throw error;
+  }
+};
 
 // Function for Fetching Session class
 export const fetchSessionClass = async (id: string | number) => {
-	try {
-	  console.log("Fetching session class for ID:", id);
-	  const response = await axios.get(`${API_URL}/sessions/${id}`, {
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  });
-	  console.log("Session Class response:", response.data);
-	  return response.data;
-	} catch (error) {
-	  console.error("Error fetching Session Class:", error);
-	  throw error;
-	}
-  };
-  
-  
+  try {
+    console.log("Fetching session class for ID:", id);
+    const response = await axios.get(`${API_URL}/sessions/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Session Class response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching Session Class:", error);
+    throw error;
+  }
+};
 
-		
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
   try {
@@ -161,58 +156,60 @@ export const fetchUpcomingSessions = async () => {
 
 // Function to post learner interests
 export const postLearnerInterest = async (categoryIds: number[]) => {
-	try {
-		const response = await axios.post(
-			`${API_URL}/learners/interest`,
-			{
-				category_id: categoryIds,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		return response.data;
-	} catch (error) {
-		console.error("Error posting learner interests:", error);
-		throw error;
-	}
+  try {
+    const response = await axios.post(
+      `${API_URL}/learners/interest`,
+      {
+        category_id: categoryIds,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error posting learner interests:", error);
+    throw error;
+  }
 };
 
-
 export interface SessionSearchResultItem {
-	title: string;
-	short_description: string;
-	schedule: string;
-	image_url: string;
-  }
-  export  interface MentorSearchResultItem {
-	fullname: string;
-	email: string;
-	image_url: string;
-  }
- export  interface TopicSearchResultItem {
-	category_name: string;
-  }
-  export interface SearchResultResponse {
-	mentors: MentorSearchResultItem[];
-	sessions: SessionSearchResultItem[];
-	topics: TopicSearchResultItem[];
-  }
+  title: string;
+  short_description: string;
+  schedule: string;
+  image_url: string;
+}
+export interface MentorSearchResultItem {
+  fullname: string;
+  email: string;
+  image_url: string;
+}
+export interface TopicSearchResultItem {
+  category_name: string;
+}
+export interface SearchResultResponse {
+  mentors: MentorSearchResultItem[];
+  sessions: SessionSearchResultItem[];
+  topics: TopicSearchResultItem[];
+}
 
+// Function to get search bar results
+//   export const getSearchResult = async (
+// 	keyword: string
+//   ): Promise<AxiosResponse<SearchResultResponse>> => {
+// 	try {
+// 	  const params = new URLSearchParams();
+// 	  params.append("keyword", keyword);
+// 	  const resp = await axios.get(`${API_URL}/search`, { params });
+// 	  return resp;
+// 	} catch (error) {
+// 	  console.error("Error getting search result:", error);
+// 	  throw error;
+// 	}
+//   };
 
-  // Function to get search bar results
-  export const getSearchResult = async (
-	keyword: string
-  ): Promise<AxiosResponse<SearchResultResponse>> => {
-	try {
-	  const params = new URLSearchParams();
-	  params.append("keyword", keyword);
-	  const resp = await axios.get(`${API_URL}/search`, { params });
-	  return resp;
-	} catch (error) {
-	  console.error("Error getting search result:", error);
-	  throw error;
-	}
-  };
+export const getSearchResult = async (query: string): Promise<string> => {
+  return `${API_URL}/search?query=${query}`;
+};

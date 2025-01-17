@@ -6,7 +6,9 @@ import { useSearchParams } from "next/navigation";
 import { getSearchResult } from "../../utils/api";
 import { SearchResultResponse } from "../../utils/api";
 import SearchResult from "@/components/navbar/search_result";
-import { get } from "http";
+import axios from "axios";
+
+
 
 const SearchPage: React.FC = () => {
   const searchParams = useSearchParams();
@@ -17,10 +19,10 @@ const SearchPage: React.FC = () => {
     const fetchSearchResult = async () => {
       if (search) {
         try {
-          const resp = await getSearchResult(search);
+          const searchUrl = await getSearchResult(search);
+          const resp = await axios.get(searchUrl);
           const dataArray = Array.isArray(resp.data) ? resp.data : [];
           setSearchResult(dataArray);
-          console.log(dataArray);
         } catch (error) {
           console.error("Error fetching search results:", error);
         }
@@ -33,7 +35,7 @@ const SearchPage: React.FC = () => {
     <div className="space-y-4 text-white">
       <h2
         style={{
-          color: "red",
+          color: "white",
         }}
       >
         {search}
@@ -47,6 +49,9 @@ const SearchPage: React.FC = () => {
             topics={result.topics}
           />
         ))}
+    {searchResult.length === 0 && (
+      <p>No results found for "{search}". Please try a different query.</p>
+    )}
     </div>
   );
 };

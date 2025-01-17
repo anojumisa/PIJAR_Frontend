@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { SearchResultResponse } from "@/utils/api";
 import axios from "axios";
 import { MentorSearchResultItem, SessionSearchResultItem, TopicSearchResultItem } from "@/utils/api";
-import { getSearchResult } from "@/utils/api";
-import { get } from "http";
+
+
 
  interface SearchResultProps {
   mentors?: MentorSearchResultItem[];
@@ -20,7 +20,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ mentors, sessions, topics }
     const fetchSearchResult = async () => {
       if (search) {
         try {
-          const resp = await getSearchResult(search);
+          const resp = await axios.get<SearchResultResponse>(`/api/search?query=${search}`);
           setSearchResult(resp.data);
         } catch (error) {
           console.error('Error fetching search results:', error);
