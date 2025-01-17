@@ -1,8 +1,14 @@
 //cetegory fetch
-
 export interface Category {
   id: number;
   category_name: string;
+  sub_categories: SubCategory[];
+  image_url?: string;
+}
+
+export interface SubCategory {
+  category_id: number;
+  sub_category_name:string
 }
 
 export interface MentorDetails {
@@ -33,6 +39,7 @@ export interface Mentor {
   mentor_expertise: MentorExpertise[];
   occupation: string;
   user_id: number;
+  email: string;
 }
 
 export interface Education {
@@ -58,4 +65,12 @@ export interface Session {
   total: number;
   page: number;
   page_size: number;
+  image_url: string;
+  schedule: string;
+  short_description: string;
+  title: string;
+}
+
+export interface Topic {
+  category_name: string;
 }
