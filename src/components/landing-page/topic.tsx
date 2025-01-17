@@ -1,66 +1,89 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import TopicCard from "@/fragments/TopicCard";
-import { fetchLandingPageCategories } from "@/utils/api";
+import { fetchLandingPageCategories, fetchCategories } from "@/utils/api";
+import Link from "next/link";
+import Loading from "../animation/loading/page";
+import { Category} from "@/utils/interface/type";
 
-type Categories = {
-    category_name: string;
-    image_url: string;
-}
 const Topic: React.FC = () => {
-    const [topicCategories, setTopicCategories] = useState<Categories[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const data = await fetchLandingPageCategories();
-                setTopicCategories(data);
-            } catch (error) {
-                console.error("Failed to fetch categories:", error);
-                setError("Gagal memuat kategori");
-            } finally {
-                setLoading(false);
-        };
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const landingData = await fetchLandingPageCategories();
+        const detailedCategories = await fetchCategories();
 
-        fetchCategories();
-    }, []);
+        const mergedCategories = detailedCategories.map(
+          (category: Category) => {
+            const matchedLanding = landingData.find(
+              (landing: { category_name: string }) =>
+                landing.category_name === category.category_name
+            );
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-    if (error) {
-        return <p>{error}</p>;
-    }
-    
-    return (
-        <div className="topic-container p-6 max-w-6xl mx-auto">
-            <div className="text-left mb-6">
-			<h2 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">
-                    Topik Pilihan
-                </h2>
-            </div>
+            return {
+              ...category,
+              image_url:
+                matchedLanding?.image_url ||
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            };
+          }
+        );
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            {topicCategories.length > 0 ? (
-                topicCategories.map((category, index) => (
-                    <TopicCard
-                        key={index}
-                        category_name={category.category_name}
-                        image_url={category.image_url}
-                    />
-                ))
-            ) : (
-                <p>Tidak ada kategori yang tersedia.</p>
-            )}
-            </div>
-        </div>
-    );
+        setCategories(mergedCategories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+        setError("Gagal memuat kategori");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  return (
+    <div className="topic-container p-6 max-w-6xl mx-auto">
+      <div className="text-left mb-6">
+        <h2 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">
+          Topik Pilihan
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {categories.length > 0 ? (
+          categories.map((category) =>
+            category.sub_categories.map((subCategory, index) => (
+              <Link
+                key={`${category.id}-${subCategory.category_id}-${index}`}
+                href={`/course?categoryid=${subCategory.category_id}`}
+                className="block"
+              >
+                <TopicCard
+                  category_name={category.category_name}
+                  image_url={category.image_url}
+                />
+              </Link>
+            ))
+          )
+        ) : (
+          <p>Tidak ada kategori yang tersedia.</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Topic;

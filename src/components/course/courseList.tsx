@@ -40,7 +40,7 @@ export default function CourseList({ sessions }: CourseListProps) {
               </div>
               <StarRating rating={course.average_rating || 0} />
             </div>
-            <p className="text-sm text-gray-400 mt-2">{course.schedule}</p>
+            <p className=" justify-center text-bold text-amber-500 mt-2">{course.schedule}</p>
           </div>
         ))}
       </div>
@@ -67,7 +67,7 @@ export default function CourseList({ sessions }: CourseListProps) {
               </div>
               <StarRating rating={course.average_rating || 0} />
             </div>
-            <p className="text-sm text-amber-300 mt-2">{course.schedule}</p>
+            <p className="text-bold text-amber-500 mt-4 p-10">{course.schedule}</p>
           </div>
         ))}
       </div>
