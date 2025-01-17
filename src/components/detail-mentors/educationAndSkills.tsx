@@ -11,14 +11,6 @@ mentor:Mentor
 
 export default function EducationAndSkills({mentor}:Props){
 
-  const [showEducationContent, setShowEducationContent] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const toggleEducationContent = (index: number) => {
-    setShowEducationContent((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
-
   
   const education: Education[] = [
     {
@@ -54,26 +46,6 @@ export default function EducationAndSkills({mentor}:Props){
                   {edu.year}
                 </p>
               </div>
-              <p className="italic text-gray-700 text-xs md:text-sm lg:text-base">{edu.major}</p>
-              {showEducationContent[index] ? (
-                <p className="text-gray-900 mt-2 font-firaSans text-xs md:text-sm lg:text-lg ">
-                  {typeof edu.description === "string"
-                    ? edu.description
-                    : edu.description}
-                </p>
-              ) : null}
-              <button
-                className="font-openSans mt-[0.3rem] md:mt-[1rem] lg:mt-[1.5rem]"
-                onClick={() => toggleEducationContent(index)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#007bff",
-                  cursor: "pointer",
-                }}
-              >
-                {showEducationContent[index] ? "Sembunyikan " : "Lihat Detail"}
-              </button>
             </div>
           ))}
         </div>

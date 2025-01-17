@@ -1,109 +1,116 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { searchDataByKeyword } from "@/utils/api";
+import { useSearchParams } from "next/navigation";
+import Loading from "../animation/loading/page";
 
-interface SearchResultProps {
-  query: string;
+interface Mentor {
+  email: string;
+  fullname: string;
+  image_url: string;
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({ query }) => {
-  const [mentors, setMentors] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [topics, setTopics] = useState([]);
+interface Session {
+  image_url: string;
+  schedule: string;
+  short_description: string;
+  title: string;
+}
+
+interface Topic {
+  category_name: string;
+}
+
+interface ApiResponse {
+  mentors: Mentor[];
+  sessions: Session[];
+  topics: Topic[];
+}
+
+const SearchResult: React.FC = () => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("keyword") || ""; // Mendapatkan nilai keyword dari URL
+  const [mentors, setMentors] = useState<Mentor[]>([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const mentorResponse = await axios.get(`/api/mentors?search=${query}`);
-        const categoryResponse = await axios.get(
-          `/api/categories?search=${query}`
-        );
-        const topicResponse = await axios.get(`/api/topics?search=${query}`);
-
-        setMentors(mentorResponse.data);
-        setCategories(categoryResponse.data);
-        setTopics(topicResponse.data);
+        setLoading(true); // Mulai loading
+        const data: ApiResponse = await searchDataByKeyword(query);
+        setMentors(data.mentors);
+        setSessions(data.sessions);
+        setTopics(data.topics);
       } catch (error) {
         console.error("Error fetching search results", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Selesai loading
       }
     };
 
-    fetchResults();
+    if (query) {
+      fetchResults();
+    }
   }, [query]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
     <div>
       <h1>Search Results for "{query}"</h1>
       <div className="grid grid-cols-1 gap-4 p-5">
-        <div className="p-5 border rounded shadow flex">
-          <img
-            src="/pijarLogo.png"
-            alt="Pijar Logo"
-            className="h-14 w-auto px-4 mt-2"
-          />
-
-          <div>
-            <h2 className="text-xl font-bold py-1">Mentors: Person Name </h2>
-            <p>
-              Description: A description of someone can include their physical
-              appearance, personality traits, and sometimes their occupation or
-              hobbies.{" "}
-            </p>
-            <ul>
-              {mentors.map((mentor: any) => (
-                <li key={mentor.id}>{mentor.name}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="p-5 border rounded shadow">
+          <h2 className="text-xl font-bold py-1">Mentors</h2>
+          <ul>
+            {mentors.map((mentor, index) => (
+              <li key={index}>
+                <div className="flex items-center">
+                  <img
+                    src={mentor.image_url}
+                    alt={mentor.fullname}
+                    className="h-10 w-10 rounded-full mr-3"
+                  />
+                  <div>
+                    <p>{mentor.fullname}</p>
+                    <p>{mentor.email}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="p-5 border rounded shadow flex">
-          <img
-            src="/pijarLogo.png"
-            alt="Pijar Logo"
-            className="h-14 w-auto px-4 mt-2"
-          />
-
-          <div>
-            <h2 className="text-xl font-bold">Categories: </h2>
-            <p>
-              description: " refers to the broad field or discipline that a
-              particular area of study falls under, such as "natural sciences,"
-              "social sciences," "humanities," "business," "engineering,"
-              "medicine," or "arts,"{" "}
-            </p>
-            <ul>
-              {categories.map((category: any) => (
-                <li key={category.id}>{category.name}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="p-5 border rounded shadow">
+          <h2 className="text-xl font-bold">Sessions</h2>
+          <ul>
+            {sessions.map((session, index) => (
+              <li key={index}>
+                <div className="flex items-center">
+                  <img
+                    src={session.image_url}
+                    alt={session.title}
+                    className="h-14 w-14 mr-3"
+                  />
+                  <div>
+                    <h3>{session.title}</h3>
+                    <p>{session.schedule}</p>
+                    <p>{session.short_description}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="p-4 border rounded shadow flex">
-          <img
-            src="/pijarLogo.png"
-            alt="Pijar Logo"
-            className="h-14 w-auto px-4 mt-2"
-          />
-          <div>
-            <h2 className="text-xl font-bold">Topics: </h2>
-            <p>
-              description: A "topic of study name" refers to the specific
-              subject or area of focus within a field of study that a researcher
-              or student chooses to investigate{" "}
-            </p>
-            <ul>
-              {topics.map((topic: any) => (
-                <li key={topic.id}>{topic.name}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="p-5 border rounded shadow">
+          <h2 className="text-xl font-bold">Topics</h2>
+          <ul>
+            {topics.map((topic, index) => (
+              <li key={index}>{topic.category_name}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
