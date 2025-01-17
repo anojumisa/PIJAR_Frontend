@@ -18,6 +18,40 @@ export const fetchCategories = async () => {
 	}
 };
 
+// Function for Fetching Landing Page Category
+export const fetchLandingPageCategories = async () => {
+	try {
+		const response = await axios.get(`${API_URL}/categories/featured`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return response.data; // Return the data directly
+	} catch (error) {
+		console.error("Error fetching categories:", error);
+		throw error;
+	}
+};
+
+// Function for searching category by keyword
+export const searchDataByKeyword = async (keyword: string | number) => {
+  try {
+    console.log(`Fetching courses for keyword: ${keyword}`);
+    const response = await axios.get(`${API_URL}/search`, {
+      params: { keyword },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Search response:", response.data);
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    throw error;
+  }
+};
+
+
 export const fetchCourseSession = async (id: string | number) => {
 	try {
 	  console.log(`Fetching course by category for: ${id}`);
@@ -116,21 +150,6 @@ export const fetchLearnersInterests = async (accessToken: string): Promise<Axios
         console.error("Error fetching learner interests:", error);
         throw error;
     }
-};
-
-// Function for Fetching Landing Page Category
-export const fetchLandingPageCategories = async () => {
-	try {
-		const response = await axios.get(`${API_URL}/categories/featured`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data; // Return the data directly
-	} catch (error) {
-		console.error("Error fetching categories:", error);
-		throw error;
-	}
 };
 
 // Function for Fetching Featured Mentors
