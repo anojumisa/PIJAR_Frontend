@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "@/components/landing-page/Footer";
 import Navbar from "@/components/navbar/navbar";
 import Reviews from "@/components/class/Reviews";
+import AddReview from "@/components/class/AddReview";
 
 interface SessionDetail {
 	id: number;
@@ -88,6 +89,7 @@ const SessionPage: React.FC = () => {
 				mentorData={sessionDetail.mentor_details}
 			/>
 			<SessionDetails sessionDetail={sessionDetail} />
+			<AddReview sessionId={Number(sessionId)} />
 			<Reviews sessionId={Number(sessionId)} />
 			{/* <Comments sessionId={Number(sessionId)} />
 			<Resources sessionId={Number(sessionId)} /> */}
