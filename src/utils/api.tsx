@@ -18,39 +18,23 @@ export const fetchCategories = async () => {
 	}
 };
 
-// Function for Fetching Landing Page Category
-export const fetchLandingPageCategories = async () => {
+// Function for searching category by keyword
+export const searchDataByKeyword = async (keyword: string | number) => {
 	try {
-		const response = await axios.get(`${API_URL}/categories/featured`, {
+		console.log(`Fetching courses for keyword: ${keyword}`);
+		const response = await axios.get(`${API_URL}/search`, {
+			params: { keyword },
 			headers: {
 				"Content-Type": "application/json",
 			},
 		});
-		return response.data; // Return the data directly
+		console.log("Search response:", response.data);
+		return response.data;
 	} catch (error) {
-		console.error("Error fetching categories:", error);
+		console.error("Error fetching courses:", error);
 		throw error;
 	}
 };
-
-// Function for searching category by keyword
-export const searchDataByKeyword = async (keyword: string | number) => {
-  try {
-    console.log(`Fetching courses for keyword: ${keyword}`);
-    const response = await axios.get(`${API_URL}/search`, {
-      params: { keyword },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Search response:", response.data);
-    return response.data; 
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    throw error;
-  }
-};
-
 
 export const fetchCourseSession = async (id: string | number) => {
 	try {
@@ -150,6 +134,21 @@ export const fetchLearnersInterests = async (
 		return response;
 	} catch (error) {
 		console.error("Error fetching learner interests:", error);
+		throw error;
+	}
+};
+
+// Function for Fetching Landing Page Category
+export const fetchLandingPageCategories = async () => {
+	try {
+		const response = await axios.get(`${API_URL}/categories/featured`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return response.data; // Return the data directly
+	} catch (error) {
+		console.error("Error fetching categories:", error);
 		throw error;
 	}
 };
@@ -262,109 +261,114 @@ export const fetchSessionDetails = async (sessionId: number) => {
 };
 
 // Function to add review
-export const addReview = async (sessionId: number, rating: number, review: string, token: string) => {
-    const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ rating, review }),
-    });
+export const addReview = async (
+	sessionId: number,
+	rating: number,
+	review: string,
+	token: string
+) => {
+	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ rating, review }),
+	});
 
-    if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
+	if (!response.ok) {
+		throw new Error(`Network response was not ok: ${response.statusText}`);
+	}
 
-    return response.json();
+	return response.json();
 };
 
 // Function to fetch reviews
 export const fetchReviews = async (sessionId: number, token: string) => {
-    const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    });
+	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
 
-    if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
+	if (!response.ok) {
+		throw new Error(`Network response was not ok: ${response.statusText}`);
+	}
 
-    return response.json();
+	return response.json();
 };
 
 // Function to toggle follow mentor
 export const toggleFollowMentor = async (
-    mentorId: number,
-    isFollowing: boolean,
-    access_token: string
+	mentorId: number,
+	isFollowing: boolean,
+	access_token: string
 ) => {
-    if (!access_token) throw new Error("Access token is missing.");
+	if (!access_token) throw new Error("Access token is missing.");
 
-    try {
-        console.log("Mentor ID:", mentorId);
-        console.log("Is Following:", isFollowing);
-        console.log("Access Token:", access_token);
+	try {
+		console.log("Mentor ID:", mentorId);
+		console.log("Is Following:", isFollowing);
+		console.log("Access Token:", access_token);
 
-        const response = await fetch(`${API_URL}/mentors/${mentorId}/follow`, {
-            method: isFollowing ? "DELETE" : "POST",
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-                "Content-Type": "application/json",
-            },
-        });
+		const response = await fetch(`${API_URL}/mentors/${mentorId}/follow`, {
+			method: isFollowing ? "DELETE" : "POST",
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+				"Content-Type": "application/json",
+			},
+		});
 
-        console.log("Response:", response);
+		console.log("Response:", response);
 
-        if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error("Unauthorized: Please check your token.");
-            }
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
+		if (!response.ok) {
+			if (response.status === 401) {
+				throw new Error("Unauthorized: Please check your token.");
+			}
+			throw new Error(`Network response was not ok: ${response.statusText}`);
+		}
 
-        return response.json();
-    } catch (error) {
-        console.error("Error toggling follow status:", error);
-        throw error;
-    }
+		return response.json();
+	} catch (error) {
+		console.error("Error toggling follow status:", error);
+		throw error;
+	}
 };
 
 // Function to fetch follow status
 export const getMentorFollowStatus = async (
-    mentorId: number,
-    access_token: string
+	mentorId: number,
+	access_token: string
 ) => {
-    if (!access_token) throw new Error("Access token is missing.");
+	if (!access_token) throw new Error("Access token is missing.");
 
-    try {
-        console.log("Mentor ID:", mentorId);
-        console.log("Access Token:", access_token);
+	try {
+		console.log("Mentor ID:", mentorId);
+		console.log("Access Token:", access_token);
 
-        const response = await fetch(`${API_URL}/mentors/${mentorId}/status`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-                "Content-Type": "application/json",
-            },
-        });
+		const response = await fetch(`${API_URL}/mentors/${mentorId}/status`, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+				"Content-Type": "application/json",
+			},
+		});
 
-        console.log("Response:", response);
+		console.log("Response:", response);
 
-        if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error("Unauthorized: Please check your token.");
-            }
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
+		if (!response.ok) {
+			if (response.status === 401) {
+				throw new Error("Unauthorized: Please check your token.");
+			}
+			throw new Error(`Network response was not ok: ${response.statusText}`);
+		}
 
-        const responseBody = await response.json();
-        console.log("Response body:", responseBody); // Debugging
-        return responseBody; // Response includes `is_following`
-    } catch (error) {
-        console.error("Error fetching follow status:", error);
-        throw error;
-    }
+		const responseBody = await response.json();
+		console.log("Response body:", responseBody); // Debugging
+		return responseBody; // Response includes `is_following`
+	} catch (error) {
+		console.error("Error fetching follow status:", error);
+		throw error;
+	}
 };
