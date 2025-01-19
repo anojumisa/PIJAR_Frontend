@@ -30,16 +30,8 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
     useEffect(() => {
         const fetchReviewsData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/sessions/${sessionId}/review`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual access token
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
-                }
-                const data: ReviewsResponse = await response.json();
+                const token = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token
+                const data: ReviewsResponse = await fetchReviews(sessionId, token);
                 setReviews(data.reviews);
             } catch (error) {
                 if (error instanceof Error) {
