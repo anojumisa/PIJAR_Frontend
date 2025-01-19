@@ -260,3 +260,37 @@ export const fetchSessionDetails = async (sessionId: number) => {
 		throw error;
 	}
 };
+
+// Function to add review
+export const addReview = async (sessionId: number, rating: number, review: string, token: string) => {
+    const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rating, review }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
+    return response.json();
+};
+
+// Function to fetch reviews
+export const fetchReviews = async (sessionId: number, token: string) => {
+    const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
+    return response.json();
+};
