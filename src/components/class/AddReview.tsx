@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addReview } from "@/utils/api";
 
 interface AddReviewProps {
 	sessionId: number;
@@ -18,22 +19,8 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 		setSuccess(null);
 
 		try {
-			const response = await fetch(
-				`http://localhost:8080/api/v1/sessions/${sessionId}/review`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: "Bearer YOUR_ACCESS_TOKEN", // Replace with your actual access token
-					},
-					body: JSON.stringify({ rating, review }),
-				}
-			);
-
-			if (!response.ok) {
-				throw new Error(`Network response was not ok: ${response.statusText}`);
-			}
-
+			const token = "YOUR_ACCESS_TOKEN";
+			await addReview(sessionId, rating, review, token);
 			setSuccess("Review added successfully!");
 			setRating(0);
 			setReview("");
@@ -75,7 +62,6 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 			<h2 className="text-xl font-bold mb-2">Beri Ulasan</h2>
 			<form onSubmit={handleSubmit}>
 				<div className="mb-4">
-					
 					<textarea
 						id="review"
 						value={review}
@@ -84,7 +70,7 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 						required
 					/>
 				</div>
-				<div className=" flex flex-row items-center gap-4">
+				<div className="flex flex-row  gap-4">
 					<button
 						type="submit"
 						className="bg-amber-600 text-white px-4 py-2 rounded-3xl"
@@ -92,11 +78,11 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 					>
 						{loading ? "Submitting..." : "Submit Review"}
 					</button>
-					<div className="mb-4 flex flex-row gap-2 justify-center">
-                        <label className=" text-white mb-2" htmlFor="rating">
-                            Beri Rating:
-                        </label>
-						<div className="flex ">{renderStars()}</div>
+					<div className="mb-4 flex flex-row gap-2">
+						<label className="block text-white mb-2" htmlFor="rating">
+							Beri Rating:
+						</label>
+						<div className="flex">{renderStars()}</div>
 					</div>
 				</div>
 				{error && <p className="text-red-500 mt-2">{error}</p>}
