@@ -47,6 +47,22 @@ export const UserSignIn = async (userData: {
   }
 };
 
+export const UpdateUserDetails = async (userData: {
+  birth_date?: string,
+  fullname?: string,
+  image_url?: string,
+  phone_number?: string,
+  is_mentor?: string
+}) => {
+  try {
+    const response = await axios.patch(`${API_URL}/users/me/details`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating in user:", error);
+    throw error;
+  }
+};
+
 export interface NotificationItem {
   is_read: boolean;
   message: string;

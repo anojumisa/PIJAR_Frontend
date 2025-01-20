@@ -85,7 +85,7 @@ export default function SignUp() {
 				description: "Selamat datang di platform kami!",
 			});
 			// Redirect ke minat
-			document.location.replace("/minat");
+			document.location.replace("/register");
 		} catch (error) {
 			console.log("🚀 ~ SignUp ~ error:", error);
 			toast.error(

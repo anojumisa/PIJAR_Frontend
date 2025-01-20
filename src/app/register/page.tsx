@@ -2,16 +2,27 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { UpdateUserDetails } from "@/utils/api";
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
 
+  const handleChangeUserMentorStatus = async () => {
+    try {
+      await UpdateUserDetails({ is_mentor: "true" })
+      router.replace("/")
+    } catch (error) {
+      // TODO:: Tampilin tooltips kalo error
+    }
+  };
+
   const handleOptionClick = (role: string) => {
     // Redirect to the appropriate page based on the selected role
     if (role === "mentor") {
-      router.push("/");
+      // TODO: Add logic to update user details, change user to mentor
+      handleChangeUserMentorStatus()
     } else if (role === "learner") {
-      router.push("/");
+			document.location.replace("/minat");
     }
   };
 
@@ -23,7 +34,7 @@ const RegisterPage: React.FC = () => {
 
       <div style={{ marginTop: "300px", display: "flex" }}>
         <button
-          onClick={() => handleOptionClick("mentor")}
+          onClick={() => handleOptionClick("learner")}
           className="mr-16 px-12 py-28 bg-green-600 border-2 rounded cursor-pointer text-5xl flex flex-col items-center"
         >
           <img
@@ -34,7 +45,7 @@ const RegisterPage: React.FC = () => {
           <p>Hello, I am Student</p>
         </button>
         <button
-          onClick={() => handleOptionClick("learner")}
+          onClick={() => handleOptionClick("mentor")}
           className="px-12 py-28 bg-yellow-600 border-2 rounded cursor-pointer text-5xl flex flex-col items-center"
         >
           <img
