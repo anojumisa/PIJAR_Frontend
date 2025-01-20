@@ -6,8 +6,8 @@ import Spline from '@splinetool/react-spline';
 const Banner = () => {
     return (
         <div className="h-[800px] max-w-screen-2xl mx-auto flex flex-col justify-center items-center mt-20 lg:mt-28">
-            <img src="banner.png" alt="" />
-            {/* <Spline scene="https://prod.spline.design/3olMyDmlAS7WlJux/scene.splinecode" /> */}
+            <a href="/course"><img src="banner.png" alt="" /></a>
+            {/* <Spline scene="https://prod.spline.design/5TxMYP8V7-3Q3XAs/scene.splinecode" /> */}
             {/* <div className="bg-black bg-opacity-75 p-4 mt-6 max-w-3xl">
                 <p className="text-white text-sm md:text-base mt-2 text-center">
                     Pijar is a Community-Based Learning Hub is an educational platform aimed at underserved communities to provide access to quality learning resources. It connects learners with volunteer teachers or mentors in various fields like farming, coding, basic life skills, and more.

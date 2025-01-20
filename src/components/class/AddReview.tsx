@@ -58,7 +58,7 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 	};
 
 	return (
-		<div className="mt-6 bg-stone-900 border-yellow-600 text-white p-4 text-sm rounded-lg">
+		<div className="mt-6 bg-gray-800 border-yellow-600 text-white p-4 text-sm rounded-lg">
 			<h2 className="text-xl font-bold mb-2">Beri Ulasan</h2>
 			<form onSubmit={handleSubmit}>
 				<div className="mb-4">
@@ -66,11 +66,11 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 						id="review"
 						value={review}
 						onChange={(e) => setReview(e.target.value)}
-						className="w-5/12 p-4 text-black border rounded-full"
+						className="w-full px-6 py-4 text-black border rounded-full"
 						required
 					/>
 				</div>
-				<div className="flex flex-row  gap-4">
+				<div className="flex flex-row items-center gap-4">
 					<button
 						type="submit"
 						className="bg-amber-600 text-white px-4 py-2 rounded-3xl"
@@ -78,8 +78,8 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 					>
 						{loading ? "Submitting..." : "Submit Review"}
 					</button>
-					<div className="mb-4 flex flex-row gap-2">
-						<label className="block text-white mb-2" htmlFor="rating">
+					<div className="flex flex-row items-center gap-2">
+						<label className="text-white" htmlFor="rating">
 							Beri Rating:
 						</label>
 						<div className="flex">{renderStars()}</div>
