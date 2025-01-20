@@ -20,9 +20,13 @@ export const fetchCategories = async () => {
 
 // Function for searching category by keyword
 export const searchDataByKeyword = async (keyword: string | number) => {
+	if (typeof keyword === "string" && keyword.length < 3) {
+		throw new Error("Keyword must be at least 3 characters long");
+	}
+
 	try {
-		console.log(`Fetching courses for keyword: ${keyword}`);
-		const response = await axios.get(`${API_URL}/search`, {
+		console.log(`Fetching data for keyword: ${keyword}`);
+		const response = await axios.get(`http://localhost:8080/api/v1/search`, {
 			params: { keyword },
 			headers: {
 				"Content-Type": "application/json",
@@ -31,7 +35,7 @@ export const searchDataByKeyword = async (keyword: string | number) => {
 		console.log("Search response:", response.data);
 		return response.data;
 	} catch (error) {
-		console.error("Error fetching courses:", error);
+		console.error("Error fetching data:", error);
 		throw error;
 	}
 };

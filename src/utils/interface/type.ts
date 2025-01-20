@@ -40,6 +40,7 @@ export interface Mentor {
   occupation: string;
   user_id: number;
   email: string;
+  id: number;
 }
 
 export interface Education {
@@ -69,8 +70,11 @@ export interface Session {
   schedule: string;
   short_description: string;
   title: string;
+  session_id: number;
 }
 
 export interface Topic {
   category_name: string;
+  image_url: string;
+
 }

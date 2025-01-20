@@ -12,7 +12,7 @@ const MentorList: React.FC<MentorListProps> = ({ mentors }) => (
     <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
       {mentors.map((mentor) => (
         <div
-          key={mentor.email}
+          key={mentor.id}
           className="p-4 bg-white shadow rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500"
         >
           <div className="flex flex-col items-center">
@@ -21,9 +21,10 @@ const MentorList: React.FC<MentorListProps> = ({ mentors }) => (
               alt={mentor.fullname}
               className="w-full h-32 object-cover rounded-lg mb-3"
             />
-            <p className="mt-2 font-bold text-amber-500 line-clamp-2">
+            <p className="mt-2 font-bold text-stone-800 line-clamp-2">
               {mentor.fullname}
             </p>
+            <p className="text-sm font-bold text-stone-800 line-clamp-2">{mentor.occupation}</p>
           </div>
         </div>
       ))}

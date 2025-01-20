@@ -8,13 +8,19 @@ import Footer from "@/components/landing-page/Footer";
 import MentorList from "@/components/navbar/component/search-component/mentorList";
 import SessionList from "@/components/navbar/component/search-component/sessionList";
 import TopicList from "@/components/navbar/component/search-component/topicList";
+import Modal from "@/components/modal"; // Import the Modal component
 
 import { Mentor, Session, Topic } from "@/utils/interface/type";
 
 interface ApiResponse {
+  categories: Topic[];
   mentors: Mentor[];
-  sessions: Session[];
-  topics: Topic[];
+  sessions: {
+    page: number;
+    page_size: number;
+    sessions: Session[];
+    total: number;
+  };
 }
 
 const SearchResult: React.FC = () => {
@@ -25,29 +31,37 @@ const SearchResult: React.FC = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const [activeCategory, setActiveCategory] = useState<
-    "mentors" | "sessions" | "topics" | null
-  >(null);
+  const [activeCategories, setActiveCategories] = useState<{
+    mentors: boolean;
+    sessions: boolean;
+    topics: boolean;
+  }>({ mentors: false, sessions: false, topics: false });
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         setLoading(true);
         setError(null);
+        if (query.length < 3) {
+          setShowModal(true);
+          setLoading(false);
+          return;
+        }
         const data: ApiResponse = await searchDataByKeyword(query);
 
         if (data.mentors && data.mentors.length > 0) {
-          setActiveCategory("mentors");
           setMentors(data.mentors);
-        } else if (data.sessions && data.sessions.length > 0) {
-          setActiveCategory("sessions");
-          setSessions(data.sessions);
-        } else if (data.topics && data.topics.length > 0) {
-          setActiveCategory("topics");
-          setTopics(data.topics);
-        } else {
-          setActiveCategory(null);
+          setActiveCategories((prev) => ({ ...prev, mentors: true }));
+        }
+        if (data.sessions && data.sessions.sessions && data.sessions.sessions.length > 0) {
+          setSessions(data.sessions.sessions);
+          setActiveCategories((prev) => ({ ...prev, sessions: true }));
+        }
+        if (data.categories && data.categories.length > 0) {
+          setTopics(data.categories);
+          setActiveCategories((prev) => ({ ...prev, topics: true }));
         }
       } catch (err) {
         setError("Gagal memuat hasil pencarian");
@@ -74,18 +88,26 @@ const SearchResult: React.FC = () => {
     <>
       <Navbar_not_auth />
       <div className="p-10">
-        {activeCategory === "mentors" && <MentorList mentors={mentors} />}
-        {activeCategory === "sessions" && <SessionList sessions={sessions} />}
-        {activeCategory === "topics" && <TopicList topics={topics} />}
-        {!activeCategory && (
-          <p className="text-center text-xl font-semibold mb-4 text-gray-500">
+        {(activeCategories.mentors || activeCategories.sessions || activeCategories.topics) && (
+          <h1 className="text-center text-neutral-300 text-3xl font-bold mb-8">Hasil Pencarian:</h1>
+        )}
+        {activeCategories.mentors && <MentorList mentors={mentors} />}
+        {activeCategories.sessions && <SessionList sessions={sessions} />}
+        {activeCategories.topics && <TopicList topics={topics} />}
+        {!activeCategories.mentors && !activeCategories.sessions && !activeCategories.topics && (
+          <p className="text-center text-xl font-semibold mb-4 text-gray-900">
             Hasil Pencarian{" "}
-            <span className="font-bold text-blue-500">{query}</span>Tidak di
+            <span className="font-bold text-blue-500">"{query}" </span>tidak di
             Temukan
           </p>
         )}
       </div>
       <Footer />
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          Kata kunci pencarian harus minimal 3 karakter
+        </Modal>
+      )}
     </>
   );
 };

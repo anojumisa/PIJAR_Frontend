@@ -81,7 +81,6 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
                         <p className="font-bold">{review.user_details.fullname}</p>
                     </div>
                     <p className="text-gray-400 mb-2">Rating: {generateStars(review.rating)}</p>
-                    <p className="text-gray-400 mb-2">Rating: {generateStars(review.rating)}</p>
                     <p>{review.review}</p>
                 </div>
             ))}
