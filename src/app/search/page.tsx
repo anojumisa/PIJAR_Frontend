@@ -8,7 +8,7 @@ import Footer from "@/components/landing-page/Footer";
 import MentorList from "@/components/navbar/component/search-component/mentorList";
 import SessionList from "@/components/navbar/component/search-component/sessionList";
 import TopicList from "@/components/navbar/component/search-component/topicList";
-import Modal from "@/components/modal"; // Import the Modal component
+import Modal from "@/components/modal"; 
 
 import { Mentor, Session, Topic } from "@/utils/interface/type";
 
@@ -128,4 +128,4 @@ const SearchResultPage = () => (
 	</Suspense>
 );
 
-export default SearchResultPage;
+export default SearchResult;
