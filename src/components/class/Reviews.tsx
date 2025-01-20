@@ -30,7 +30,7 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
     useEffect(() => {
         const fetchReviewsData = async () => {
             try {
-                const token = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token
+                const token = "YOUR_ACCESS_TOKEN"; 
                 const data: ReviewsResponse = await fetchReviews(sessionId, token);
                 setReviews(data.reviews);
             } catch (error) {
