@@ -30,7 +30,7 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
     useEffect(() => {
         const fetchReviewsData = async () => {
             try {
-                const token = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token
+                const token = "YOUR_ACCESS_TOKEN"; 
                 const data: ReviewsResponse = await fetchReviews(sessionId, token);
                 setReviews(data.reviews);
             } catch (error) {
@@ -75,7 +75,7 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
         <div className="mt-6 text-white">
             <h2 className="text-xl font-bold mb-2">Reviews</h2>
             {reviews.map((review) => (
-                <div key={review.review_id} className="mb-4 p-4 bg-stone-900 border rounded">
+                <div key={review.review_id} className="mb-4 p-4 bg-gray-800 border rounded">
                     <div className="flex items-center mb-2">
                         <img src={review.user_details.image_url} alt={review.user_details.fullname} className="w-10 h-10 rounded-full mr-2" />
                         <p className="font-bold">{review.user_details.fullname}</p>

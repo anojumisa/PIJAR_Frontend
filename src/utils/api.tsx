@@ -294,3 +294,77 @@ export const fetchReviews = async (sessionId: number, token: string) => {
 
     return response.json();
 };
+
+// Function to toggle follow mentor
+export const toggleFollowMentor = async (
+    mentorId: number,
+    isFollowing: boolean,
+    access_token: string
+) => {
+    if (!access_token) throw new Error("Access token is missing.");
+
+    try {
+        console.log("Mentor ID:", mentorId);
+        console.log("Is Following:", isFollowing);
+        console.log("Access Token:", access_token);
+
+        const response = await fetch(`${API_URL}/mentors/${mentorId}/follow`, {
+            method: isFollowing ? "DELETE" : "POST",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        console.log("Response:", response);
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error("Unauthorized: Please check your token.");
+            }
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("Error toggling follow status:", error);
+        throw error;
+    }
+};
+
+// Function to fetch follow status
+export const getMentorFollowStatus = async (
+    mentorId: number,
+    access_token: string
+) => {
+    if (!access_token) throw new Error("Access token is missing.");
+
+    try {
+        console.log("Mentor ID:", mentorId);
+        console.log("Access Token:", access_token);
+
+        const response = await fetch(`${API_URL}/mentors/${mentorId}/status`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        console.log("Response:", response);
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error("Unauthorized: Please check your token.");
+            }
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const responseBody = await response.json();
+        console.log("Response body:", responseBody); // Debugging
+        return responseBody; // Response includes `is_following`
+    } catch (error) {
+        console.error("Error fetching follow status:", error);
+        throw error;
+    }
+};
