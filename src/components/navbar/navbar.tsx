@@ -6,7 +6,8 @@ import { AxiosError } from "axios";
 import { SearchBar } from "./component/searchBar";
 import { AuthenticatedMenu } from "./component/authenticatedMenu";
 import { AuthenticationButtons } from "./component/authenticationButtons";
-import { Categories, Category } from "./component/categories";
+import { Categories } from "./component/categories";
+import { Category } from "@/utils/interface/type";
 import Loading from "../animation/loading/page";
 
 
@@ -47,7 +48,7 @@ const Navbar_not_auth: React.FC = () => {
 			// fetch disini
 			const getNotifications = async () => {
 				try {
-					const notificationsResp = await fetchNotifications(get_cookie(document.cookie, "access_token"))
+					const notificationsResp = await fetchNotifications()
 					console.log("🚀 ~ getNotifications ~ notificationsResp:", notificationsResp);
 					setNotifications(notificationsResp.data.notification)
 				} catch (error) {

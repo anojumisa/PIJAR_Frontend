@@ -99,15 +99,14 @@ interface NotificationsResponse {
 	notification: NotificationItem[];
 }
 
+
 export const fetchNotifications = async (
-	accessToken: string
+	
 ): Promise<AxiosResponse<NotificationsResponse>> => {
 	try {
 		// API Call for protected
 		const response = await axios.get(`${API_URL}/users/notifications`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
+			
 		});
 		return response;
 	} catch (error) {
@@ -127,13 +126,10 @@ interface LearnersInterestResponse {
 }
 
 export const fetchLearnersInterests = async (
-	accessToken: string
 ): Promise<AxiosResponse<LearnersInterestResponse>> => {
 	try {
 		const response = await axios.get(`${API_URL}/learners/interests`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
+			
 		});
 		return response;
 	} catch (error) {
@@ -269,14 +265,9 @@ export const addReview = async (
 	sessionId: number,
 	rating: number,
 	review: string,
-	token: string
 ) => {
 	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
 		body: JSON.stringify({ rating, review }),
 	});
 
@@ -288,12 +279,10 @@ export const addReview = async (
 };
 
 // Function to fetch reviews
-export const fetchReviews = async (sessionId: number, token: string) => {
+export const fetchReviews = async (sessionId: number) => {
 	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
 		method: "GET",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
+		
 	});
 
 	if (!response.ok) {
@@ -307,21 +296,13 @@ export const fetchReviews = async (sessionId: number, token: string) => {
 export const toggleFollowMentor = async (
 	mentorId: number,
 	isFollowing: boolean,
-	access_token: string
 ) => {
-	if (!access_token) throw new Error("Access token is missing.");
-
 	try {
 		console.log("Mentor ID:", mentorId);
 		console.log("Is Following:", isFollowing);
-		console.log("Access Token:", access_token);
 
 		const response = await fetch(`${API_URL}/mentors/${mentorId}/follow`, {
 			method: isFollowing ? "DELETE" : "POST",
-			headers: {
-				Authorization: `Bearer ${access_token}`,
-				"Content-Type": "application/json",
-			},
 		});
 
 		console.log("Response:", response);
@@ -343,20 +324,13 @@ export const toggleFollowMentor = async (
 // Function to fetch follow status
 export const getMentorFollowStatus = async (
 	mentorId: number,
-	access_token: string
 ) => {
-	if (!access_token) throw new Error("Access token is missing.");
 
 	try {
 		console.log("Mentor ID:", mentorId);
-		console.log("Access Token:", access_token);
 
 		const response = await fetch(`${API_URL}/mentors/${mentorId}/status`, {
 			method: "GET",
-			headers: {
-				Authorization: `Bearer ${access_token}`,
-				"Content-Type": "application/json",
-			},
 		});
 
 		console.log("Response:", response);

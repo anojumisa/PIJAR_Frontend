@@ -19,8 +19,7 @@ const AddReview: React.FC<AddReviewProps> = ({ sessionId }) => {
 		setSuccess(null);
 
 		try {
-			const token = "YOUR_ACCESS_TOKEN";
-			await addReview(sessionId, rating, review, token);
+			await addReview(sessionId, rating, review);
 			setSuccess("Review added successfully!");
 			setRating(0);
 			setReview("");

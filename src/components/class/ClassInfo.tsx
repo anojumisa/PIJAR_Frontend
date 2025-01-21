@@ -14,10 +14,9 @@ interface ClassData {
     link: string;
 }
 
-const ClassInfo: React.FC<{ classData: ClassData; mentorData: MentorDetails; token: string }> = ({
+const ClassInfo: React.FC<{ classData: ClassData; mentorData: MentorDetails;}> = ({
     classData,
     mentorData,
-    token,
 }) => {
     const [isFollowing, setIsFollowing] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +25,7 @@ const ClassInfo: React.FC<{ classData: ClassData; mentorData: MentorDetails; tok
     useEffect(() => {
         const fetchFollowStatus = async () => {
             try {
-                const response = await getMentorFollowStatus(mentorData.id, token);
+                const response = await getMentorFollowStatus(mentorData.id);
                 setIsFollowing(response.is_following); // Update based on API response
             } catch (error) {
                 console.error("Error fetching follow status:", error);
@@ -34,13 +33,13 @@ const ClassInfo: React.FC<{ classData: ClassData; mentorData: MentorDetails; tok
         };
 
         fetchFollowStatus();
-    }, [mentorData.id, token]);
+    }, [mentorData.id]);
 
     // Handle follow/unfollow button click
     const handleFollowToggle = async () => {
         try {
             setLoading(true);
-            await toggleFollowMentor(mentorData.id, isFollowing, token);
+            await toggleFollowMentor(mentorData.id, isFollowing);
             setIsFollowing(!isFollowing); // Toggle the follow state
         } catch (error) {
             console.error("Error toggling follow status:", error);

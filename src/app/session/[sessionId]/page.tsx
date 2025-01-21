@@ -95,7 +95,6 @@ const SessionPage: React.FC = () => {
                 <ClassInfo
                     classData={sessionDetail}
                     mentorData={sessionDetail.mentor_details}
-                    token={token}
                 />
                 <SessionDetails sessionDetail={sessionDetail} />
                 <AddReview sessionId={sessionIdNumber} />

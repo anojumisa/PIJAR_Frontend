@@ -29,7 +29,7 @@ export default function LearnerDashboard() {
 		const fetchData = async () => {
 			try {
 				// const historyResponse = await axios.get("/api/learner/history");
-				const interestResponse = await fetchLearnersInterests(get_cookie(document.cookie, "access_token"))
+				const interestResponse = await fetchLearnersInterests()
 				// setLearningHistory(historyResponse.data.history);
 				setInterests(interestResponse.data.data);
 			} catch (err) {

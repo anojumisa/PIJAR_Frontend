@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import Loading from "@/components/animation/loading/page";
@@ -21,7 +21,7 @@ export default function UpComingClasses({mentor}:Props){
 
 
   return (
-   <>
+   <Suspense>
    <div
         className="bg-slate-200"
         style={{
@@ -61,6 +61,6 @@ export default function UpComingClasses({mentor}:Props){
             </div>
           ))}
         </div>
-      </div></>
+      </div></Suspense>
   );
 }

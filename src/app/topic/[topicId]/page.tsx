@@ -8,7 +8,7 @@ import Navbar from "@/components/navbar/navbar";
 import Loading from "@/components/animation/loading/page";
 import { fetchSessionDetails } from "@/utils/api";
 
-/*
+
 const MOCK_TOPIC_DATA = {
 	id: "123",
 	title: "Belajar Dasar Coding",
@@ -21,7 +21,7 @@ const MOCK_TOPIC_DATA = {
 	image_url:
 		"https://codeop.tech/wp-content/webp-express/webp-images/uploads/2023/11/arpad-czapp-H424WdcQN4Y-unsplash-scaled.jpg.webp",
 };
-*/
+
 
 const TopicPage: React.FC = () => {
 

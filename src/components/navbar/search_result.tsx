@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { searchDataByKeyword } from "@/utils/api";
 import { useSearchParams } from "next/navigation";
 import Loading from "../animation/loading/page";
@@ -60,60 +60,63 @@ const SearchResult: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Search Results for "{query}"</h1>
-      <div className="grid grid-cols-1 gap-4 p-5">
-        <div className="p-5 border rounded shadow">
-          <h2 className="text-xl font-bold py-1">Mentors</h2>
-          <ul>
-            {mentors.map((mentor, index) => (
-              <li key={index}>
-                <div className="flex items-center">
-                  <img
-                    src={mentor.image_url}
-                    alt={mentor.fullname}
-                    className="h-10 w-10 rounded-full mr-3"
-                  />
-                  <div>
-                    <p>{mentor.fullname}</p>
-                    <p>{mentor.email}</p>
+    <Suspense>
+
+      <div>
+        <h1>Search Results for "{query}"</h1>
+        <div className="grid grid-cols-1 gap-4 p-5">
+          <div className="p-5 border rounded shadow">
+            <h2 className="text-xl font-bold py-1">Mentors</h2>
+            <ul>
+              {mentors.map((mentor, index) => (
+                <li key={index}>
+                  <div className="flex items-center">
+                    <img
+                      src={mentor.image_url}
+                      alt={mentor.fullname}
+                      className="h-10 w-10 rounded-full mr-3"
+                    />
+                    <div>
+                      <p>{mentor.fullname}</p>
+                      <p>{mentor.email}</p>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="p-5 border rounded shadow">
-          <h2 className="text-xl font-bold">Sessions</h2>
-          <ul>
-            {sessions.map((session, index) => (
-              <li key={index}>
-                <div className="flex items-center">
-                  <img
-                    src={session.image_url}
-                    alt={session.title}
-                    className="h-14 w-14 mr-3"
-                  />
-                  <div>
-                    <h3>{session.title}</h3>
-                    <p>{session.schedule}</p>
-                    <p>{session.short_description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-5 border rounded shadow">
+            <h2 className="text-xl font-bold">Sessions</h2>
+            <ul>
+              {sessions.map((session, index) => (
+                <li key={index}>
+                  <div className="flex items-center">
+                    <img
+                      src={session.image_url}
+                      alt={session.title}
+                      className="h-14 w-14 mr-3"
+                    />
+                    <div>
+                      <h3>{session.title}</h3>
+                      <p>{session.schedule}</p>
+                      <p>{session.short_description}</p>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="p-5 border rounded shadow">
-          <h2 className="text-xl font-bold">Topics</h2>
-          <ul>
-            {topics.map((topic, index) => (
-              <li key={index}>{topic.category_name}</li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-5 border rounded shadow">
+            <h2 className="text-xl font-bold">Topics</h2>
+            <ul>
+              {topics.map((topic, index) => (
+                <li key={index}>{topic.category_name}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 
