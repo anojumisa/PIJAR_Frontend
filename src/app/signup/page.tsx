@@ -93,8 +93,7 @@ export default function SignUp() {
 	};
 
 	const handleGoogleSignUp = () => {
-		const callbackUrl = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback/google`;
-		signIn("google", { callbackUrl });
+		signIn("google", { callbackUrl: "/signup/oauth" });
 	};
 
 	const handleOAuthCallback = async () => {

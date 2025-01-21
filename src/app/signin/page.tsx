@@ -60,8 +60,7 @@ export default function SignIn() {
 	};
 
 	const handleGoogleSignIn = () => {
-		const callbackUrl = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback/google`;
-		signIn("google", { callbackUrl });
+		signIn("google", { callbackUrl: "/signin/oauth" });
 	};
 
 	return (

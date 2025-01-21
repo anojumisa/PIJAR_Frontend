@@ -16,13 +16,16 @@ export default NextAuth({
 	callbacks: {
 		async jwt({ token, account }) {
 			if (account) {
+				token.idToken = account.id_token;
 				token.accessToken = account.access_token;
 			}
 			return token;
 		},
 		async session({ session, token }) {
-			session.accessToken = token.accessToken;
+			session.idToken = token.idToken;
+			session.accessToken = token.access_token;
 			return session;
 		},
 	},
+	debug: true
 });
