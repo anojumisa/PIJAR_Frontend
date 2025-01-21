@@ -11,12 +11,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/select";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignUp, postLearnerInterest } from "@/utils/api";
-import { redirect, RedirectType } from "next/navigation";
 import { set_cookie } from "@/lib/utils";
+import { signIn } from "next-auth/react";
 
 interface SignUpFormValues {
 	fullName: string;
@@ -29,6 +29,7 @@ interface InterestFormValues {
 	name: string;
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function SignUp() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
@@ -77,26 +78,56 @@ export default function SignUp() {
 				password: values.password,
 			};
 			const data = await UserSignUp(userData);
-			// Pasti belom authenticated
-			// Simpan info hasil signup -> set cookie access_token & refresh_token
 			set_cookie("access_token", data.access_token);
 			set_cookie("refresh_token", data.refresh_token);
 			toast.success("Pendaftaran berhasil! 🎉", {
 				description: "Selamat datang di platform kami!",
 			});
-			// Redirect ke minat
 			document.location.replace("/minat");
 		} catch (error) {
-			console.log("🚀 ~ SignUp ~ error:", error);
-			toast.error(
-				`Gagal mendaftar. Silakan coba lagi.
-				}`
-			);
 			console.error("Failed to register user:", error);
+			toast.error("Gagal mendaftar. Silakan coba lagi.");
 		} finally {
 			setSubmitting(false);
 		}
 	};
+
+	const handleGoogleSignUp = () => {
+		const callbackUrl = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback/google`;
+		signIn("google", { callbackUrl });
+	};
+
+	const handleOAuthCallback = async () => {
+		try {
+			const urlParams = new URLSearchParams(window.location.search);
+			const code = urlParams.get("code");
+
+			if (!code) {
+				throw new Error("Authorization code not found");
+			}
+
+			const response = await axios.post(
+				`${API_URL}/auth/google/learner/register/callback`,
+				{ code }
+			);
+			set_cookie("access_token", response.data.access_token);
+			set_cookie("refresh_token", response.data.refresh_token);
+			toast.success("Pendaftaran berhasil! 🎉", {
+				description: "Selamat datang di platform kami!",
+			});
+			document.location.replace("/minat");
+		} catch (error) {
+			console.error("Failed to handle OAuth callback:", error);
+			toast.error("Gagal mendaftar. Silakan coba lagi.");
+		}
+	};
+
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.has("oauth")) {
+			handleOAuthCallback();
+		}
+	}, []);
 
 	const fetchInterests = async () => {
 		setIsLoading(true);
@@ -230,6 +261,15 @@ export default function SignUp() {
 								)}
 							</Formik>
 
+							<div className="my-6 text-center text-gray-600">Atau</div>
+
+							<button
+								onClick={handleGoogleSignUp}
+								className="w-full bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition"
+							>
+								Daftar dengan Google
+							</button>
+
 							<p className="text-center text-gray-600 mt-4">
 								Sudah punya akun?{" "}
 								<a
@@ -282,7 +322,10 @@ export default function SignUp() {
 								</Select>
 							)}
 							<br />
-							<button className="justify-center bg-yellow-600 w-[35rem] rounded-full p-2" onClick={handleInterestSubmit}>
+							<button
+								className="justify-center bg-yellow-600 w-[35rem] rounded-full p-2"
+								onClick={handleInterestSubmit}
+							>
 								Lihat Usulan
 							</button>
 						</>

@@ -8,6 +8,7 @@ import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignIn } from "@/utils/api";
 import { set_cookie } from "@/lib/utils";
+import { signIn } from "next-auth/react";
 
 interface SignInFormValues {
 	email: string;
@@ -56,6 +57,11 @@ export default function SignIn() {
 		} finally {
 			setSubmitting(false);
 		}
+	};
+
+	const handleGoogleSignIn = () => {
+		const callbackUrl = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback/google`;
+		signIn("google", { callbackUrl });
 	};
 
 	return (
@@ -138,6 +144,15 @@ export default function SignIn() {
 							</Form>
 						)}
 					</Formik>
+
+					<div className="my-6 text-center text-gray-600">Atau</div>
+
+					<button
+						onClick={handleGoogleSignIn}
+						className="w-full bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition"
+					>
+						Masuk dengan Google
+					</button>
 
 					<p className="text-center text-gray-600 mt-4">
 						Belum punya akun?{" "}
