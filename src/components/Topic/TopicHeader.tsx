@@ -3,21 +3,19 @@ import React, { useState } from "react";
 
 interface TopicHeaderProps {
     title: string;
-    mentor: string;
     short_description: string;
-    rating: number;
+    average_rating: number;
     link: string;
 };
 
-const TopicHeader: React.FC<TopicHeaderProps> = ({ title, mentor, short_description, rating, link }) => {
+const TopicHeader: React.FC<TopicHeaderProps> = ({ title, short_description, average_rating, link }) => {
     return(
         <div className="p-4 bg-neutral-800 shadow border border-neutral-400 rounded-2xl">
             <h2 className="text-4xl text-neutral-300 font-semibold">{title}</h2>
-            <p className="text-sm font-bold text-white">{mentor}</p>
             <p className="text-sm font-bold text-white">{short_description}</p>
             <div className="text-sm font-bold text-yellow-600">
                 {[...Array(5)].map((star, index) => {
-                    const decimalRating = rating;
+                    const decimalRating = average_rating;
                     const fullStar = index + 1;
                     const isFullStar = decimalRating >= fullStar;
                     const isPartialStar = decimalRating > index && decimalRating < fullStar;
@@ -34,7 +32,7 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({ title, mentor, short_descript
                     </span>
                     );
                 })}
-                <span className="ml-2">({rating}/5)</span>
+                <span className="ml-2">({average_rating}/5)</span>
             </div>
             <div className="mt-4 text-center">
                 <a

@@ -8,7 +8,7 @@ import Navbar from "@/components/navbar/navbar";
 import Loading from "@/components/animation/loading/page";
 import { fetchSessionDetails } from "@/utils/api";
 
-
+/*
 const MOCK_TOPIC_DATA = {
 	id: "123",
 	title: "Belajar Dasar Coding",
@@ -21,32 +21,53 @@ const MOCK_TOPIC_DATA = {
 	image_url:
 		"https://codeop.tech/wp-content/webp-express/webp-images/uploads/2023/11/arpad-czapp-H424WdcQN4Y-unsplash-scaled.jpg.webp",
 };
+*/
 
-
+interface SessionDetail {
+	session_id: number;
+	title: string;
+	short_description: string;
+	image_url: string;
+	average_rating: number;
+	link: string;
+	detail: string;
+}
 const TopicPage: React.FC = () => {
 
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [sessionDetails, setSessionDetails] = useState<SessionDetail | null>(null);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			const getSessionDetails async () => {
+				try {
+					
+				}catch (err: any) {
+					
+				}
+			}
+		} 
+	})
 	return (
 		<>
 			<Navbar />
 			<div className="container mx-auto px-4 py-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<ImageButton
-						image_url={MOCK_TOPIC_DATA.image_url}
-						title={MOCK_TOPIC_DATA.title}
+						image_url={SessionDetail.image_url}
+						title={SessionDetail.title}
 					/>
 					<TopicHeader
-						title={MOCK_TOPIC_DATA.title}
-						mentor={MOCK_TOPIC_DATA.mentor}
-						short_description={MOCK_TOPIC_DATA.short_description}
-						rating={MOCK_TOPIC_DATA.rating}
-						link={MOCK_TOPIC_DATA.link}
+						title={SessionDetail.title}
+						mentor={SessionDetail.mentor}
+						short_description={SessionDetail.short_description}
+						rating={SessionDetail.rating}
+						link={SessionDetail.link}
 					/>
 				</div>
 				<div className="mt-8">
-					<WhatYouLearn details={MOCK_TOPIC_DATA.details} />
+					<WhatYouLearn details={SessionDetail.details} />
 				</div>
 			</div>
 			<Footer />
