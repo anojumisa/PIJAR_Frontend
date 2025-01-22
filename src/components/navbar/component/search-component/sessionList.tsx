@@ -3,7 +3,7 @@ import { Session } from "@/utils/interface/type";
 import Link from "next/link";
 
 interface SessionListProps {
-  sessions: Session[];
+  sessions: Sessions[];
 }
 
 const formatSchedule = (schedule: string) => {
