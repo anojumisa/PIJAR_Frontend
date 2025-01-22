@@ -12,7 +12,7 @@ import Loading from "@/components/animation/loading/page";
 
 const CoursePage = () => {
   const searchParams = useSearchParams();
-  const categoryid = searchParams.get("categoryid");
+  const categoryid = searchParams?.get("categoryid");
   const [courses, setCourses] = useState<MentorSession[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);

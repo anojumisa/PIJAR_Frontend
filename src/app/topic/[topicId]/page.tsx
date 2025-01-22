@@ -25,8 +25,8 @@ interface TopicDetail {
 }
 
 const TopicPage: React.FC = () => {
-  const { topicId } = useParams();
-  const session_id = Number(topicId);
+  const params = useParams();
+  const session_id = Number(params?.topicId);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [sessionDetails, setSessionDetails] = useState<TopicDetail | null>(null);

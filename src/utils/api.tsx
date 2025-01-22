@@ -177,7 +177,7 @@ export const fetchNotifications = async (): Promise<
 	try {
 		// API Call for protected
 		const response = await privateService.get(`/users/notifications`);
-		return response;
+		return response.data;
 	} catch (error) {
 		console.error("Error fetching notifications:", error);
 		throw error;
@@ -199,7 +199,7 @@ export const fetchLearnersInterests = async (): Promise<
 > => {
 	try {
 		const response = await privateService.get(`/learners/interests`);
-		return response;
+		return response.data;
 	} catch (error) {
 		console.error("Error fetching learner interests:", error);
 		throw error;
@@ -310,7 +310,7 @@ export const addReview = async (
 				review,
 			}
 		);
-		return response.data();
+		return response.data;
 	} catch (error) {
 		console.error("Error fetching session details:", error);
 		throw error;
@@ -318,10 +318,10 @@ export const addReview = async (
 };
 
 // Function to fetch reviews
-export const fetchReviews = async (sessionId: number, token: string) => {
+export const fetchReviews = async (sessionId: number) => {
 	try {
 		const response = await publicService.get("/sessions/${sessionId}/review");
-		return response;
+		return response.data;
 	} catch (error) {
 		console.error("Error fetching session details:", error);
 		throw error;
@@ -337,7 +337,7 @@ export const toggleFollowMentor = async (
 		console.log("Mentor ID:", mentorId);
 		console.log("Is Following:", isFollowing);
 		const response = await privateService.post(`/mentors/${mentorId}/follow`);
-		return response;
+		return response.data;
 	} catch (error) {
 		console.error("Error toggling follow status:", error);
 		throw error;
@@ -350,10 +350,9 @@ export const getMentorFollowStatus = async (
 ) => {
 	try {
 		console.log("Mentor ID:", mentorId);
-		console.log("Access Token:", access_token);
 		const response = await privateService.get(`/mentors/${mentorId}/status`);
 		console.log("Response:", response);
-		return response; // Response includes `is_following`
+		return response.data; // Response includes `is_following`
 	} catch (error) {
 		console.error("Error fetching follow status:", error);
 		throw error;

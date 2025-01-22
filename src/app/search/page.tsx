@@ -25,7 +25,7 @@ interface ApiResponse {
 
 const SearchResult: React.FC = () => {
 	const searchParams = useSearchParams();
-	const query = searchParams.get("keyword") || "";
+	const query = searchParams?.get("keyword") || "";
 	const [mentors, setMentors] = useState<Mentor[]>([]);
 	const [sessions, setSessions] = useState<Session[]>([]);
 	const [topics, setTopics] = useState<Topic[]>([]);
@@ -128,4 +128,4 @@ const SearchResultPage = () => (
 	</Suspense>
 );
 
-export default SearchResult;
+export default SearchResultPage;

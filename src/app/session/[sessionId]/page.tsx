@@ -39,8 +39,8 @@ import ClassInfo from "@/components/class/ClassInfo";
 import SessionDetails from "@/components/class/Session";
 
 const SessionPage: React.FC = () => {
-    const { sessionId } = useParams();
-    const sessionIdNumber = Number(sessionId);
+    const params  = useParams();
+    const sessionIdNumber = Number(params?.sessionId);
     const [sessionDetail, setSessionDetail] = useState<SessionDetail | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

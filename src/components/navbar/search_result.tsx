@@ -29,7 +29,7 @@ interface ApiResponse {
 
 const SearchResult: React.FC = () => {
   const searchParams = useSearchParams();
-  const query = searchParams.get("keyword") || ""; // Mendapatkan nilai keyword dari URL
+  const query = searchParams?.get("keyword") || ""; // Mendapatkan nilai keyword dari URL
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
