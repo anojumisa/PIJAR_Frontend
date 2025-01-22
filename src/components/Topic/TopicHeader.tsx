@@ -2,15 +2,26 @@
 import React, { useState } from "react";
 
 interface TopicHeaderProps {
+    mentor_details: {
+		id: number;
+		fullname: string;
+		image_url: string;
+	};
     title: string;
     short_description: string;
     average_rating: number;
     link: string;
 };
 
-const TopicHeader: React.FC<TopicHeaderProps> = ({ title, short_description, average_rating, link }) => {
+const TopicHeader: React.FC<TopicHeaderProps> = ({ mentor_details, title, short_description, average_rating, link }) => {
     return(
         <div className="p-4 bg-neutral-800 shadow border border-neutral-400 rounded-2xl">
+            <img
+                src={mentor_details.image_url}
+                alt={mentor_details.fullname}
+                className="h-60 w-full object-cover rounded-lg" 
+            />
+            <p className="text-sm font-bold text-white">Mentor: {mentor_details.fullname}</p>
             <h2 className="text-4xl text-neutral-300 font-semibold">{title}</h2>
             <p className="text-sm font-bold text-white">{short_description}</p>
             <div className="text-sm font-bold text-yellow-600">
