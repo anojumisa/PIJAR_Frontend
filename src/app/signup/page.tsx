@@ -77,9 +77,7 @@ export default function SignUp() {
 				fullname: values.fullName,
 				password: values.password,
 			};
-			const data = await UserSignUp(userData);
-			set_cookie("access_token", data.access_token);
-			set_cookie("refresh_token", data.refresh_token);
+			await UserSignUp(userData);
 			toast.success("Pendaftaran berhasil! 🎉", {
 				description: "Selamat datang di platform kami!",
 			});

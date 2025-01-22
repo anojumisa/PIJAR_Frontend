@@ -1,6 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchCategories, fetchNotifications, NotificationItem } from "@/utils/api";
+import {
+	fetchCategories,
+	fetchNotifications,
+	NotificationItem,
+	UserLogOut,
+} from "@/utils/api";
 import { delete_cookie, get_cookie } from "@/lib/utils";
 import { AxiosError } from "axios";
 import { SearchBar } from "./component/searchBar";
@@ -10,7 +15,6 @@ import { Categories } from "./component/categories";
 import { Category } from "@/utils/interface/type";
 import Loading from "../animation/loading/page";
 
-
 const Navbar_not_auth: React.FC = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [notifications, setNotifications] = useState<NotificationItem[]>([]);
@@ -18,68 +22,57 @@ const Navbar_not_auth: React.FC = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [isAuthenthicated, setIsAuthenthicated] = useState(false);
 
-	useEffect(() => {
-		const getCategories = async () => {
-			try {
-				const data = await fetchCategories();
-				setCategories(data);
-				setIsAuthenthicated(!!get_cookie(document.cookie, "access_token"));
-			} catch (error) {
-				if (error instanceof AxiosError && error.response?.status === 401) {
-					// Unauthorized
-					console.error("Unauthorized");
-					// Logout
-					delete_cookie("access_token");
-					delete_cookie("refresh_token");
-					alert("Session Expired, Please Login Again")
-					document.location.replace("/signin");
-				}
-				setError("Error loading categories");
-			} finally {
-				setLoading(false);
-			}
-		};
+	const getCategories = async () => {
+		try {
+			const data = await fetchCategories();
+			setCategories(data);
+			setIsAuthenthicated(!!get_cookie(document.cookie, "isLoggedIn"));
+		} catch (error) {
+			setError("Error loading categories");
+		} finally {
+			setLoading(false);
+		}
+	};
 
+	const getNotifications = async () => {
+		try {
+			const notificationsResp = await fetchNotifications();
+			setNotifications(notificationsResp.data.notification);
+		} catch (error) {
+			setError("Error loading notifications" + error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const signOut = async () => {
+		try {
+			await UserLogOut();
+		} catch (error) {
+			setError("Error loading notifications" + error);
+		}
+	};
+
+	useEffect(() => {
 		getCategories();
 	}, []);
 
 	useEffect(() => {
 		if (isAuthenthicated) {
 			// fetch disini
-			const getNotifications = async () => {
-				try {
-					const notificationsResp = await fetchNotifications()
-					console.log("🚀 ~ getNotifications ~ notificationsResp:", notificationsResp);
-					setNotifications(notificationsResp.data.notification)
-				} catch (error) {
-					setError("Error loading notifications" + error);
-					if (error instanceof AxiosError && error.response?.status === 401) {
-						// Unauthorized
-						console.error("Unauthorized");
-						// Logout
-						delete_cookie("access_token");
-						delete_cookie("refresh_token");
-						alert("Session Expired, Please Login Again")
-						document.location.replace("/signin");
-					}
-				} finally {
-					setLoading(false);
-				}
-			}
-			getNotifications()
+			getNotifications();
 		}
 		// Gausa fetch kalo ga authenthicated
-	}, [isAuthenthicated])
+	}, [isAuthenthicated]);
 
 	const handleSignOut = () => {
 		// Hapus Cookies
-		delete_cookie("access_token");
-		delete_cookie("refresh_token");
+		signOut();
+		document.location.replace("/");
 		// Redirect ke home
-		document.location.replace("/")
-	}
+	};
 
-	 if (loading) return <Loading/>;
+	if (loading) return <Loading />;
 	if (error) return <div>{error}</div>;
 
 	return (
@@ -103,12 +96,14 @@ const Navbar_not_auth: React.FC = () => {
 						<Categories categories={categories} />
 						<SearchBar />
 					</div>
-					{isAuthenthicated && <AuthenticatedMenu 
-						notifications={notifications} 
-						onEditProfile={() => {}}
-						onMyProfile={() => {}}
-						onSignOut={handleSignOut}
-					/>}
+					{isAuthenthicated && (
+						<AuthenticatedMenu
+							notifications={notifications}
+							onEditProfile={() => {}}
+							onMyProfile={() => {}}
+							onSignOut={handleSignOut}
+						/>
+					)}
 					{!isAuthenthicated && <AuthenticationButtons />}
 				</ul>
 			</div>
