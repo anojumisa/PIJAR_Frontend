@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import ImageButton from "../../../components/Topic/ImageButton";
 import TopicHeader from "../../../components/Topic/TopicHeader";
 import WhatYouLearn from "../../../components/Topic/WhatYouLearn";
@@ -24,6 +25,8 @@ interface TopicDetail {
 }
 
 const TopicPage: React.FC = () => {
+  const { topicId } = useParams();
+  const session_id = Number(topicId);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [sessionDetails, setSessionDetails] = useState<TopicDetail | null>(null);
@@ -31,7 +34,7 @@ const TopicPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchSessionDetails(1);
+        const data = await fetchSessionDetails(session_id);
         setSessionDetails(data);
       } catch (err: any) {
         setError(err.message || "An error occurred while fetching the session.");
