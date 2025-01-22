@@ -1,16 +1,49 @@
 import axios, { AxiosResponse } from "axios";
-axios.defaults.withCredentials = true;
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { delete_cookie, set_cookie } from "@/lib/utils";
 
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 if (!API_URL) {
 	throw new Error("NEXT_PUBLIC_API_URL is not defined");
 }
 
+// Manggil API tanpa auth headers
+const publicService = axios.create({
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
+// Manggil API yang ngisi auth headers, sign in & sign up
+const authService = axios.create({
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
+	withCredentials: true,
+});
+
+authService.interceptors.response.use((resp) => {
+	if (resp.status == axios.HttpStatusCode.Ok) {
+		set_cookie("isLoggedIn", "true");
+	}
+	return resp;
+});
+
+// Manggil API yang butuh auth headers
+const privateService = axios.create({
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
+	withCredentials: true,
+});
+
+privateService.interceptors.response.use((resp) => {
+	return resp;
+}, (error) => {
+	if (error.status == axios.HttpStatusCode.Unauthorized) {
+		delete_cookie("isLoggedIn");
+		alert("Session Expired, Please Login Again");
+		document.location.replace("/signin");
+	}
+	console.log(error.status)
+});
+
 export const fetchCategories = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/categories`, {
-			maxRedirects: 10,
-		});
+		const response = await publicService.get(`/categories`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching categories:", error);
@@ -20,17 +53,12 @@ export const fetchCategories = async () => {
 
 // Function for searching category by keyword
 export const searchDataByKeyword = async (keyword: string | number) => {
-	if (typeof keyword === "string" && keyword.length < 3) {
-		throw new Error("Keyword must be at least 3 characters long");
-	}
-
 	try {
-		console.log(`Fetching data for keyword: ${keyword}`);
-		const response = await axios.get(`http://localhost:8080/api/v1/search`, {
+		if (typeof keyword === "string" && keyword.length < 3) {
+			throw new Error("Keyword must be at least 3 characters long");
+		}
+		const response = await publicService.get(`/search`, {
 			params: { keyword },
-			headers: {
-				"Content-Type": "application/json",
-			},
 		});
 		console.log("Search response:", response.data);
 		return response.data;
@@ -43,18 +71,25 @@ export const searchDataByKeyword = async (keyword: string | number) => {
 export const fetchCourseSession = async (id: string | number) => {
 	try {
 		console.log(`Fetching course by category for: ${id}`);
-		const response = await axios.get(`${API_URL}/sessions`, {
+		const response = await publicService.get(`/sessions`, {
 			params: {
 				categoryid: id,
-			},
-			headers: {
-				"Content-Type": "application/json",
 			},
 		});
 		console.log("Course sessions response:", response.data);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching course session:", error);
+		throw error;
+	}
+};
+
+export const UserLogOut = async () => {
+	try {
+		const response = await authService.post(`/users/logout`);
+		return response.data;
+	} catch (error) {
+		console.error("Error registering user:", error);
 		throw error;
 	}
 };
@@ -66,10 +101,46 @@ export const UserSignUp = async (userData: {
 	password: string;
 }) => {
 	try {
-		const response = await axios.post(`${API_URL}/users/register`, userData);
+		const response = await authService.post(`/users/register`, userData);
 		return response.data;
 	} catch (error) {
 		console.error("Error registering user:", error);
+		throw error;
+	}
+};
+
+export const UserSignUpGAuth = async (
+	session: any,
+	entity: "learner" | "mentor"
+) => {
+	try {
+		const response = await authService.get(`/auth/google/register`, {
+			params: {
+				entity: entity,
+				access_token: session.accessToken,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error registering user:", error);
+		throw error;
+	}
+};
+
+export const UserSignInGAuth = async (
+	session: any,
+	entity: "learner" | "mentor"
+) => {
+	try {
+		const response = await authService.get(`/auth/google/login`, {
+			params: {
+				entity: entity,
+				access_token: session.accessToken,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error login user:", error);
 		throw error;
 	}
 };
@@ -80,7 +151,7 @@ export const UserSignIn = async (userData: {
 	password: string;
 }) => {
 	try {
-		const response = await axios.post(`${API_URL}/users/login`, userData);
+		const response = await authService.post(`/users/login`, userData);
 		return response.data;
 	} catch (error) {
 		console.error("Error logging in user:", error);
@@ -100,14 +171,12 @@ interface NotificationsResponse {
 }
 
 
-export const fetchNotifications = async (
-	
-): Promise<AxiosResponse<NotificationsResponse>> => {
+export const fetchNotifications = async (): Promise<
+	AxiosResponse<NotificationsResponse>
+> => {
 	try {
 		// API Call for protected
-		const response = await axios.get(`${API_URL}/users/notifications`, {
-			
-		});
+		const response = await privateService.get(`/users/notifications`);
 		return response;
 	} catch (error) {
 		console.error("Error fetching notifications:", error);
@@ -125,12 +194,11 @@ interface LearnersInterestResponse {
 	data: LearnersInterest[];
 }
 
-export const fetchLearnersInterests = async (
-): Promise<AxiosResponse<LearnersInterestResponse>> => {
+export const fetchLearnersInterests = async (): Promise<
+	AxiosResponse<LearnersInterestResponse>
+> => {
 	try {
-		const response = await axios.get(`${API_URL}/learners/interests`, {
-			
-		});
+		const response = await privateService.get(`/learners/interests`);
 		return response;
 	} catch (error) {
 		console.error("Error fetching learner interests:", error);
@@ -141,11 +209,7 @@ export const fetchLearnersInterests = async (
 // Function for Fetching Landing Page Category
 export const fetchLandingPageCategories = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/categories/featured`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await publicService.get(`/categories/featured`);
 		return response.data; // Return the data directly
 	} catch (error) {
 		console.error("Error fetching categories:", error);
@@ -156,11 +220,7 @@ export const fetchLandingPageCategories = async () => {
 // Function for Fetching Featured Mentors
 export const fetchFeaturedMentors = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/mentors/landingpage`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await publicService.get(`/mentors/landingpage`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching mentors:", error);
@@ -171,11 +231,7 @@ export const fetchFeaturedMentors = async () => {
 // Function to fetch upcoming sessions
 export const fetchUpcomingSessions = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/sessions/upcoming`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await privateService.get(`/sessions/upcoming`);
 		return response.data.sessions;
 	} catch (error) {
 		console.error("Error fetching upcoming sessions:", error);
@@ -186,17 +242,9 @@ export const fetchUpcomingSessions = async () => {
 // Function to post learner interests
 export const postLearnerInterest = async (categoryIds: number[]) => {
 	try {
-		const response = await axios.post(
-			`${API_URL}/learners/interest`,
-			{
-				category_id: categoryIds,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
+		const response = await privateService.post(`/learners/interest`, {
+			category_id: categoryIds,
+		});
 		return response.data;
 	} catch (error) {
 		console.error("Error posting learner interests:", error);
@@ -207,11 +255,7 @@ export const postLearnerInterest = async (categoryIds: number[]) => {
 // Function to fetch mentor details
 export const fetchMentorDetail = async (id: string | number) => {
 	try {
-		const response = await axios.get(`${API_URL}/mentors/${id}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await publicService.get(`/mentors/${id}`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching mentor detail:", error);
@@ -222,11 +266,7 @@ export const fetchMentorDetail = async (id: string | number) => {
 // Function to fetch session class
 export const fetchSessionClass = async (userId: number) => {
 	try {
-		const response = await axios.get(`${API_URL}/mentors/${userId}/sessions`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await publicService.get(`/mentors/${userId}/sessions`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching session class:", error);
@@ -237,11 +277,7 @@ export const fetchSessionClass = async (userId: number) => {
 // Function to fetch learner profile
 export const fetchLearnerProfile = async (id: number) => {
 	try {
-		const response = await axios.get(`${API_URL}/learners/${id}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await privateService.get(`/learners/${id}`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching learner profile:", error);
@@ -252,7 +288,7 @@ export const fetchLearnerProfile = async (id: number) => {
 // Function to fetch session detail by id
 export const fetchSessionDetails = async (sessionId: number) => {
 	try {
-		const response = await axios.get(`${API_URL}/sessions/${sessionId}`);
+		const response = await publicService.get(`/sessions/${sessionId}`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching session details:", error);
@@ -266,55 +302,42 @@ export const addReview = async (
 	rating: number,
 	review: string,
 ) => {
-	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
-		method: "POST",
-		body: JSON.stringify({ rating, review }),
-	});
-
-	if (!response.ok) {
-		throw new Error(`Network response was not ok: ${response.statusText}`);
+	try {
+		const response = await privateService.post(
+			`/sessions/${sessionId}/review`,
+			{
+				rating,
+				review,
+			}
+		);
+		return response.data();
+	} catch (error) {
+		console.error("Error fetching session details:", error);
+		throw error;
 	}
-
-	return response.json();
 };
 
 // Function to fetch reviews
-export const fetchReviews = async (sessionId: number) => {
-	const response = await fetch(`${API_URL}/sessions/${sessionId}/review`, {
-		method: "GET",
-		
-	});
-
-	if (!response.ok) {
-		throw new Error(`Network response was not ok: ${response.statusText}`);
+export const fetchReviews = async (sessionId: number, token: string) => {
+	try {
+		const response = await publicService.get("/sessions/${sessionId}/review");
+		return response;
+	} catch (error) {
+		console.error("Error fetching session details:", error);
+		throw error;
 	}
-
-	return response.json();
 };
 
 // Function to toggle follow mentor
 export const toggleFollowMentor = async (
 	mentorId: number,
-	isFollowing: boolean,
+	isFollowing: boolean
 ) => {
 	try {
 		console.log("Mentor ID:", mentorId);
 		console.log("Is Following:", isFollowing);
-
-		const response = await fetch(`${API_URL}/mentors/${mentorId}/follow`, {
-			method: isFollowing ? "DELETE" : "POST",
-		});
-
-		console.log("Response:", response);
-
-		if (!response.ok) {
-			if (response.status === 401) {
-				throw new Error("Unauthorized: Please check your token.");
-			}
-			throw new Error(`Network response was not ok: ${response.statusText}`);
-		}
-
-		return response.json();
+		const response = await privateService.post(`/mentors/${mentorId}/follow`);
+		return response;
 	} catch (error) {
 		console.error("Error toggling follow status:", error);
 		throw error;
@@ -325,26 +348,12 @@ export const toggleFollowMentor = async (
 export const getMentorFollowStatus = async (
 	mentorId: number,
 ) => {
-
 	try {
 		console.log("Mentor ID:", mentorId);
-
-		const response = await fetch(`${API_URL}/mentors/${mentorId}/status`, {
-			method: "GET",
-		});
-
+		console.log("Access Token:", access_token);
+		const response = await privateService.get(`/mentors/${mentorId}/status`);
 		console.log("Response:", response);
-
-		if (!response.ok) {
-			if (response.status === 401) {
-				throw new Error("Unauthorized: Please check your token.");
-			}
-			throw new Error(`Network response was not ok: ${response.statusText}`);
-		}
-
-		const responseBody = await response.json();
-		console.log("Response body:", responseBody); // Debugging
-		return responseBody; // Response includes `is_following`
+		return response; // Response includes `is_following`
 	} catch (error) {
 		console.error("Error fetching follow status:", error);
 		throw error;
