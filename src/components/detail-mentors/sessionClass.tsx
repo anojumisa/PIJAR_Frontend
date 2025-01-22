@@ -1,8 +1,10 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/animation/loading/page";
 import { fetchSessionClass } from "@/utils/api";
+import StarRating from "../custom-rate/customrate";
+import { format, toZonedTime } from "date-fns-tz";
 
 interface MentorDetails {
   id: number;
@@ -11,32 +13,87 @@ interface MentorDetails {
 }
 
 interface MentorSession {
-  mentor_session_title: string;
-  short_description: string;
-  schedule: string;
-  registered: boolean;
+  session_id: number;
   mentor_details: MentorDetails;
+  category: string;
+  title: string;
+  short_description: string;
+  detail: string;
+  schedule: string;
+  duration: number;
+  image_url: string;
+  link: string;
+  day: string;
+  time: string;
+  average_rating: number;
+  scheduleLocal?: string;
+  scheduleWIB?: string;
+  scheduleWITA?: string;
+  scheduleWIT?: string;
 }
 
 interface ClassSessionProps {
-  userId: string;
+  sessionId: number;
 }
 
-export default function ClassSession({ userId }: ClassSessionProps) {
-  const [sessions, setSessions] = useState<MentorSession[] | null>(null);
+export default function ClassSession({ sessionId }: ClassSessionProps) {
+  const [sessions, setSessions] = useState<MentorSession | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const getTimeZoneLabel = (timezone: string): string => {
+    switch (timezone) {
+      case "Asia/Jakarta":
+        return "WIB";
+      case "Asia/Makassar":
+        return "WITA";
+      case "Asia/Jayapura":
+        return "WIT";
+      default:
+        return "Unknown";
+    }
+  };
+
+  const formatToLocalTimezone = (dateString: string, timezone: string) => {
+    const date = new Date(dateString);
+    const zonedTime = toZonedTime(date, timezone);
+    return format(zonedTime, "yyyy-MM-dd HH:mm:ss zzz", { timeZone: timezone });
+  };
+
+  const getUserTimezone = () =>
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
+    if (!sessionId) {
+      setError("Invalid or missing user ID.");
+      setLoading(false);
+      return;
+    }
+
     const fetchClassSessions = async () => {
       try {
-        const numericUserId = Number(userId);
-        if (isNaN(numericUserId)) {
-          throw new Error("Invalid user ID");
-        }
+        const response = await fetchSessionClass(sessionId);
+        console.log("Class sessions fetched:", response); 
+        const userTimezone = getUserTimezone();
+        const formattedResponse = {
+          ...response,
+          scheduleLocal: formatToLocalTimezone(response.schedule, userTimezone),
+        };
 
-        const response = await fetchSessionClass(numericUserId);
-        setSessions(response);
+        setSessions(formattedResponse);
+        // const formattedResponse = {
+        //   ...response,
+        //   scheduleWIB: formatDateToTimezone(response.schedule, "Asia/Jakarta"),
+        //   scheduleWITA: formatDateToTimezone(response.schedule, "Asia/Makassar"),
+        //   scheduleWIT: formatDateToTimezone(response.schedule, "Asia/Jayapura"),
+        // };
+        // setSessions(formattedResponse);
+        // if (Array.isArray(response)) {
+        //   setSessions(response);
+        // } else if (Array.isArray(response) && response.length === 0) {
+        //   setError("No sessions available.");
+        //  } else {
+        //    setError("Invalid data format received.");
+        //  }
       } catch (err) {
         setError("Error fetching sessions");
         console.error(err);
@@ -46,68 +103,72 @@ export default function ClassSession({ userId }: ClassSessionProps) {
     };
 
     fetchClassSessions();
-  }, [userId]);
+  }, [sessionId]);
 
   if (loading) return <Loading />;
   if (error) return <main>{error}</main>;
+  if (!sessions) return <main>No sessions available</main>;
 
   return (
-    <div
-      className="bg-slate-200"
-      style={{
-        margin: "1.25rem 0",
-        padding: "1.25rem",
-        borderRadius: "0.5rem",
-      }}
-    >
-      <h2 className="text-base md:text-lg lg:text-2xl font-semibold font-lilita mb-4">
-        Kelas yang Akan Datang
-      </h2>
-      {(!sessions || sessions.length === 0) && (
-        <p className="text-center text-xl font-semibold text-gray-500">
-          Belum ada kelas yang dibuat
-        </p>
-      )}
-      {sessions && sessions.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5 lg:gap-6">
-          {sessions.map((session) => {
-            
-            const imageUrl =
-              session.mentor_details.image_url ||
-              "https://via.placeholder.com/150"; 
-            
-            return (
-              <div
-                className="text-xs md:text-base lg:text-lg rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 p-[0.5rem] lg:p-[1rem] text-center text-white transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
-                key={session.mentor_session_title}
-              >
-                <img
-                  className="w-full h-[10rem] rounded-lg"
-                  src={imageUrl}
-                  alt={session.mentor_session_title}
-                />
-                <h3 className="pt-4 font-bold font-firaSans text-amber-300">
-                  {session.mentor_session_title}
-                </h3>
-                <p className="pt-4 font-bold font-firaSans text-amber-300">
-                  {session.short_description}
-                </p>
-                <p>{session.schedule}</p>
-
-                {/* <button
-                  className="mt-4 bg-sky-700 rounded-lg text-white font-openSans"
-                  style={{
-                    padding: "0.63rem 1.25rem",
-                    cursor: "pointer",
-                  }}
-                >
-                  Daftar
-                </button> */}
-              </div>
-            );
-          })}
+    <>
+      <div className="bg-slate-200 p-5 rounded-lg my-5">
+        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold mb-4">
+          Kelas yang Akan Datang
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 p-4 text-center text-white transform transition duration-300 hover:scale-105">
+            <img
+              src={sessions.image_url || "https://via.placeholder.com/150"}
+            ></img>
+            <h3 className="pt-3 font-bold text-amber-300">{sessions.title}</h3>
+            <p className="pt-1 font-bold text-amber-300">
+              {sessions.short_description}
+            </p>
+            <StarRating rating={sessions.average_rating || 0} />
+            {/* <p className="pt-1 font-bold text-amber-300">{sessions.schedule}</p> */}
+            {/* <p className="pt-1 font-bold text-amber-300">
+              WIB: {sessions.scheduleWIB}
+            </p>
+            <p className="pt-1 font-bold text-amber-300">
+              WITA: {sessions.scheduleWITA}
+            </p>
+            <p className="pt-1 font-bold text-amber-300">
+              WIT: {sessions.scheduleWIT}
+            </p> */}
+            <p className="pt-1 font-bold text-amber-300">
+              {sessions.scheduleLocal}
+            </p>
+            <p className="font-bold text-amber-300">{sessions.time}</p>
+          </div>
         </div>
-      )}
-    </div>
+        {/* {sessions && sessions.length === 0 ? (
+      <p className="text-center text-lg font-medium text-gray-500">
+        Belum ada kelas yang dibuat
+      </p>
+    ) : (
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+       
+        {sessions.map((session) => (
+          <div
+            key={session.session_id}
+            className="rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 p-4 text-center text-white transform transition duration-300 hover:scale-105"
+          >
+            <img
+              className="w-full h-40 rounded-lg object-cover"
+              src={session.image_url ||"https://via.placeholder.com/150"}
+              alt={session.title}
+            />
+            <h3 className="pt-3 font-bold text-amber-300">{session.title}</h3>
+            <p className="pt-1 font-bold text-amber-300">{session.short_description}</p>
+            <StarRating rating={session.average_rating || 0} />
+            <p className="pt-1 font-bold text-amber-300">{session.schedule}</p>
+            <p className="font-bold text-amber-300">{session.time}</p>
+              
+          </div>
+        ))}
+      </div>
+    )} */}
+      </div>
+    </>
   );
 }

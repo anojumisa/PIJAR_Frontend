@@ -11,11 +11,6 @@ export interface SubCategory {
   sub_category_name:string
 }
 
-export interface MentorDetails {
-  mentor_id: number;
-  fullname: string;
-  image_url: string;
-}
 
 //mentor detail
 export interface MentorExperience {
@@ -51,6 +46,11 @@ export interface Education {
   description: string;
 }
 
+export interface MentorDetails {
+  mentor_id: number;
+  fullname: string;
+  image_url: string;
+}
 
 export interface MentorSession {
   mentor_session_title: string;
@@ -62,7 +62,8 @@ export interface MentorSession {
   session_id: number;
 }
 
-export interface Session {
+export interface Sessions {
+  id:number;
   sessions: MentorSession[];
   total: number;
   page: number;
@@ -76,6 +77,18 @@ export interface Session {
 
 export interface Topic {
   category_name: string;
+}
+
+
+export interface Session {
+  session_id: number;
+  mentor_details: MentorDetails;
+  category: string;
+  title: string;
+  short_description: string;
+  detail: string;
+  schedule: string; 
+  duration: number;
   image_url: string;
   id: number;
 

@@ -262,9 +262,9 @@ export const fetchMentorDetail = async (id: string | number) => {
 };
 
 // Function to fetch session class
-export const fetchSessionClass = async (userId: number) => {
+export const fetchSessionClass = async (sessionId: number) => {
 	try {
-		const response = await publicService.get(`/mentors/${userId}/sessions`);
+		const response = await publicService.get(`/sessions/${sessionId}`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching session class:", error);
