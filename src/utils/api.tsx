@@ -176,8 +176,8 @@ export const fetchNotifications = async (): Promise<
 > => {
 	try {
 		// API Call for protected
-		const response = await privateService.get(`/users/notifications`);
-		return response.data;
+		const response = await privateService.get<NotificationsResponse>(`/users/notifications`);
+		return response;
 	} catch (error) {
 		console.error("Error fetching notifications:", error);
 		throw error;
@@ -194,11 +194,9 @@ interface LearnersInterestResponse {
 	data: LearnersInterest[];
 }
 
-export const fetchLearnersInterests = async (): Promise<
-	AxiosResponse<LearnersInterestResponse>
-> => {
+export const fetchLearnersInterests = async (): Promise<LearnersInterestResponse> => {
 	try {
-		const response = await privateService.get(`/learners/interests`);
+		const response = await privateService.get<LearnersInterestResponse>(`/learners/interests`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching learner interests:", error);

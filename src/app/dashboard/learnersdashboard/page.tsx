@@ -31,7 +31,7 @@ export default function LearnerDashboard() {
 				// const historyResponse = await axios.get("/api/learner/history");
 				const interestResponse = await fetchLearnersInterests()
 				// setLearningHistory(historyResponse.data.history);
-				setInterests(interestResponse.data.data);
+				setInterests(interestResponse.data);
 			} catch (err) {
 				console.error("Error fetching data:", err);
 				setError("Failed to load data.");
