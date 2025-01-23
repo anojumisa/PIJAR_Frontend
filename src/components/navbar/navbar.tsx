@@ -78,8 +78,8 @@ const Navbar_not_auth: React.FC = () => {
 	return (
 		<nav className="bg-gradient-to-t from-sky-800 to-gray-900 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
 			<div className="flex-auto p-4">
-				<ul className="flex flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-					<li>
+				<ul className="flex flex-col md:flex-row items-center justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+					<li className="mb-4 md:mb-0">
 						<a
 							href="/"
 							className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -92,7 +92,7 @@ const Navbar_not_auth: React.FC = () => {
 							/>
 						</a>
 					</li>
-					<div className="relative inline-flex">
+					<div className="relative inline-flex flex-col md:flex-row items-center w-full md:w-auto">
 						<Categories categories={categories} />
 						<SearchBar />
 					</div>

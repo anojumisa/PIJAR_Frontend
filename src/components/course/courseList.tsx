@@ -33,7 +33,7 @@ export default function CourseList({ sessions }: CourseListProps) {
       <div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {newCourses.map((course) => (
           <Link key={course.mentor_session_title} href={`/topic/${course.session_id}`}>
-            <div className="rounded-lg bg-white shadow p-4 bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer">
+            <div className="rounded-lg bg-white shadow p-4 bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer space-y-2">
               <img
                 src={course.image_url || "https://via.placeholder.com/150"}
                 alt={course.mentor_session_title}
@@ -52,7 +52,7 @@ export default function CourseList({ sessions }: CourseListProps) {
                 </div>
                 <StarRating rating={course.average_rating || 0} />
               </div>
-              <p className=" justify-center text-bold text-black mt-2">{course.schedule}</p>
+              <p className=" justify-center text-bold text-black mt-2">{formatSchedule(course.schedule)}</p>
             </div>
           </Link>
         ))}
@@ -62,7 +62,7 @@ export default function CourseList({ sessions }: CourseListProps) {
       <div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {oldCourses.map((course) => (
           <Link key={course.mentor_session_title} href={`/topic/${course.session_id}`}>
-            <div className="rounded-lg bg-white shadow p-4 bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer">
+            <div className="rounded-lg bg-white shadow p-4 bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer space-y-2">
               <img
                 src={course.image_url || "https://via.placeholder.com/150"}
                 alt={course.mentor_session_title}

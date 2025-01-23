@@ -23,7 +23,7 @@ interface ReviewsResponse {
 }
 
 const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
-    const [reviews, setReviews] = useState<Review[]>([]);
+    const [reviews, setReviews] = useState<Review[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -54,7 +54,7 @@ const Reviews: React.FC<{ sessionId: number }> = ({ sessionId }) => {
         return <div>Error: {error}</div>;
     }
 
-    if (reviews.length === 0) {
+    if (!reviews || reviews.length === 0) {
         return <div>No reviews found</div>;
     }
 
