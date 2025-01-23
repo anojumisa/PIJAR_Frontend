@@ -27,8 +27,8 @@ export default function CourseList({ sessions }: CourseListProps) {
               alt={course.mentor_session_title}
               className="w-full h-32 object-cover rounded-lg"
             />
-            <h3 className="mt-2 font-bold text-amber-500 line-clamp-2">{course.mentor_session_title}</h3>
-            <p className="mt-2 font-bold text-amber-400 line-clamp-2">{course.short_description}</p>
+            <h3 className="mt-2 font-bold text-black line-clamp-2">{course.mentor_session_title}</h3>
+            <p className="mt-2 font-bold text-black line-clamp-2">{course.short_description}</p>
             <div className="flex justify-between items-center">
               <div className="flex gap-1">
                 <img
@@ -36,11 +36,11 @@ export default function CourseList({ sessions }: CourseListProps) {
                   src={course.mentor_details.image_url || "https://via.placeholder.com/150"}
                   alt={course.mentor_details.fullname}
                 />
-                <p className="text-sm text-amber-300">{course.mentor_details.fullname}</p>
+                <p className="text-sm text-amber-900">{course.mentor_details.fullname}</p>
               </div>
               <StarRating rating={course.average_rating || 0} />
             </div>
-            <p className=" justify-center text-bold text-amber-500 mt-2">{course.schedule}</p>
+            <p className=" justify-center text-bold text-black mt-2">{course.schedule}</p>
           </div>
         ))}
       </div>
@@ -54,8 +54,8 @@ export default function CourseList({ sessions }: CourseListProps) {
               alt={course.mentor_session_title}
               className="w-full h-32 object-cover rounded-lg"
             />
-            <h3 className="mt-2 font-bold text-amber-500 line-clamp-2">{course.mentor_session_title}</h3>
-            <p className="mt-2 font-bold text-amber-400 line-clamp-2">{course.short_description}</p>
+            <h3 className="mt-2 font-bold text-black line-clamp-2">{course.mentor_session_title}</h3>
+            <p className="mt-2 font-bold text-black line-clamp-2">{course.short_description}</p>
             <div className="flex justify-between items-center">
               <div className="flex gap-1">
                 <img
@@ -63,11 +63,11 @@ export default function CourseList({ sessions }: CourseListProps) {
                   src={course.mentor_details.image_url || "https://via.placeholder.com/150"}
                   alt={course.mentor_details.fullname}
                 />
-                <p className="text-sm text-amber-300">{course.mentor_details.fullname}</p>
+                <p className="text-sm text-amber-900">{course.mentor_details.fullname}</p>
               </div>
               <StarRating rating={course.average_rating || 0} />
             </div>
-            <p className="text-bold text-amber-500 mt-4 p-10">{course.schedule}</p>
+            <p className="text-bold text-black mt-4 p-10">{course.schedule}</p>
           </div>
         ))}
       </div>

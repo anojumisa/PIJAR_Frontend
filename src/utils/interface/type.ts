@@ -59,6 +59,7 @@ export interface MentorSession {
   schedule: string; 
   mentor_details: MentorDetails;
   average_rating: number;
+  session_id: number;
 }
 
 export interface Session {
@@ -76,5 +77,6 @@ export interface Session {
 export interface Topic {
   category_name: string;
   image_url: string;
+  id: number;
 
 }
