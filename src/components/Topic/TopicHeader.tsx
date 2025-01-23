@@ -63,7 +63,7 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({
 			</div>
 			<div className="mt-4 text-center">
 				<Link
-					href={`/session/${session_id}`}
+					href={`/session/${session_id}`} 
 					target="_blank"
 					rel="noopener noreferrer"
 					className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium text-sm rounded hover:bg-blue-600 transition duration-300"
