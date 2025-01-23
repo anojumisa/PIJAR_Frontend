@@ -11,6 +11,7 @@ type UpcomingSession = {
     short_description: string;
     schedule: string;
     link: string;
+    session_id: number;
 };
 
 const UpcomingSession: React.FC = () => {
@@ -55,6 +56,7 @@ const UpcomingSession: React.FC = () => {
                             short_description={session.short_description}
                             schedule={session.schedule}
                             link={session.link}
+                            session_id={session.session_id}
                         />
                     ))
                 ) : (
