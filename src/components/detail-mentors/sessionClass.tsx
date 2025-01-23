@@ -80,20 +80,6 @@ export default function ClassSession({ sessionId }: ClassSessionProps) {
         };
 
         setSessions(formattedResponse);
-        // const formattedResponse = {
-        //   ...response,
-        //   scheduleWIB: formatDateToTimezone(response.schedule, "Asia/Jakarta"),
-        //   scheduleWITA: formatDateToTimezone(response.schedule, "Asia/Makassar"),
-        //   scheduleWIT: formatDateToTimezone(response.schedule, "Asia/Jayapura"),
-        // };
-        // setSessions(formattedResponse);
-        // if (Array.isArray(response)) {
-        //   setSessions(response);
-        // } else if (Array.isArray(response) && response.length === 0) {
-        //   setError("No sessions available.");
-        //  } else {
-        //    setError("Invalid data format received.");
-        //  }
       } catch (err) {
         setError("Error fetching sessions");
         console.error(err);
@@ -125,16 +111,6 @@ export default function ClassSession({ sessionId }: ClassSessionProps) {
               {sessions.short_description}
             </p>
             <StarRating rating={sessions.average_rating || 0} />
-            {/* <p className="pt-1 font-bold text-amber-300">{sessions.schedule}</p> */}
-            {/* <p className="pt-1 font-bold text-amber-300">
-              WIB: {sessions.scheduleWIB}
-            </p>
-            <p className="pt-1 font-bold text-amber-300">
-              WITA: {sessions.scheduleWITA}
-            </p>
-            <p className="pt-1 font-bold text-amber-300">
-              WIT: {sessions.scheduleWIT}
-            </p> */}
             <p className="pt-1 font-bold text-amber-300">
               {sessions.scheduleLocal}
             </p>
