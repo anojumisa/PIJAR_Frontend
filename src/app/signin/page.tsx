@@ -148,9 +148,10 @@ export default function SignIn() {
 
 					<button
 						onClick={handleGoogleSignIn}
-						className="w-full bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition"
-					>
-						Masuk dengan Google
+						className="w-full flex flex-row gap-2 items-center border-2 justify-center  text-black font-bold py-2 rounded-lg hover:bg-gray-300 transition"
+						>
+						<img src="/google.png" alt="Google logo" className="w-6" />
+						<span>Masuk dengan Google</span>
 					</button>
 
 					<p className="text-center text-gray-600 mt-4">

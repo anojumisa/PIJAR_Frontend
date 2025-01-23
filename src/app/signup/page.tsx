@@ -262,9 +262,10 @@ export default function SignUp() {
 
 							<button
 								onClick={handleGoogleSignUp}
-								className="w-full bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition"
+								className="w-full flex flex-row gap-2 items-center border-2 justify-center  text-black font-bold py-2 rounded-lg hover:bg-gray-300 transition"
 							>
-								Daftar dengan Google
+								<img src="/google.png" alt="google logo" className="w-6" />
+								<span>Daftar dengan Google</span>
 							</button>
 
 							<p className="text-center text-gray-600 mt-4">
