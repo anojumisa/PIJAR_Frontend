@@ -11,9 +11,10 @@ interface TopicHeaderProps {
     short_description: string;
     average_rating: number;
     link: string;
+    session_id: number;
 };
 
-const TopicHeader: React.FC<TopicHeaderProps> = ({ mentor_details, title, short_description, average_rating, link }) => {
+const TopicHeader: React.FC<TopicHeaderProps> = ({ mentor_details, title, short_description, average_rating, session_id }) => {
     return(
         <div className="p-4 bg-neutral-800 shadow border border-neutral-400 rounded-2xl">
             <img
@@ -47,7 +48,7 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({ mentor_details, title, short_
             </div>
             <div className="mt-4 text-center">
                 <a
-                    href={link}
+                    href={`/session/${session_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium text-sm rounded hover:bg-blue-600 transition duration-300"

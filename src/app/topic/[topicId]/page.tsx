@@ -65,6 +65,7 @@ const TopicPage: React.FC = () => {
                   short_description={sessionDetails.short_description}
                   average_rating={sessionDetails.average_rating}
                   link={sessionDetails.link}
+                  session_id={sessionDetails.session_id}
                 />
               </div>
               <div className="mt-8">
