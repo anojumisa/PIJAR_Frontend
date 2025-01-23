@@ -318,7 +318,7 @@ export const addReview = async (
 // Function to fetch reviews
 export const fetchReviews = async (sessionId: number) => {
 	try {
-		const response = await publicService.get("/sessions/${sessionId}/review");
+		const response = await publicService.get(`/sessions/${sessionId}/review`);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching session details:", error);
