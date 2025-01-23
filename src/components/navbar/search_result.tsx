@@ -10,6 +10,26 @@ import { MentorSearchResultItem, SessionSearchResultItem, TopicSearchResultItem 
   mentors?: MentorSearchResultItem[];
   sessions?: SessionSearchResultItem[];
   topics?: TopicSearchResultItem[];
+import React, { useState, useEffect, Suspense } from "react";
+import { searchDataByKeyword } from "@/utils/api";
+import { useSearchParams } from "next/navigation";
+import Loading from "../animation/loading/page";
+
+interface Mentor {
+  email: string;
+  fullname: string;
+  image_url: string;
+}
+
+interface Session {
+  image_url: string;
+  schedule: string;
+  short_description: string;
+  title: string;
+}
+
+interface Topic {
+  category_name: string;
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ mentors, sessions, topics }) => {

@@ -8,6 +8,8 @@ import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { UserSignIn } from "@/utils/api";
 import { set_cookie } from "@/lib/utils";
+import { signIn } from "next-auth/react";
+import { sign } from "crypto";
 
 interface SignInFormValues {
 	email: string;
@@ -41,8 +43,6 @@ export default function SignIn() {
 		try {
 			const data = await UserSignIn(values);
 			// Simpan info hasil signup -> set cookie access_token & refresh_token
-			set_cookie("access_token", data.access_token);
-			set_cookie("refresh_token", data.refresh_token);
 			toast.success("Berhasil Masuk! 🎉", {
 				description: "Selamat datang kembali!",
 			});
@@ -50,12 +50,17 @@ export default function SignIn() {
 			document.location.replace("/")
 		} catch (error) {
 			toast.error("Gagal Masuk", {
-				description: `Periksa kembali email dan kata sandi Anda., error: ${(error as any).response?.data.error}`,
+				description: `Periksa kembali email dan kata sandi Anda.`,
 			});
-			console.error("Sign In error:", error);
+	
 		} finally {
 			setSubmitting(false);
 		}
+	};
+
+	const handleGoogleSignIn = () => {
+		signIn("google", { callbackUrl: "/signin/oauth" });
+		
 	};
 
 	return (
@@ -138,6 +143,16 @@ export default function SignIn() {
 							</Form>
 						)}
 					</Formik>
+
+					<div className="my-6 text-center text-gray-600">Atau</div>
+
+					<button
+						onClick={handleGoogleSignIn}
+						className="w-full flex flex-row gap-2 items-center border-2 justify-center  text-black font-bold py-2 rounded-lg hover:bg-gray-300 transition"
+						>
+						<img src="/google.png" alt="Google logo" className="w-6" />
+						<span>Masuk dengan Google</span>
+					</button>
 
 					<p className="text-center text-gray-600 mt-4">
 						Belum punya akun?{" "}

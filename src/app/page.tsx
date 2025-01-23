@@ -11,6 +11,8 @@ export default function Home() {
 	return (
 		<>
 			<Navbar />
+
+			<Banner />
 			<Topic />
 			<FeaturedMentors />
 			<UpcomingSession />

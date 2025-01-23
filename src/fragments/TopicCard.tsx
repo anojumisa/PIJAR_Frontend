@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 interface TopicCardProps {
     category_name: string;
-    image_url: string;
+    image_url?: string;
 }
 
 const TopicCard: React.FC<TopicCardProps> = ({ category_name, image_url }) => {

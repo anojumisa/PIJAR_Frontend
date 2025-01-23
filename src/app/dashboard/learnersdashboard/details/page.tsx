@@ -34,7 +34,7 @@ interface Learner {
 
 function LearnersDashboardDetail() {
 	const searchParams = useSearchParams();
-	const id = searchParams.get("id");
+	const id = searchParams?.get("id");
 	const [learner, setLearner] = useState<Learner | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);

@@ -7,38 +7,22 @@ import MentorsProfile from "@/components/detail-mentors/profileMentor";
 import MentorsIntro from "@/components/detail-mentors/introduction";
 import ExperienceMentors from "@/components/detail-mentors/experienceMentors";
 import ClassSession from "@/components/detail-mentors/sessionClass";
+import { Mentor } from "@/utils/interface/type";
+import Footer from "@/components/landing-page/Footer";
+import Navbar_not_auth from "@/components/navbar/navbar";
 
-
-interface MentorExperience {
-  company_name: string;
-  end_date: string; 
-  occupation: string;
-  start_date: string; 
-}
-
-interface MentorExpertise {
-  category: string;
-  expertise: string;
-}
-
-interface Mentor {
-  fullname: string;
-  image_url: string;
-  mentor_bio: string;
-  mentor_experiences: MentorExperience[];
-  mentor_expertise: MentorExpertise[];
-  occupation: string;
-  user_id: number;
-}
-
-
-export default function MentorsDetail({ params }: { params: Promise<{ mentorId: string }> }) {
+export default function MentorsDetail({
+  params,
+}: {
+  params: Promise<{ mentorId: string }>;
+}) {
   const [mentor, setMentor] = useState<Mentor | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
   const mentorParams = React.use(params) as { mentorId: string };
   const mentorId = mentorParams.mentorId;
- 
+
   useEffect(() => {
     const fetchMentorDetails = async () => {
       try {
@@ -60,12 +44,17 @@ export default function MentorsDetail({ params }: { params: Promise<{ mentorId: 
   if (!mentor) return <main>No mentor data available.</main>;
 
   return (
-    <div className="relative p-[1.5rem] md:p-[3rem] lg:p-[5rem] bg-black">
-      <MentorsProfile mentor={mentor} />
-      <MentorsIntro mentor={mentor} />
-      <ExperienceMentors mentor={mentor} />
-      <EducationAndSkills mentor={mentor}/>
-      <ClassSession userId={String(mentor.user_id)} /> {/* explisite prop */}
-    </div>
+    <>
+      <Navbar_not_auth />
+      <div className="relative p-[1.5rem] md:p-[3rem] lg:p-[5rem] bg-black">
+        <MentorsProfile mentor={mentor} />
+        <MentorsIntro mentor={mentor} />
+        <ExperienceMentors mentor={mentor} />
+        <EducationAndSkills mentor={mentor} />
+        <ClassSession sessionId={mentor.user_id} />
+      </div>
+      console.log({mentor.user_id})
+      <Footer />
+    </>
   );
 }

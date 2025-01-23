@@ -1,10 +1,48 @@
 import axios, { AxiosResponse } from "axios";
+import { delete_cookie, set_cookie } from "@/lib/utils";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 if (!API_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is not defined");
 }
+
+// Manggil API tanpa auth headers
+const publicService = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
+// Manggil API yang ngisi auth headers, sign in & sign up
+const authService = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
+});
+
+authService.interceptors.response.use((resp) => {
+  if (resp.status == axios.HttpStatusCode.Ok) {
+    set_cookie("isLoggedIn", "true");
+  }
+  return resp;
+});
+
+// Manggil API yang butuh auth headers
+const privateService = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
+});
+
+privateService.interceptors.response.use(
+  (resp) => {
+    return resp;
+  },
+  (error) => {
+    if (error.status == axios.HttpStatusCode.Unauthorized) {
+      delete_cookie("isLoggedIn");
+      alert("Session Expired, Please Login Again");
+      document.location.replace("/signin");
+    }
+    console.log(error.status);
+  }
+);
 
 export const fetchCategories = async () => {
   try {
@@ -14,6 +52,49 @@ export const fetchCategories = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
+// Function for searching category by keyword
+export const searchDataByKeyword = async (keyword: string | number) => {
+  try {
+    if (typeof keyword === "string" && keyword.length < 3) {
+      throw new Error("Keyword must be at least 3 characters long");
+    }
+    const response = await publicService.get(`/search`, {
+      params: { keyword },
+    });
+    console.log("Search response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
+export const fetchCourseSession = async (id: string | number) => {
+  try {
+    console.log(`Fetching course by category for: ${id}`);
+    const response = await publicService.get(`/sessions`, {
+      params: {
+        categoryid: id,
+      },
+    });
+    console.log("Course sessions response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching course session:", error);
+    throw error;
+  }
+};
+
+export const UserLogOut = async () => {
+  try {
+    const response = await authService.post(`/users/logout`);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering user:", error);
     throw error;
   }
 };
@@ -29,6 +110,24 @@ export const UserSignUp = async (userData: {
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const UserSignInGAuth = async (
+  session: any,
+  entity: "learner" | "mentor"
+) => {
+  try {
+    const response = await authService.get(`/auth/google/login`, {
+      params: {
+        entity: entity,
+        access_token: session.accessToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error login user:", error);
     throw error;
   }
 };

@@ -77,15 +77,6 @@ export default function SignUp() {
 				setInterests(data);
 				setIsLoading(false);
 			} catch (error) {
-				if (error instanceof AxiosError && error.response?.status === 401) {
-					// Unauthorized
-					console.error("Unauthorized");
-					// Logout
-					delete_cookie("access_token");
-					delete_cookie("refresh_token");
-					alert("Session Expired, Please Login Again");
-					document.location.replace("/signin");
-				}
 				console.error("Error fetching interests:", error);
 			}
 		};

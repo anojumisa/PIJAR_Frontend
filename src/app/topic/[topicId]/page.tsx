@@ -1,10 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import ImageButton from "../../../components/Topic/ImageButton";
 import TopicHeader from "../../../components/Topic/TopicHeader";
 import WhatYouLearn from "../../../components/Topic/WhatYouLearn";
 import Footer from "@/components/landing-page/Footer";
 import Navbar from "@/components/navbar/navbar";
+import Loading from "@/components/animation/loading/page";
+import { fetchSessionDetails } from "@/utils/api";
 
 const MOCK_TOPIC_DATA = {
 	id: "123",

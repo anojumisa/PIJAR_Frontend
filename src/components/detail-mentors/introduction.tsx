@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
+import { Mentor } from "../../utils/interface/type";
 
 interface Props {
-  mentor: {
-    fullname: string;
-    mentor_bio: string;
-  };
+  mentor: Mentor
 }
 
 export default function MentorsIntro({ mentor }: Props) {

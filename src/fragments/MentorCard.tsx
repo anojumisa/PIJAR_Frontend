@@ -2,24 +2,29 @@
 
 import React, { useState } from "react";
 
-type MentorProps = {
+interface MentorProps {
 	mentor: {
 		name: string;
 		expertise: string;
-		profilePicture: string; // URL or static image path
+		profilePicture: string;
 		isFollowing: boolean;
 	};
-};
+	
+}
 
 const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 	const [isFollowing, setIsFollowing] = useState(mentor.isFollowing);
 
-	const toggleFollow = () => {
+	const toggleFollow = (e: React.MouseEvent) => {
+		e.stopPropagation(); // Prevent triggering onCardClick when the button is clicked
 		setIsFollowing(!isFollowing);
 	};
 
 	return (
-		<div className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:transform hover:scale-105 transition duration-300">
+		<div
+			className="mentor-card h-52 bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:cursor-pointer hover:transform hover:scale-105 transition duration-300"
+			onClick={() => {}} 
+		>
 			<img
 				src={mentor.profilePicture}
 				alt={`${mentor.name}'s profile`}
@@ -31,14 +36,14 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 					<p className="text-sm text-gray-800">{mentor.expertise}</p>
 				</div>
 				<button
-					className={`mt-4 px-4 py-2 rounded ${
-						isFollowing
-							? "bg-gradient-to-r from-emerald-500 to-emerald-900 text-gray-900"
-							: "bg-sky-700 text-white hover:transform hover:scale-105 transition duration-300"
-					}`}
 					onClick={toggleFollow}
+					className={`mt-2 lg:mt-0 px-4 py-2 rounded outline-black hover:cursor-alias ${
+						isFollowing
+							? "bg-gradient-to-r from-gray-800 to-cyan-800 text-red-400"
+							: "bg-gradient-to-r from-slate-800 to-cyan-900 text-yellow-500"
+					}`}
 				>
-					{isFollowing ? "Following" : "Follow"}
+					{isFollowing ? "Unfollow" : "Follow"}
 				</button>
 			</div>
 		</div>

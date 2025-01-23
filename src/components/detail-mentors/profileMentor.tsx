@@ -1,21 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Briefcase } from "lucide-react";
 import WavingHand from "@/components/animation/wavinghand/page";
-
+import { Mentor } from "../../utils/interface/type";
 
 interface Props {
-  mentor: {
-  image_baground?: string;
-  fullname: string;
-  image_url: string;
-  occupation: string;
-  user_id: number;
-  };
+  mentor: Mentor
   
 }
 
+
+
 export default function MentorsProfile({ mentor }: Props) {
+  const [isFollowing, setIsFollowing] = useState(mentor.isFollowing);
+  
+    const toggleFollow = (e: React.MouseEvent) => {
+      e.stopPropagation(); // Prevent triggering onCardClick when the button is clicked
+      setIsFollowing(!isFollowing);
+    };
   return (
     <div
       className="p-[0.5rem] md:p-[2rem] lg:p-[6rem] h-[8rem] md:h-[12rem] lg:h-[16rem]"
@@ -50,18 +52,19 @@ export default function MentorsProfile({ mentor }: Props) {
               {mentor.occupation}
             </p>
           </div>
+          <div className="absolute right-4 bottom-4 flex flex-col items-end">
           <button
-          className="absolute p-[0.3rem] md:p-[0.5rem] lg:p-[0.9rem] text-[0.45rem] md:text-[0.5rem] lg:text-[0.9rem] shadow-md rounded-full"
-          style={{
-            right: "1rem",
-            background: "#e53e3e",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          FOLLOW ME
-        </button>
+					onClick={toggleFollow}
+					className={`mt-2 lg:mt-0 px-4 py-2 rounded outline-black hover:cursor-alias ${
+						isFollowing
+							? "bg-gradient-to-r from-gray-800 to-cyan-800 text-red-400"
+							: "bg-gradient-to-r from-slate-800 to-cyan-900 text-yellow-500"
+					}`}
+				>
+					{isFollowing ? "Unfollow" : "Follow"}
+				</button>
+      
+          </div>
         </div>
       </div>
     </div>
