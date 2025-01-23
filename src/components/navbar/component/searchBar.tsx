@@ -1,7 +1,7 @@
 import React from "react";
 
 export const SearchBar: React.FC = () => (
-  <li>
+  <li className="w-full md:w-auto mt-5">
     <form
       className="flex items-center"
       action="/search"
@@ -10,7 +10,7 @@ export const SearchBar: React.FC = () => (
       <label htmlFor="simple-search" className="sr-only">
         Search
       </label>
-      <div className="relative shrink w-80">
+      <div className="relative w-full md:w-80">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <svg
             className="w-5 h-5 text-gray-500 dark:text-gray-400"
