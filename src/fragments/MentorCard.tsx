@@ -22,7 +22,7 @@ const MentorCard: React.FC<MentorProps> = ({ mentor }) => {
 
 	return (
 		<div
-			className="mentor-card bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:cursor-pointer hover:transform hover:scale-105 transition duration-300"
+			className="mentor-card h-52 bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md rounded-lg p-4 flex flex-col items-center hover:shadow-lg hover:cursor-pointer hover:transform hover:scale-105 transition duration-300"
 			onClick={() => {}} 
 		>
 			<img

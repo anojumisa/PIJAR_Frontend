@@ -43,8 +43,8 @@ const FeaturedMentors: React.FC = () => {
 	}, []);
 
 	return (
-		<div className="featured-mentors-container p-6 max-w-6xl mx-auto">
-			<h2 className="text-2xl md:text-4xl mb-6 font-bold text-gray-500 text-center">
+		<div className="featured-mentors-container p-4 sm:p-6 max-w-6xl mx-auto">
+			<h2 className="text-xl sm:text-2xl md:text-4xl mb-4 sm:mb-6 font-bold text-gray-500 text-center">
 				Mentor Pilihan
 			</h2>
 
@@ -53,7 +53,7 @@ const FeaturedMentors: React.FC = () => {
 			) : error ? (
 				<p className="text-red-500">{error}</p>
 			) : (
-				<div className="mentor-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+				<div className="mentor-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
 					{Array.isArray(mentors) && mentors.length > 0 ? (
 						mentors.map((mentor) => (
 							<Link key={mentor.id} href={`/mentor/${mentor.id}`} passHref>
@@ -64,8 +64,7 @@ const FeaturedMentors: React.FC = () => {
 											expertise: mentor.occupation,
 											profilePicture: mentor.image_url,
 											isFollowing: false, 
-										}}
-										
+												}}
 									/>
 								</div>
 							</Link>
