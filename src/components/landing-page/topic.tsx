@@ -5,7 +5,7 @@ import TopicCard from "@/fragments/TopicCard";
 import { fetchLandingPageCategories, fetchCategories } from "@/utils/api";
 import Link from "next/link";
 import Loading from "../animation/loading/page";
-import { Category} from "@/utils/interface/type";
+import { Category } from "@/utils/interface/type";
 
 const Topic: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -64,20 +64,18 @@ const Topic: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.length > 0 ? (
-          categories.map((category) =>
-            category.sub_categories.map((subCategory, index) => (
-              <Link
-                key={`${category.id}-${subCategory.category_id}-${index}`}
-                href={`/course?categoryid=${subCategory.category_id}`}
-                className="block"
-              >
-                <TopicCard
-                  category_name={category.category_name}
-                  image_url={category.image_url}
-                />
-              </Link>
-            ))
-          )
+          categories.map((category) => (
+            <Link
+              key={category.id}
+              href={`/course?categoryid=${category.id}`}
+              className="block"
+            >
+              <TopicCard
+                category_name={category.category_name}
+                image_url={category.image_url}
+              />
+            </Link>
+          ))
         ) : (
           <p>Tidak ada kategori yang tersedia.</p>
         )}
