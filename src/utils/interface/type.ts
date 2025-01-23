@@ -26,6 +26,7 @@ export interface MentorExpertise {
 }
 
 export interface Mentor {
+  id:number;
   fullname: string;
   image_url: string;
   image_baground?: string;
@@ -77,7 +78,9 @@ export interface Sessions {
 }
 
 export interface Topic {
+  id:number;
   category_name: string;
+  image_url:string
 }
 
 
