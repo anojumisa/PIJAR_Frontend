@@ -35,8 +35,9 @@ export interface Mentor {
   occupation: string;
   user_id: number;
   email: string;
-  id: number;
+  isFollowing: boolean;
 }
+
 
 export interface Education {
   id: number;
