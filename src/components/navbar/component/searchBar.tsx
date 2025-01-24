@@ -1,7 +1,7 @@
 import React from "react";
 
 export const SearchBar: React.FC = () => (
-  <li className="w-full  md:w-auto">
+
     <form
       className="flex items-center md:mt-0 mt-4"
       action="/search"
@@ -59,5 +59,5 @@ export const SearchBar: React.FC = () => (
       <span className="sr-only">Search</span>
       </button>
     </form>
-  </li>
+
 );

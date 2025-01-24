@@ -8,9 +8,13 @@ interface Props {
 
 export default function ExperienceMentors({ mentor }: Props) {
 
+  const getYear = (dateString: string) => {
+    return new Date(dateString).getFullYear();
+  };
+
   return (
     <div
-      className="bg-slate-200"
+      className="bg-gradient-to-tr from-cyan-500 to-blue-500"
       style={{
         margin: "1.25rem 0",
         padding: "1.25rem",
@@ -18,7 +22,7 @@ export default function ExperienceMentors({ mentor }: Props) {
         boxShadow: "0rem 0.125rem 0.25rem rgba(0,0,0,0.1)",
       }}
     >
-      <h2 className="text-base md:text-lg lg:text-2xl font-semibold font-lilita mb-4">
+      <h2 className="text-base md:text-lg lg:text-2xl font-semibold mb-4">
         Pengalaman Profesional
       </h2>
       {mentor.mentor_experiences.map((exp, index) => (
@@ -30,8 +34,8 @@ export default function ExperienceMentors({ mentor }: Props) {
               <Briefcase className="w-4 h-4" />
               {exp.occupation} di {exp.company_name}
             </h3>
-            <p className="text-sm md:text-base lg:text-lg text-gray-600 italic">
-              {exp.start_date} - {exp.end_date}
+            <p className="text-lg font-bold md:text-base lg:text-lg text-gray-200 italic">
+              {getYear(exp.start_date)}
             </p>
           </div>
         </div>

@@ -17,7 +17,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, onClick }) => {
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-center">
       {[...Array(5)].map((_, index) => {
         if (index < fullStars) {
           return (

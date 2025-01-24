@@ -22,9 +22,9 @@ export default function MentorsProfile({ mentor }: Props) {
     <div
       className="p-[0.5rem] md:p-[2rem] lg:p-[6rem] h-[8rem] md:h-[12rem] lg:h-[16rem]"
       style={{
-        backgroundImage: `url(${mentor.image_baground || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"})`,
+        backgroundImage: `url('https://st3.depositphotos.com/2101611/37519/i/450/depositphotos_375196990-stock-photo-back-school-education-banner-background.jpg')`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "top",
         color: "white",
         borderRadius: "0.5rem",
         position: "relative",
@@ -41,13 +41,13 @@ export default function MentorsProfile({ mentor }: Props) {
         }}
       ></div>
 
-      <div className="absolute ml-[7rem] md:ml-[12rem] lg:ml-[16rem] bottom-[-1.75rem] md:bottom-[-2rem] lg:bottom-[-3.5rem] w-4/5 max-w-[70%] h-max bg-slate-200 p-4 rounded-2xl font-bold shadow-md">
+      <div className="absolute ml-[7rem] md:ml-[12rem] lg:ml-[16rem] bottom-[-1.75rem] md:bottom-[-2rem] lg:bottom-[-3.5rem] w-4/5 max-w-[70%] h-max bg-gradient-to-tr from-slate-900 to-slate-200 p-4 rounded-2xl font-bold shadow-md">
         <div className="flex gap-2">
           <div className="grid">
-            <h1 className="text-blue-600 text-base md:text-lg lg:text-3xl font-caveat">
+            <h1 className="text-white text-base md:text-lg lg:text-3xl font-caveat">
               {mentor.fullname} <WavingHand />
             </h1>
-            <p className="text-black text-xs md:text-sm lg:text-base flex items-center gap-1">
+            <p className="text-white text-xs md:text-sm lg:text-base flex items-center gap-1">
               <Briefcase className="w-4 h-4" /> 
               {mentor.occupation}
             </p>
