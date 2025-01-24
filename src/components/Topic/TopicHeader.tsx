@@ -24,14 +24,15 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({
 }) => {
 	return (
 		<div className="p-4 bg-neutral-800 shadow border border-neutral-400 rounded-2xl">
-			<img
-				src={mentor_details.image_url}
-				alt={mentor_details.fullname}
-				className="h-60 w-full object-cover rounded-lg"
-			/>
-			<p className="text-sm font-bold text-white">
-				Mentor: {mentor_details.fullname}
-			</p>
+			<div className="mt-4 flex gap-4 items-center">
+                <img
+                    src={mentor_details?.image_url}
+                    alt="mentor image"
+                    className="w-12 h-12 rounded-full"
+                />
+                <p className="text-xl font-bold text-gray-200">{mentor_details?.fullname}</p>
+			</div>
+			<br />
 			<h2 className="text-4xl text-neutral-300 font-semibold">{title}</h2>
 			<p className="text-sm font-bold text-white">{short_description}</p>
 			<div className="text-sm font-bold text-yellow-600">
@@ -61,14 +62,14 @@ const TopicHeader: React.FC<TopicHeaderProps> = ({
 				})}
 				<span className="ml-2">({average_rating}/5)</span>
 			</div>
-			<div className="mt-4 text-center">
+			<div className="mt-4 text-center w-full">
 				<Link
 					href={`/session/${session_id}`} 
 					target="_blank"
 					rel="noopener noreferrer"
-					className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium text-sm rounded hover:bg-blue-600 transition duration-300"
+					className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium text-xl rounded hover:bg-blue-600 transition duration-300"
 				>
-				Daftar Sekarang!</Link>
+				Daftar Kelas Sekarang!</Link>
 			</div>
 		</div>
 	);
