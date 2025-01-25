@@ -15,6 +15,7 @@ export default function Home() {
 				<title>Pijar</title>
 				<meta name="description" content="Pijar" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				
 			</Head>
 			<Navbar />
 			<Banner />
