@@ -2,6 +2,8 @@
 
 Welcome to the **PIJAR Frontend Project**! This application is designed to provide an interactive and seamless interface for users to explore and book mentorship programs. With a clean UI, responsive design, and rich feature set, PIJAR connects learners with mentors globally. This README will guide you through the project setup, structure, and key functionalities.
 
+Visit the website here: [revou-pijar.vercel.app](https://revou-pijar.vercel.app/)
+
 ---
 
 ## Table of Contents
@@ -10,16 +12,16 @@ Welcome to the **PIJAR Frontend Project**! This application is designed to provi
 3. [Solution](#solution)
 4. [Value Proposition](#value-proposition)
 5. [Features](#features)
-6. [Tech Stack](#tech-stack)
-7. [Getting Started](#getting-started)
+6. [Recent Updates](#recent-updates)
+7. [Tech Stack](#tech-stack)
+8. [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
     - [Running the Development Server](#running-the-development-server)
-8. [Project Structure](#project-structure)
-9. [API Integration](#api-integration)
-10. [Styling and Theming](#styling-and-theming)
-11. [Contributing](#contributing)
-12. [License](#license)
+9. [Project Structure](#project-structure)
+10. [API Integration](#api-integration)
+11. [Styling and Theming](#styling-and-theming)
+12. [Contributors](#contributors)
 
 ---
 
@@ -43,9 +45,7 @@ Access to quality mentorship and learning resources is limited, particularly for
 PIJAR bridges the gap between learners and mentors by providing a user-friendly platform where:
 
 - Learners can search for mentors by skills, topics, or availability.
-
 - Mentors can share their expertise, schedules, and resources with learners.
-
 - The platform ensures accessibility, inclusivity, and engagement.
 
 ---
@@ -54,13 +54,10 @@ PIJAR bridges the gap between learners and mentors by providing a user-friendly 
 
 PIJAR provides:
 
-- Accessibility: A lightweight, responsive platform that works on low-bandwidth connections.
-
-- Personalized Learning: Connects learners to mentors who match their specific needs.
-
-- Scalability: Designed to support growth and integration with other tools.
-
-- Empowerment: Supports underserved communities by democratizing access to mentorship.
+- **Accessibility**: A lightweight, responsive platform that works on low-bandwidth connections.
+- **Personalized Learning**: Connects learners to mentors who match their specific needs.
+- **Scalability**: Designed to support growth and integration with other tools.
+- **Empowerment**: Supports underserved communities by democratizing access to mentorship.
 
 ---
 
@@ -69,7 +66,45 @@ PIJAR provides:
 - **Search and Filter**: Search mentors by name, expertise, and schedule. Apply filters for targeted results.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **Booking System**: Book mentorship sessions.
-- **User Authentication**: Secure login and signup features.
+- **User Authentication**: Secure login and signup features with Google OAuth integration.
+- **Certificate Offering**: Certificates provided after session completion.
+- **Lesson Downloads**: Users can download session resources for offline learning.
+
+---
+
+## Recent Updates
+
+### Deployment
+- The application is now deployed on **Vercel**, ensuring fast and reliable performance with seamless CI/CD integration.
+
+### Gmail OAuth Integration
+- Added Gmail authentication using OAuth to simplify the signin/signup process and enhance security.
+- This feature also includes email verification to ensure user authenticity.
+
+### Bug Fixes and Improvements
+- Optimized search API integration and resolved issues with search functionality.
+- Improved category APIs and navigation functionality.
+- Enhanced performance and reduced page load times for the homepage and main banner.
+- Fixed card interactivity issues; all cards are now clickable.
+
+## Security Enhancements with Cookie-Based Authentication
+
+### Why Cookies Instead of JWT in LocalStorage?
+Storing JWT tokens in cookies enhances security by:
+- Preventing access via JavaScript (using HttpOnly).
+- Enabling automatic inclusion in requests without manual headers.
+- Providing better protection against XSS attacks.
+
+### Backend Implementation
+- Cookies are used to store authentication tokens with the following attributes:
+  - **HttpOnly**: Prevents client-side scripts from accessing the token.
+  - **Secure**: Ensures the cookie is sent only over HTTPS.
+  - **SameSite**: Restricts cookie usage to prevent CSRF attacks.
+
+### Frontend Updates
+- All API calls now include cookies for authentication using:
+  ```typescript
+  credentials: 'include';
 
 ---
 
@@ -77,36 +112,11 @@ PIJAR provides:
 - **Frontend Framework**: [Next.js](https://nextjs.org/)
 - **Styling**: Tailwind CSS
 - **API Communication**: Axios
+- **Authentication**: Gmail OAuth
 - **Type Checking**: TypeScript
-- **Version Control**: Git
+- **Deployment**: Vercel
 
 ---
-
-## UI Design
-
-The UI/UX of PIJAR was meticulously crafted using Figma, ensuring a modern and intuitive design. The design process involved:
-
-- User-centric research.
-
-- Wireframing and prototyping.
-
-- Consistent color schemes and typography.
-
-- Accessibility compliance for diverse users.
-
----
-
-## CI/CD Integration
-
-The project follows a robust CI/CD pipeline using the **Rebase method** to ensure:
-
-- Clean commit histories.
-
-- Automated builds and tests before merging.
-
-- Continuous deployment for rapid feature delivery.
-
-**Deployment**: The application is seamlessly deployed on Vercel, leveraging its powerful infrastructure for fast and reliable performance.
 
 ## Getting Started
 
@@ -198,3 +208,4 @@ Styling is powered by **Tailwind CSS** for utility-first and responsive design.
 3. Leonard Abimanyu - Frontend Developer
 4. Ardyanto Hendrajaya - Frontend Developer
 5. Frederick Alexander Badaruddin - Frontend Developer
+6. Philip Nathaniel - Backend Developer

@@ -148,7 +148,7 @@ const Navbar_not_auth: React.FC = () => {
 					<Categories categories={categories} />
 					<SearchBar />
 				</div>
-				<div className=" w-full md:block md:w-auto" id="navbar-default">
+				<div className=" w-full md:block md:w-auto" id="navbar-default"> 
 					<ul className=" md:flex flex-col md:flex-row items-center justify-between gap-4 md:gap-16 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 						{isAuthenthicated && (
 							<AuthenticatedMenu
