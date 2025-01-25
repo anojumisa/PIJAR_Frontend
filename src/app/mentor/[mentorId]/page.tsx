@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import EducationAndSkills from "@/components/detail-mentors/educationAndSkills";
 import Loading from "@/components/animation/loading/page";
 import { fetchMentorDetail } from "@/utils/api";
@@ -45,6 +46,9 @@ export default function MentorsDetail({
 
   return (
     <>
+      <Head>
+        <title>Mentor Details - Pijar</title>
+      </Head>
       <Navbar_not_auth />
       <div className="relative p-[1.5rem] md:p-[3rem] lg:p-[5rem] bg-black">
         <MentorsProfile mentor={mentor} />
@@ -53,7 +57,6 @@ export default function MentorsDetail({
         <EducationAndSkills mentor={mentor} />
         <ClassSession sessionId={mentor.user_id} />
       </div>
-      console.log({mentor.user_id})
       <Footer />
     </>
   );
